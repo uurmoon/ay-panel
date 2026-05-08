@@ -2355,122 +2355,120 @@ let a = data[i];
 
 if(!a) return;
 
+let raporNo =
+"AY-ODM-" +
+new Date().getFullYear() +
+"-" +
+String(i + 1).padStart(4,"0");
+
+let odemeTarihi =
+a.odemeTarihi || bugun();
+
 let w = window.open("");
 
 w.document.write(`
 
-<body style="
-font-family:-apple-system;
-padding:30px;
-background:#f5f5f7;
-color:#111;
-">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ödeme Makbuzu - AY ASANSÖR</title>
 
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#eef1f6;color:#111827;padding:26px}
+.page{max-width:840px;margin:0 auto;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 18px 55px rgba(15,23,42,.10)}
+.topBand{height:10px;background:linear-gradient(90deg,#007aff,#60a5fa,#34c759)}
+.header{padding:28px 30px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #eef0f4}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
+.reportMeta{text-align:right;font-size:13px;color:#6b7280;line-height:1.7}.reportMeta b{color:#111827}
+.titleBox{padding:26px 30px 18px}.docTitle{font-size:30px;font-weight:900;letter-spacing:-.6px;margin:0}.docDesc{margin:8px 0 0;color:#6b7280;font-size:15px;line-height:1.45}
+.statusBox{margin:8px 30px 24px;border-radius:22px;padding:18px;display:flex;gap:14px;align-items:flex-start}.statusBlue{background:#eff6ff;border:1px solid #dbeafe}.statusGreen{background:#eaf8f0;border:1px solid #c9efd7}
+.statusIcon{width:36px;height:36px;border-radius:50%;color:white;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0}.iconBlue{background:#007aff}.iconGreen{background:#34c759}
+.statusTitle{font-size:18px;font-weight:900;margin-bottom:4px}.titleBlue{color:#1d4ed8}.titleGreen{color:#168a3a}.statusText{font-size:14px;line-height:1.45;color:#4b5563}
+.infoGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 30px 26px}.infoCard{background:#f8fafc;border:1px solid #edf0f5;border-radius:18px;padding:16px;min-height:78px}.label{font-size:12px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;color:#8a94a6;margin-bottom:7px}.value{font-size:18px;font-weight:850;color:#111827;line-height:1.25;word-break:break-word}.amountCard{grid-column:1/-1;background:linear-gradient(135deg,#effaf3,#f8fffb);border-color:#d6f4df}.amountCard .value{font-size:32px;color:#168a3a}
+.noteBox{margin:0 30px 28px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;padding:18px}.noteTitle{font-size:14px;font-weight:900;color:#111827;margin-bottom:8px}.noteText{font-size:14px;color:#4b5563;line-height:1.6;white-space:pre-wrap}
+.checkList{margin:0 30px 28px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.checkItem{background:#fff;border:1px solid #edf0f5;border-radius:16px;padding:13px 14px;font-size:13px;font-weight:800;color:#4b5563;display:flex;align-items:center;gap:9px}.checkDot{width:18px;height:18px;border-radius:50%;background:#eaf8f0;color:#22a859;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
+.summaryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 30px 26px}.summaryCard{background:#f8fafc;border:1px solid #edf0f5;border-radius:18px;padding:16px}.summaryLabel{font-size:12px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;color:#8a94a6;margin-bottom:8px}.summaryValue{font-size:26px;font-weight:950;letter-spacing:-.5px;color:#111827}
+.section{margin:0 30px 18px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;overflow:hidden}.sectionTitle{padding:16px 18px;font-size:17px;font-weight:950;border-bottom:1px solid #edf0f5;background:#fff}.list{padding:14px 18px;font-size:14px;color:#4b5563;line-height:1.8}.listItem{padding:7px 0;border-bottom:1px solid rgba(229,231,235,.8)}.listItem:last-child{border-bottom:none}.empty{color:#9ca3af;font-style:italic}
+.signatureArea{padding:6px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.signatureBox{border-top:1.5px solid #cfd5df;padding-top:10px;font-size:13px;color:#6b7280;font-weight:800;text-align:center}
+.footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}
+@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn{display:none}}
+@media(max-width:720px){body{padding:14px}.header,.footer{flex-direction:column;align-items:flex-start;text-align:left}.reportMeta{text-align:left}.summaryGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.infoGrid,.checkList,.signatureArea{grid-template-columns:1fr}.signatureArea{gap:34px}}
+@media(max-width:480px){.summaryGrid{grid-template-columns:1fr}}
+</style>
 
-<div style="
-display:flex;
-align-items:center;
-gap:12px;
-font-size:24px;
-font-weight:800;
-">
+</head>
+<body>
 
-<img
-src='https://i.imgur.com/jbOSWKN.png'
-width='40'>
+<div class="page">
+<div class="topBand"></div>
 
-AY ASANSÖR
-
-</div>
-
-<div style="
-font-size:14px;
-color:#666;
-">
-
-${bugun()}
-
-</div>
-
-</div>
-
-<div style="
-margin-top:25px;
-background:white;
-padding:24px;
-border-radius:20px;
-box-shadow:0 3px 10px rgba(0,0,0,0.05);
-">
-
-<h2 style="margin-top:0">
-Ödeme Alındı Makbuzu
-</h2>
-
-<hr>
-
-<b>Apartman:</b> ${a.ad || "-"}<br><br>
-
-<b>Yönetici:</b> ${a.yonetici || "-"}<br>
-
-<b>Telefon:</b> ${a.tel || "-"}<br>
-
-<b>Tutar:</b> ${a.ucret || 0} ₺<br>
-
-<b>Ödeme Tarihi:</b> ${a.odemeTarihi || bugun()}<br><br>
-
-<div style="
-background:#eaf8f0;
-padding:16px;
-border-radius:14px;
-color:#168a3a;
-font-weight:700;
-">
-
-Belirtilen bakım ücreti AY ASANSÖR tarafından tahsil edilmiştir.
-
-</div>
-
-</div>
-
-<div style="
-display:flex;
-justify-content:space-between;
-margin-top:70px;
-font-size:14px;
-">
-
+<div class="header">
+<div class="brand">
+<img src="https://i.imgur.com/jbOSWKN.png">
 <div>
-
-_____________________<br>
-AY ASANSÖR
-
+<div class="brandTitle">AY ASANSÖR</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
+</div>
+</div>
+<div class="reportMeta">
+<b>Makbuz No:</b> ${raporNo}<br>
+<b>Tarih:</b> ${bugun()}
+</div>
 </div>
 
+<div class="titleBox">
+<h1 class="docTitle">Ödeme Alındı Makbuzu</h1>
+<p class="docDesc">Bu belge, ilgili apartmana ait bakım/tahsilat ücretinin alındığını göstermek amacıyla oluşturulmuştur.</p>
+</div>
+
+<div class="statusBox statusGreen">
+<div class="statusIcon iconGreen">✓</div>
 <div>
+<div class="statusTitle titleGreen">Ödeme Alındı</div>
+<div class="statusText">${a.ad || "-"} için ${a.ucret || 0} ₺ tutarındaki ödeme ${odemeTarihi} tarihinde tahsil edilmiştir.</div>
+</div>
+</div>
 
-_____________________<br>
-Müşteri / Yönetici
+<div class="infoGrid">
+<div class="infoCard"><div class="label">Apartman</div><div class="value">${a.ad || "-"}</div></div>
+<div class="infoCard"><div class="label">Yönetici</div><div class="value">${a.yonetici || "-"}</div></div>
+<div class="infoCard"><div class="label">Telefon</div><div class="value">${a.tel || "-"}</div></div>
+<div class="infoCard"><div class="label">Ödeme Tarihi</div><div class="value">${odemeTarihi}</div></div>
+<div class="infoCard amountCard"><div class="label">Tahsil Edilen Tutar</div><div class="value">${a.ucret || 0} ₺</div></div>
+</div>
+
+<div class="noteBox">
+<div class="noteTitle">Açıklama</div>
+<div class="noteText">Ödeme kaydı AY ASANSÖR servis takip sistemi üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
+</div>
+
+<div class="signatureArea">
+<div class="signatureBox">AY ASANSÖR<br>Teknik Servis</div>
+<div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
+</div>
+
+
+<div class="footer">
+<div>© 2026 AY ASANSÖR. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı</div>
+<div>Güvenli yükseliş, düzenli bakım.</div>
+</div>
+
 
 </div>
 
-</div>
-
-<br><br>
-
-<button onclick="window.print()">
-PDF / Yazdır
-</button>
+<button class="printBtn" onclick="window.print()">PDF / Yazdır</button>
 
 </body>
+</html>
 
 `);
 
 }
+
 
 
 function pdf(i){
@@ -2479,141 +2477,132 @@ haptic("medium");
 
 let a = data[i];
 
+let raporNo =
+"AY-BKM-" +
+new Date().getFullYear() +
+"-" +
+String(i + 1).padStart(4,"0");
+
+let bakimTarihi =
+a.bakimTarihi || bugun();
+
+let durum =
+a.bakimTarihi ? "Bakım Yapıldı" : "Bakım Raporu";
+
 let w = window.open("");
 
 w.document.write(`
 
-<body style="
-font-family:-apple-system;
-padding:30px;
-background:#f5f5f7;
-color:#111;
-">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bakım Servis Raporu - AY ASANSÖR</title>
 
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#eef1f6;color:#111827;padding:26px}
+.page{max-width:840px;margin:0 auto;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 18px 55px rgba(15,23,42,.10)}
+.topBand{height:10px;background:linear-gradient(90deg,#007aff,#60a5fa,#34c759)}
+.header{padding:28px 30px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #eef0f4}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
+.reportMeta{text-align:right;font-size:13px;color:#6b7280;line-height:1.7}.reportMeta b{color:#111827}
+.titleBox{padding:26px 30px 18px}.docTitle{font-size:30px;font-weight:900;letter-spacing:-.6px;margin:0}.docDesc{margin:8px 0 0;color:#6b7280;font-size:15px;line-height:1.45}
+.statusBox{margin:8px 30px 24px;border-radius:22px;padding:18px;display:flex;gap:14px;align-items:flex-start}.statusBlue{background:#eff6ff;border:1px solid #dbeafe}.statusGreen{background:#eaf8f0;border:1px solid #c9efd7}
+.statusIcon{width:36px;height:36px;border-radius:50%;color:white;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0}.iconBlue{background:#007aff}.iconGreen{background:#34c759}
+.statusTitle{font-size:18px;font-weight:900;margin-bottom:4px}.titleBlue{color:#1d4ed8}.titleGreen{color:#168a3a}.statusText{font-size:14px;line-height:1.45;color:#4b5563}
+.infoGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 30px 26px}.infoCard{background:#f8fafc;border:1px solid #edf0f5;border-radius:18px;padding:16px;min-height:78px}.label{font-size:12px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;color:#8a94a6;margin-bottom:7px}.value{font-size:18px;font-weight:850;color:#111827;line-height:1.25;word-break:break-word}.amountCard{grid-column:1/-1;background:linear-gradient(135deg,#effaf3,#f8fffb);border-color:#d6f4df}.amountCard .value{font-size:32px;color:#168a3a}
+.noteBox{margin:0 30px 28px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;padding:18px}.noteTitle{font-size:14px;font-weight:900;color:#111827;margin-bottom:8px}.noteText{font-size:14px;color:#4b5563;line-height:1.6;white-space:pre-wrap}
+.checkList{margin:0 30px 28px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.checkItem{background:#fff;border:1px solid #edf0f5;border-radius:16px;padding:13px 14px;font-size:13px;font-weight:800;color:#4b5563;display:flex;align-items:center;gap:9px}.checkDot{width:18px;height:18px;border-radius:50%;background:#eaf8f0;color:#22a859;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
+.summaryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 30px 26px}.summaryCard{background:#f8fafc;border:1px solid #edf0f5;border-radius:18px;padding:16px}.summaryLabel{font-size:12px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;color:#8a94a6;margin-bottom:8px}.summaryValue{font-size:26px;font-weight:950;letter-spacing:-.5px;color:#111827}
+.section{margin:0 30px 18px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;overflow:hidden}.sectionTitle{padding:16px 18px;font-size:17px;font-weight:950;border-bottom:1px solid #edf0f5;background:#fff}.list{padding:14px 18px;font-size:14px;color:#4b5563;line-height:1.8}.listItem{padding:7px 0;border-bottom:1px solid rgba(229,231,235,.8)}.listItem:last-child{border-bottom:none}.empty{color:#9ca3af;font-style:italic}
+.signatureArea{padding:6px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.signatureBox{border-top:1.5px solid #cfd5df;padding-top:10px;font-size:13px;color:#6b7280;font-weight:800;text-align:center}
+.footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}
+@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn{display:none}}
+@media(max-width:720px){body{padding:14px}.header,.footer{flex-direction:column;align-items:flex-start;text-align:left}.reportMeta{text-align:left}.summaryGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.infoGrid,.checkList,.signatureArea{grid-template-columns:1fr}.signatureArea{gap:34px}}
+@media(max-width:480px){.summaryGrid{grid-template-columns:1fr}}
+</style>
 
-<div style="
-display:flex;
-align-items:center;
-gap:12px;
-font-size:24px;
-font-weight:700;
-">
+</head>
+<body>
 
-<img
-src='https://i.imgur.com/jbOSWKN.png'
-width='38'>
+<div class="page">
+<div class="topBand"></div>
 
-AY ASANSÖR
-
-</div>
-
-<div style="
-font-size:14px;
-color:#666;
-">
-
-${bugun()}
-
-</div>
-
-</div>
-
-<div style="
-margin-top:25px;
-background:white;
-padding:22px;
-border-radius:18px;
-box-shadow:0 3px 10px rgba(0,0,0,0.05);
-">
-
-<h2 style="margin-top:0">
-Bakım Servis Raporu
-</h2>
-
-<hr>
-
-<b>Apartman:</b> ${a.ad}<br><br>
-
-<b>Yönetici:</b> ${a.yonetici}<br>
-
-<b>Telefon:</b> ${a.tel}<br>
-
-<b>Ücret:</b> ${a.ucret} ₺<br>
-
-<b>Bakım Günü:</b> ${a.bakimGunu || "-"}<br>
-
-<b>Ödeme:</b> ${a.odemeTarihi || "-"}<br>
-
-<b>Bakım:</b> ${a.bakimTarihi || "-"}<br><br>
-
-<b>Teknik Not:</b><br>
-
-<div style="
-background:#f5f5f7;
-padding:14px;
-border-radius:12px;
-margin-top:8px;
-">
-
-${a.not || "-"}
-
-</div>
-
-</div>
-
-<div style="
-margin-top:20px;
-background:white;
-padding:22px;
-border-radius:18px;
-box-shadow:0 3px 10px rgba(0,0,0,0.05);
-">
-
-<b>İşlem Kayıtları</b><br><br>
-
-${a.kayitlar.length ? a.kayitlar.map(x=>"• "+x).join("<br>") : "Kayıt bulunmuyor."}
-
-</div>
-
-<div style="
-display:flex;
-justify-content:space-between;
-margin-top:70px;
-font-size:14px;
-">
-
+<div class="header">
+<div class="brand">
+<img src="https://i.imgur.com/jbOSWKN.png">
 <div>
-
-_____________________<br>
-Teknik Servis
-
+<div class="brandTitle">AY ASANSÖR</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
+</div>
+</div>
+<div class="reportMeta">
+<b>Rapor No:</b> ${raporNo}<br>
+<b>Tarih:</b> ${bugun()}
+</div>
 </div>
 
+<div class="titleBox">
+<h1 class="docTitle">Bakım Servis Raporu</h1>
+<p class="docDesc">Bu rapor, ilgili asansörün servis/bakım işleminin kayıt altına alınması için oluşturulmuştur.</p>
+</div>
+
+<div class="statusBox statusBlue">
+<div class="statusIcon iconBlue">✓</div>
 <div>
+<div class="statusTitle titleBlue">${durum}</div>
+<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde AY ASANSÖR tarafından kayıt altına alınmıştır.</div>
+</div>
+</div>
 
-_____________________<br>
-Müşteri İmza
+<div class="infoGrid">
+<div class="infoCard"><div class="label">Apartman</div><div class="value">${a.ad || "-"}</div></div>
+<div class="infoCard"><div class="label">Yönetici</div><div class="value">${a.yonetici || "-"}</div></div>
+<div class="infoCard"><div class="label">Telefon</div><div class="value">${a.tel || "-"}</div></div>
+<div class="infoCard"><div class="label">Bakım Günü</div><div class="value">${a.bakimGunu || "-"}</div></div>
+<div class="infoCard"><div class="label">Son Bakım</div><div class="value">${a.bakimTarihi || "-"}</div></div>
+<div class="infoCard"><div class="label">Bakım Ücreti</div><div class="value">${a.ucret || 0} ₺</div></div>
+</div>
+
+<div class="checkList">
+<div class="checkItem"><span class="checkDot">✓</span>Genel çalışma kontrolü</div>
+<div class="checkItem"><span class="checkDot">✓</span>Kapı ve güvenlik kontrolü</div>
+<div class="checkItem"><span class="checkDot">✓</span>Kabin hareket kontrolü</div>
+<div class="checkItem"><span class="checkDot">✓</span>Teknik not kontrolü</div>
+</div>
+
+<div class="noteBox">
+<div class="noteTitle">Teknik Not</div>
+<div class="noteText">${a.not || "Teknik not bulunmuyor."}</div>
+</div>
+
+<div class="signatureArea">
+<div class="signatureBox">AY ASANSÖR<br>Teknik Servis</div>
+<div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
+</div>
+
+
+<div class="footer">
+<div>© 2026 AY ASANSÖR. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı</div>
+<div>Güvenli yükseliş, düzenli bakım.</div>
+</div>
+
 
 </div>
 
-</div>
-
-<br><br>
-
-<button onclick="window.print()">
-PDF / Yazdır
-</button>
+<button class="printBtn" onclick="window.print()">PDF / Yazdır</button>
 
 </body>
+</html>
 
 `);
 
 }
+
+
 
 function aySonuRaporu(){
 
@@ -2644,157 +2633,111 @@ a.bakimGunu < bugunISO() &&
 let notlu =
 data.filter(a=>a.not && a.not.trim() !== "");
 
+let raporNo =
+"AY-AY-" +
+new Date().getFullYear() +
+"-" +
+String(new Date().getMonth() + 1).padStart(2,"0");
+
 let w = window.open("");
 
 w.document.write(`
 
-<body style="
-font-family:-apple-system;
-padding:30px;
-background:#f5f5f7;
-color:#111;
-">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ay Sonu Raporu - AY ASANSÖR</title>
 
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#eef1f6;color:#111827;padding:26px}
+.page{max-width:840px;margin:0 auto;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 18px 55px rgba(15,23,42,.10)}
+.topBand{height:10px;background:linear-gradient(90deg,#007aff,#60a5fa,#34c759)}
+.header{padding:28px 30px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #eef0f4}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
+.reportMeta{text-align:right;font-size:13px;color:#6b7280;line-height:1.7}.reportMeta b{color:#111827}
+.titleBox{padding:26px 30px 18px}.docTitle{font-size:30px;font-weight:900;letter-spacing:-.6px;margin:0}.docDesc{margin:8px 0 0;color:#6b7280;font-size:15px;line-height:1.45}
+.statusBox{margin:8px 30px 24px;border-radius:22px;padding:18px;display:flex;gap:14px;align-items:flex-start}.statusBlue{background:#eff6ff;border:1px solid #dbeafe}.statusGreen{background:#eaf8f0;border:1px solid #c9efd7}
+.statusIcon{width:36px;height:36px;border-radius:50%;color:white;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;flex-shrink:0}.iconBlue{background:#007aff}.iconGreen{background:#34c759}
+.statusTitle{font-size:18px;font-weight:900;margin-bottom:4px}.titleBlue{color:#1d4ed8}.titleGreen{color:#168a3a}.statusText{font-size:14px;line-height:1.45;color:#4b5563}
+.infoGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 30px 26px}.infoCard{background:#f8fafc;border:1px solid #edf0f5;border-radius:18px;padding:16px;min-height:78px}.label{font-size:12px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;color:#8a94a6;margin-bottom:7px}.value{font-size:18px;font-weight:850;color:#111827;line-height:1.25;word-break:break-word}.amountCard{grid-column:1/-1;background:linear-gradient(135deg,#effaf3,#f8fffb);border-color:#d6f4df}.amountCard .value{font-size:32px;color:#168a3a}
+.noteBox{margin:0 30px 28px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;padding:18px}.noteTitle{font-size:14px;font-weight:900;color:#111827;margin-bottom:8px}.noteText{font-size:14px;color:#4b5563;line-height:1.6;white-space:pre-wrap}
+.checkList{margin:0 30px 28px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.checkItem{background:#fff;border:1px solid #edf0f5;border-radius:16px;padding:13px 14px;font-size:13px;font-weight:800;color:#4b5563;display:flex;align-items:center;gap:9px}.checkDot{width:18px;height:18px;border-radius:50%;background:#eaf8f0;color:#22a859;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
+.summaryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 30px 26px}.summaryCard{background:#f8fafc;border:1px solid #edf0f5;border-radius:18px;padding:16px}.summaryLabel{font-size:12px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;color:#8a94a6;margin-bottom:8px}.summaryValue{font-size:26px;font-weight:950;letter-spacing:-.5px;color:#111827}
+.section{margin:0 30px 18px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;overflow:hidden}.sectionTitle{padding:16px 18px;font-size:17px;font-weight:950;border-bottom:1px solid #edf0f5;background:#fff}.list{padding:14px 18px;font-size:14px;color:#4b5563;line-height:1.8}.listItem{padding:7px 0;border-bottom:1px solid rgba(229,231,235,.8)}.listItem:last-child{border-bottom:none}.empty{color:#9ca3af;font-style:italic}
+.signatureArea{padding:6px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.signatureBox{border-top:1.5px solid #cfd5df;padding-top:10px;font-size:13px;color:#6b7280;font-weight:800;text-align:center}
+.footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}
+@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn{display:none}}
+@media(max-width:720px){body{padding:14px}.header,.footer{flex-direction:column;align-items:flex-start;text-align:left}.reportMeta{text-align:left}.summaryGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.infoGrid,.checkList,.signatureArea{grid-template-columns:1fr}.signatureArea{gap:34px}}
+@media(max-width:480px){.summaryGrid{grid-template-columns:1fr}}
+</style>
 
-<div style="
-display:flex;
-align-items:center;
-gap:12px;
-font-size:24px;
-font-weight:800;
-">
+</head>
+<body>
 
-<img
-src='https://i.imgur.com/jbOSWKN.png'
-width='40'>
+<div class="page">
+<div class="topBand"></div>
 
-AY ASANSÖR
+<div class="header">
+<div class="brand">
+<img src="https://i.imgur.com/jbOSWKN.png">
+<div>
+<div class="brandTitle">AY ASANSÖR</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
+</div>
+</div>
+<div class="reportMeta">
+<b>Rapor No:</b> ${raporNo}<br>
+<b>Rapor Tarihi:</b> ${bugun()}
+</div>
+</div>
+
+<div class="titleBox">
+<h1 class="docTitle">${ayAdi()} Ay Sonu Raporu</h1>
+<p class="docDesc">Bu rapor, ilgili ay içerisindeki bakım, tahsilat, bekleyen ödeme ve geciken bakım kayıtlarının özetidir.</p>
+</div>
+
+<div class="summaryGrid">
+<div class="summaryCard"><div class="summaryLabel">Toplam Apartman</div><div class="summaryValue">${data.length}</div></div>
+<div class="summaryCard"><div class="summaryLabel">Bu Ay Bakım</div><div class="summaryValue">${buAyBakim.length}</div></div>
+<div class="summaryCard"><div class="summaryLabel">Bu Ay Tahsilat</div><div class="summaryValue">${tahsilat} ₺</div></div>
+<div class="summaryCard"><div class="summaryLabel">Bekleyen Ödeme</div><div class="summaryValue">${bekleyenTutar} ₺</div></div>
+<div class="summaryCard"><div class="summaryLabel">Geciken Bakım</div><div class="summaryValue">${geciken.length}</div></div>
+<div class="summaryCard"><div class="summaryLabel">Teknik Notlu</div><div class="summaryValue">${notlu.length}</div></div>
+</div>
+
+<div class="section"><div class="sectionTitle">Bakım Yapılanlar</div><div class="list">
+${buAyBakim.length ? buAyBakim.map(a=>`<div class="listItem">${a.ad || "-"} — ${a.bakimTarihi || "-"}</div>`).join("") : `<div class="empty">Bu ay bakım kaydı yok.</div>`}
+</div></div>
+
+<div class="section"><div class="sectionTitle">Ödeme Alınanlar</div><div class="list">
+${buAyOdeme.length ? buAyOdeme.map(a=>`<div class="listItem">${a.ad || "-"} — ${a.ucret || 0} ₺ — ${a.odemeTarihi || "-"}</div>`).join("") : `<div class="empty">Bu ay ödeme kaydı yok.</div>`}
+</div></div>
+
+<div class="section"><div class="sectionTitle">Bekleyen Ödemeler</div><div class="list">
+${bekleyen.length ? bekleyen.map(a=>`<div class="listItem">${a.ad || "-"} — ${a.ucret || 0} ₺</div>`).join("") : `<div class="empty">Bekleyen ödeme yok.</div>`}
+</div></div>
+
+<div class="section"><div class="sectionTitle">Geciken Bakımlar</div><div class="list">
+${geciken.length ? geciken.map(a=>`<div class="listItem">${a.ad || "-"} — ${a.bakimGunu || "-"}</div>`).join("") : `<div class="empty">Geciken bakım yok.</div>`}
+</div></div>
+
+
+<div class="footer">
+<div>© 2026 AY ASANSÖR. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı</div>
+<div>Güvenli yükseliş, düzenli bakım.</div>
+</div>
+
 
 </div>
 
-<div style="
-font-size:14px;
-color:#666;
-">
-
-${bugun()}
-
-</div>
-
-</div>
-
-<h1 style="
-margin-top:30px;
-font-size:30px;
-">
-
-${ayAdi()} Ay Sonu Raporu
-
-</h1>
-
-<div style="
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
-margin-top:20px;
-">
-
-<div style="background:white;padding:18px;border-radius:18px;">
-<b>Toplam Apartman</b><br>
-<span style="font-size:28px;font-weight:800;">${data.length}</span>
-</div>
-
-<div style="background:white;padding:18px;border-radius:18px;">
-<b>Bu Ay Bakım</b><br>
-<span style="font-size:28px;font-weight:800;">${buAyBakim.length}</span>
-</div>
-
-<div style="background:white;padding:18px;border-radius:18px;">
-<b>Bu Ay Tahsilat</b><br>
-<span style="font-size:28px;font-weight:800;">${tahsilat} ₺</span>
-</div>
-
-<div style="background:white;padding:18px;border-radius:18px;">
-<b>Bekleyen Ödeme</b><br>
-<span style="font-size:28px;font-weight:800;">${bekleyenTutar} ₺</span>
-</div>
-
-<div style="background:white;padding:18px;border-radius:18px;">
-<b>Geciken Bakım</b><br>
-<span style="font-size:28px;font-weight:800;">${geciken.length}</span>
-</div>
-
-<div style="background:white;padding:18px;border-radius:18px;">
-<b>Teknik Notlu</b><br>
-<span style="font-size:28px;font-weight:800;">${notlu.length}</span>
-</div>
-
-</div>
-
-<div style="
-margin-top:22px;
-background:white;
-padding:20px;
-border-radius:18px;
-">
-
-<h2>Bakım Yapılanlar</h2>
-
-${buAyBakim.length ? buAyBakim.map(a=>`• ${a.ad} — ${a.bakimTarihi}`).join("<br>") : "Bu ay bakım kaydı yok."}
-
-</div>
-
-<div style="
-margin-top:18px;
-background:white;
-padding:20px;
-border-radius:18px;
-">
-
-<h2>Ödeme Alınanlar</h2>
-
-${buAyOdeme.length ? buAyOdeme.map(a=>`• ${a.ad} — ${a.ucret} ₺ — ${a.odemeTarihi}`).join("<br>") : "Bu ay ödeme kaydı yok."}
-
-</div>
-
-<div style="
-margin-top:18px;
-background:white;
-padding:20px;
-border-radius:18px;
-">
-
-<h2>Bekleyen Ödemeler</h2>
-
-${bekleyen.length ? bekleyen.map(a=>`• ${a.ad} — ${a.ucret} ₺`).join("<br>") : "Bekleyen ödeme yok."}
-
-</div>
-
-<div style="
-margin-top:18px;
-background:white;
-padding:20px;
-border-radius:18px;
-">
-
-<h2>Geciken Bakımlar</h2>
-
-${geciken.length ? geciken.map(a=>`• ${a.ad} — ${a.bakimGunu}`).join("<br>") : "Geciken bakım yok."}
-
-</div>
-
-<br><br>
-
-<button onclick="window.print()">
-PDF / Yazdır
-</button>
+<button class="printBtn" onclick="window.print()">PDF / Yazdır</button>
 
 </body>
+</html>
 
 `);
 
@@ -2802,12 +2745,14 @@ toast("Ay sonu raporu oluşturuldu");
 
 }
 
+
+
 function yedekle(){
 
 haptic("medium");
 
 let yedek = {
-surum:"1.0.1",
+surum:"1.1.0-pdf",
 olusturmaTarihi:new Date().toISOString(),
 apartmanlar:data,
 profil:{
