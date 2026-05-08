@@ -1,0 +1,3271 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+if(localStorage.getItem("tema")==="dark"){
+document.documentElement.classList.add("darkRoot");
+}
+</script>
+
+<title>AY ASANSÖR</title>
+
+<link rel="icon" type="image/png" href="https://i.imgur.com/jbOSWKN.png">
+<link rel="apple-touch-icon" href="https://i.imgur.com/jbOSWKN.png?v=2">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="AY ASANSÖR">
+
+<style>
+html.darkRoot{
+background:#0b0f17;
+}
+
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI";
+background:#f6f7fb;
+color:#111827;
+-webkit-tap-highlight-color:transparent;
+transition:background .25s ease,color .25s ease;
+}
+
+body.darkMode{
+background:#0b0f17;
+color:#f4f7fb;
+}
+
+/* LOADING SCREEN */
+
+#splash{
+position:fixed;
+inset:0;
+z-index:999999;
+background:#f6f7fb;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+transition:
+opacity .45s ease,
+visibility .45s ease;
+}
+
+html.darkRoot #splash{
+background:#0b0f17;
+}
+
+#splash.hide{
+opacity:0;
+visibility:hidden;
+}
+
+.splashWrap{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+}
+
+.elevatorBtn{
+width:96px;
+height:96px;
+border-radius:50%;
+background:
+radial-gradient(circle at 30% 25%,rgba(255,255,255,.18),transparent 28%),
+linear-gradient(145deg,#0f172a,#111827);
+box-shadow:
+inset 0 2px 8px rgba(255,255,255,.08),
+inset 0 -6px 18px rgba(0,0,0,.28),
+0 18px 40px rgba(0,0,0,.18);
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+animation:elevatorPulse 1.55s ease-in-out infinite;
+overflow:hidden;
+}
+
+.elevatorBtn:before{
+content:"";
+position:absolute;
+width:72px;
+height:72px;
+border-radius:50%;
+border:2px solid rgba(255,255,255,.16);
+box-shadow:
+inset 0 0 0 1px rgba(255,255,255,.04);
+}
+
+.elevatorBtn:after{
+content:"";
+position:absolute;
+width:44px;
+height:1px;
+background:rgba(255,255,255,.16);
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+}
+
+.callLight{
+position:absolute;
+width:16px;
+height:16px;
+border-radius:50%;
+background:#007aff;
+top:18px;
+right:24px;
+box-shadow:
+0 0 0 8px rgba(0,122,255,.12),
+0 0 28px rgba(0,122,255,.55);
+animation:callLightPulse 1.35s ease-in-out infinite;
+z-index:2;
+}
+
+.arrowUp,
+.arrowDown{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+color:white;
+font-size:18px;
+font-weight:900;
+line-height:1;
+text-shadow:0 2px 8px rgba(0,0,0,.25);
+z-index:3;
+}
+
+.arrowUp{
+top:25px;
+animation:callUpGlow 1.35s ease-in-out infinite;
+}
+
+.arrowDown{
+bottom:25px;
+animation:callDownSoft 1.35s ease-in-out infinite;
+}
+
+.splashBrand{
+margin-top:24px;
+font-size:26px;
+font-weight:900;
+letter-spacing:-.5px;
+color:#0f172a;
+}
+
+html.darkRoot .splashBrand{
+color:#f8fafc;
+}
+
+@keyframes elevatorPulse{
+0%,100%{
+transform:scale(1);
+box-shadow:
+inset 0 2px 8px rgba(255,255,255,.08),
+inset 0 -6px 18px rgba(0,0,0,.28),
+0 18px 40px rgba(0,0,0,.18);
+}
+50%{
+transform:scale(1.045);
+box-shadow:
+inset 0 2px 8px rgba(255,255,255,.1),
+inset 0 -6px 18px rgba(0,0,0,.24),
+0 22px 46px rgba(0,122,255,.22);
+}
+}
+
+@keyframes callUpGlow{
+0%,100%{
+opacity:1;
+transform:translateX(-50%) translateY(0) scale(1);
+text-shadow:0 0 12px rgba(0,122,255,.8);
+}
+50%{
+opacity:.55;
+transform:translateX(-50%) translateY(-4px) scale(1.08);
+text-shadow:0 0 22px rgba(0,122,255,1);
+}
+}
+
+@keyframes callDownSoft{
+0%,100%{opacity:.42;}
+50%{opacity:.18;}
+}
+
+@keyframes callLightPulse{
+0%,100%{transform:scale(1);opacity:1;}
+50%{transform:scale(1.18);opacity:.65;}
+}
+
+/* HEADER */
+
+.header{
+display:grid;
+grid-template-columns:44px 1fr 44px;
+align-items:center;
+gap:10px;
+padding:24px 20px 18px;
+font-size:25px;
+font-weight:800;
+letter-spacing:-.5px;
+}
+
+.headerBrand{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+}
+
+.headerThemeBtn{
+width:40px;
+height:40px;
+border-radius:15px;
+background:rgba(255,255,255,.78);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.8);
+box-shadow:
+0 8px 22px rgba(0,0,0,.06),
+inset 0 1px 1px rgba(255,255,255,.75);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+padding:0;
+margin:0;
+transition:
+transform .18s ease,
+background .25s ease,
+box-shadow .25s ease;
+}
+
+.headerThemeBtn:active{
+transform:scale(.92);
+}
+
+.miniElevatorLogo{
+width:40px;
+height:40px;
+border-radius:14px;
+background:
+radial-gradient(circle at 30% 25%,rgba(255,255,255,.16),transparent 28%),
+linear-gradient(145deg,#0f172a,#111827);
+position:relative;
+box-shadow:0 8px 18px rgba(0,0,0,.16);
+flex-shrink:0;
+}
+
+.miniElevatorLogo:before{
+content:"";
+position:absolute;
+width:28px;
+height:28px;
+border-radius:50%;
+border:1px solid rgba(255,255,255,.14);
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+}
+
+.miniElevatorLogo:after{
+content:"";
+position:absolute;
+width:18px;
+height:1px;
+background:rgba(255,255,255,.18);
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+}
+
+.miniUp,
+.miniDown{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+color:#fff;
+font-size:9px;
+font-weight:900;
+line-height:1;
+}
+
+.miniUp{top:9px;}
+.miniDown{bottom:9px;opacity:.55;}
+
+.container{
+padding:14px;
+padding-bottom:140px;
+}
+
+.searchRow{
+display:flex;
+gap:12px;
+align-items:center;
+margin-bottom:12px;
+}
+
+#arama{
+flex:1;
+padding:17px 18px;
+border:none;
+border-radius:24px;
+box-shadow:0 8px 24px rgba(0,0,0,0.045);
+font-size:16px;
+box-sizing:border-box;
+background:white;
+color:#111827;
+}
+
+.filterBtn{
+width:112px;
+height:56px;
+border-radius:22px;
+background:white;
+box-shadow:0 8px 24px rgba(0,0,0,0.045);
+color:#1d4ed8;
+font-weight:800;
+margin:0;
+}
+
+.filterPanel{
+display:none;
+gap:8px;
+overflow-x:auto;
+padding:4px 0 14px;
+white-space:nowrap;
+}
+
+.filterChip{
+width:auto;
+padding:10px 14px;
+border-radius:999px;
+background:white;
+color:#6b7280;
+box-shadow:0 6px 18px rgba(0,0,0,.04);
+font-size:13px;
+font-weight:800;
+margin:0;
+}
+
+.filterChip.active{
+background:#007aff;
+color:white;
+}
+
+.card{
+background:white;
+padding:16px;
+border-radius:22px;
+margin-top:12px;
+box-shadow:0 8px 28px rgba(0,0,0,0.045);
+}
+
+.formTitle{
+font-size:22px;
+font-weight:900;
+margin-bottom:14px;
+letter-spacing:-.4px;
+}
+
+input,
+textarea{
+width:100%;
+padding:13px;
+border-radius:14px;
+border:1px solid #e5e7eb;
+margin-bottom:9px;
+box-sizing:border-box;
+font-size:15px;
+font-family:inherit;
+background:white;
+color:#111827;
+}
+
+textarea{
+resize:none;
+min-height:90px;
+}
+
+button{
+width:100%;
+padding:13px;
+border:none;
+border-radius:15px;
+margin-top:7px;
+font-weight:700;
+font-size:15px;
+transition:
+transform .16s ease,
+opacity .16s ease,
+box-shadow .16s ease;
+}
+
+button:active{
+transform:scale(.96);
+opacity:.88;
+}
+
+.green{background:#34c759;color:white;}
+.blue{background:#007aff;color:white;}
+.red{background:#ff3b30;color:white;}
+.gray{background:#e5e5ea;color:#111;}
+.done{opacity:.72;}
+
+/* PREMIUM STATS - emoji yerine sade ikon sistemi */
+
+.statGrid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin:12px 0 24px;
+}
+
+.statCard{
+background:rgba(255,255,255,.78);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.75);
+border-radius:26px;
+padding:15px 8px;
+min-height:106px;
+box-shadow:
+0 14px 34px rgba(15,23,42,.055),
+inset 0 1px 1px rgba(255,255,255,.7);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+transition:
+transform .18s ease,
+box-shadow .18s ease,
+background .25s ease;
+}
+
+.statCard:active{
+transform:scale(.97);
+box-shadow:
+0 8px 22px rgba(15,23,42,.045),
+inset 0 1px 1px rgba(255,255,255,.65);
+}
+
+.statIcon{
+width:38px;
+height:38px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:8px;
+position:relative;
+}
+
+.statIcon:before,
+.statIcon:after{
+content:"";
+position:absolute;
+}
+
+.iconBuilding.statBlue,
+.iconTool.statGreen,
+.iconCalendar.statOrange,
+.iconMoney.statPurple{
+font-size:0;
+}
+
+.statBlue{background:#eef4ff;color:#007aff;}
+.statGreen{background:#eaf8f0;color:#22c55e;}
+.statOrange{background:#fff5e6;color:#ff9500;}
+.statPurple{background:#f4edff;color:#8b5cf6;}
+
+.iconBuilding:before{
+width:18px;
+height:22px;
+border:2px solid currentColor;
+border-radius:4px;
+bottom:8px;
+}
+.iconBuilding:after{
+width:3px;
+height:3px;
+background:currentColor;
+box-shadow:
+6px 0 currentColor,
+0 6px currentColor,
+6px 6px currentColor,
+0 12px currentColor,
+6px 12px currentColor;
+top:10px;
+left:12px;
+}
+
+.iconTool:before{
+width:20px;
+height:4px;
+background:currentColor;
+border-radius:999px;
+transform:rotate(-40deg);
+}
+.iconTool:after{
+width:8px;
+height:8px;
+border:2px solid currentColor;
+border-radius:50%;
+right:9px;
+top:8px;
+}
+
+.iconCalendar:before{
+width:21px;
+height:20px;
+border:2px solid currentColor;
+border-radius:5px;
+bottom:7px;
+}
+.iconCalendar:after{
+width:15px;
+height:2px;
+background:currentColor;
+top:14px;
+left:11px;
+box-shadow:0 7px currentColor;
+}
+
+.iconMoney:before{
+width:22px;
+height:14px;
+border:2px solid currentColor;
+border-radius:5px;
+}
+.iconMoney:after{
+content:"₺";
+font-size:15px;
+font-weight:900;
+color:currentColor;
+top:7px;
+left:14px;
+}
+
+.statNumber{
+font-size:25px;
+font-weight:800;
+letter-spacing:-.4px;
+}
+
+.statLabel{
+font-size:12px;
+color:#6b7280;
+margin-top:2px;
+line-height:1.2;
+}
+
+.sectionHead{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin:8px 2px 14px;
+}
+
+.sectionHead h2{
+margin:0;
+font-size:22px;
+letter-spacing:-.3px;
+}
+
+/* APARTMENT CARDS */
+
+.aptCard{
+background:white;
+border-radius:28px;
+padding:16px;
+margin-bottom:14px;
+box-shadow:0 8px 28px rgba(0,0,0,.045);
+display:grid;
+grid-template-columns:72px 1fr 112px 18px;
+gap:12px;
+align-items:center;
+transition:
+transform .18s cubic-bezier(.2,.8,.2,1),
+opacity .18s ease,
+box-shadow .18s ease;
+cursor:pointer;
+animation:cardRise .36s cubic-bezier(.2,.8,.2,1) both;
+animation-delay:calc(var(--i,0) * 45ms);
+will-change:transform, opacity;
+}
+
+.aptCard:active{
+transform:scale(.975);
+opacity:.9;
+box-shadow:0 4px 18px rgba(0,0,0,.04);
+}
+
+@keyframes cardRise{
+from{
+opacity:0;
+transform:translateY(16px) scale(.985);
+filter:blur(1px);
+}
+to{
+opacity:1;
+transform:translateY(0) scale(1);
+filter:blur(0);
+}
+}
+
+.aptIcon{
+width:68px;
+height:68px;
+border-radius:22px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+}
+
+.aptIcon:before{
+content:"";
+width:28px;
+height:34px;
+border:2px solid currentColor;
+border-radius:7px;
+position:absolute;
+bottom:15px;
+}
+
+.aptIcon:after{
+content:"";
+width:4px;
+height:4px;
+background:currentColor;
+border-radius:1px;
+position:absolute;
+top:20px;
+left:24px;
+box-shadow:
+9px 0 currentColor,
+0 9px currentColor,
+9px 9px currentColor,
+0 18px currentColor,
+9px 18px currentColor;
+}
+
+.c0{background:#eef4ff;color:#007aff;}
+.c1{background:#eaf8f0;color:#22c55e;}
+.c2{background:#f4edff;color:#8b5cf6;}
+.c3{background:#fff2e8;color:#ff7a00;}
+.c4{background:#ffeef5;color:#ff2d75;}
+
+.aptName{
+font-size:20px;
+font-weight:800;
+letter-spacing:-.3px;
+margin-bottom:8px;
+}
+
+.aptMeta{
+font-size:14px;
+color:#6b7280;
+line-height:1.65;
+}
+
+.metaLine{
+display:flex;
+align-items:center;
+gap:7px;
+}
+
+.miniMetaIcon{
+width:16px;
+height:16px;
+border-radius:6px;
+border:1.8px solid currentColor;
+opacity:.75;
+display:inline-block;
+position:relative;
+flex-shrink:0;
+}
+
+.miniMetaIcon.person:before{
+content:"";
+position:absolute;
+width:5px;
+height:5px;
+border-radius:50%;
+background:currentColor;
+left:4px;
+top:2px;
+}
+.miniMetaIcon.person:after{
+content:"";
+position:absolute;
+width:9px;
+height:5px;
+border-radius:999px 999px 2px 2px;
+background:currentColor;
+left:2.5px;
+bottom:2px;
+}
+.miniMetaIcon.phone:before{
+content:"";
+position:absolute;
+width:6px;
+height:10px;
+border:1.8px solid currentColor;
+border-radius:3px;
+left:3px;
+top:1px;
+transform:rotate(-20deg);
+}
+
+.aptRight{
+text-align:right;
+font-size:13px;
+color:#6b7280;
+line-height:1.65;
+}
+
+.badge{
+display:inline-block;
+padding:7px 10px;
+border-radius:999px;
+font-size:12px;
+font-weight:800;
+margin-bottom:8px;
+white-space:nowrap;
+}
+
+.badgeGreen{background:#eaf8f0;color:#22a859;}
+.badgeOrange{background:#fff4e8;color:#ff7a00;}
+.badgeBlue{background:#eaf2ff;color:#007aff;}
+.badgeGray{background:#f1f1f1;color:#737373;}
+
+.arrow{
+font-size:28px;
+color:#a3a3a3;
+}
+
+.emptyBox{
+background:white;
+border-radius:28px;
+padding:24px;
+color:#777;
+box-shadow:0 8px 28px rgba(0,0,0,.045);
+}
+
+.detailHero{
+background:white;
+border-radius:30px;
+padding:20px;
+box-shadow:0 8px 28px rgba(0,0,0,.045);
+}
+
+.detailTopBtn{
+background:#e5e5ea;
+color:#007aff;
+margin-bottom:18px;
+}
+
+.detailTitle{
+font-size:30px;
+font-weight:900;
+letter-spacing:-.5px;
+margin-bottom:18px;
+}
+
+.detailLine{
+font-size:18px;
+line-height:1.8;
+color:#555;
+}
+
+.detailLine a{
+color:#007aff;
+text-decoration:none;
+font-weight:700;
+}
+
+.detailInfoGrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin:18px 0 18px;
+}
+
+.infoCard{
+background:#f7f7fa;
+border:1px solid #ececf1;
+border-radius:18px;
+padding:14px 16px;
+box-sizing:border-box;
+box-shadow:
+inset 0 1px 0 rgba(255,255,255,.75),
+0 6px 18px rgba(15,23,42,.035);
+}
+
+.infoLabel{
+display:block;
+font-size:12px;
+font-weight:800;
+color:#8e8e93;
+margin-bottom:6px;
+letter-spacing:.25px;
+text-transform:uppercase;
+}
+
+.infoValue{
+display:block;
+font-size:18px;
+font-weight:800;
+color:#111827;
+line-height:1.3;
+word-break:break-word;
+}
+
+.infoValue.small{
+font-size:16px;
+font-weight:700;
+}
+
+.infoPhone{
+color:#007aff;
+text-decoration:none;
+font-weight:800;
+}
+
+.detailNote{
+margin-top:14px;
+background:#f7f7f7;
+border-radius:18px;
+padding:15px;
+line-height:1.55;
+color:#555;
+}
+
+.detailGrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin-top:18px;
+}
+
+/* TABBAR - azaltılmış emoji */
+
+.tabbar{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+width:320px;
+height:74px;
+background:rgba(255,255,255,0.76);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+border-radius:34px;
+display:flex;
+align-items:center;
+justify-content:space-around;
+box-shadow:
+0 12px 35px rgba(0,0,0,0.12),
+inset 0 1px 1px rgba(255,255,255,0.65);
+z-index:9999;
+border:1px solid rgba(255,255,255,0.6);
+}
+
+.tabItem{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+font-size:12px;
+color:#7b7b7b;
+width:90px;
+font-weight:700;
+transition:
+transform .16s ease,
+opacity .16s ease;
+}
+
+.tabItem:active{
+transform:scale(.94);
+opacity:.75;
+}
+
+.tabIcon{
+width:24px;
+height:24px;
+margin-bottom:3px;
+position:relative;
+}
+
+.tabIconBuilding:before{
+content:"";
+position:absolute;
+width:16px;
+height:19px;
+border:2px solid currentColor;
+border-radius:4px;
+left:3px;
+top:2px;
+}
+.tabIconBuilding:after{
+content:"";
+position:absolute;
+width:3px;
+height:3px;
+background:currentColor;
+left:8px;
+top:7px;
+box-shadow:
+6px 0 currentColor,
+0 6px currentColor,
+6px 6px currentColor;
+}
+
+.tabIconProfile:before{
+content:"";
+position:absolute;
+width:8px;
+height:8px;
+border-radius:50%;
+border:2px solid currentColor;
+left:6px;
+top:2px;
+}
+.tabIconProfile:after{
+content:"";
+position:absolute;
+width:18px;
+height:9px;
+border:2px solid currentColor;
+border-radius:999px 999px 4px 4px;
+left:2px;
+bottom:2px;
+}
+
+.activeTab{
+color:#007aff;
+font-weight:800;
+}
+
+.middleButton{
+position:absolute;
+top:-26px;
+left:50%;
+transform:translateX(-50%);
+width:68px;
+height:68px;
+border-radius:50%;
+background:#007aff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+color:white;
+font-weight:300;
+box-shadow:
+0 10px 25px rgba(0,122,255,0.36),
+0 0 0 7px rgba(255,255,255,0.92);
+transition:
+transform .18s ease,
+box-shadow .18s ease;
+}
+
+.middleButton:active{
+transform:translateX(-50%) scale(.92);
+box-shadow:
+0 6px 18px rgba(0,122,255,0.28),
+0 0 0 7px rgba(255,255,255,0.92);
+}
+
+#profilPanel{
+padding-bottom:120px;
+animation:fadeIn .25s ease;
+}
+
+.coverArea{
+position:relative;
+height:178px;
+border-radius:30px;
+overflow:hidden;
+margin-top:8px;
+background:#ddd;
+box-shadow:0 10px 30px rgba(0,0,0,0.075);
+}
+
+.coverPhoto{
+width:100%;
+height:100%;
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-image:url('https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop');
+}
+
+.coverPhoto:after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(15,23,42,.12));
+pointer-events:none;
+}
+
+.coverEdit{
+position:absolute;
+right:14px;
+bottom:14px;
+width:44px;
+height:44px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(255,255,255,0.75);
+backdrop-filter:blur(12px);
+font-size:18px;
+}
+
+.profileWrap{
+display:flex;
+justify-content:center;
+margin-top:-46px;
+position:relative;
+z-index:5;
+}
+
+.profilePhoto{
+width:96px;
+height:96px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid white;
+background:white;
+box-shadow:0 10px 25px rgba(0,0,0,0.11);
+transition:transform .18s ease;
+}
+
+.profilePhoto:active{
+transform:scale(.96);
+}
+
+.profileContent{
+padding:12px 18px 18px;
+text-align:center;
+}
+
+.profileNameInput{
+font-size:31px !important;
+font-weight:900;
+border:none !important;
+background:none !important;
+text-align:center;
+margin-bottom:0;
+padding:0;
+letter-spacing:-.7px;
+}
+
+.profileJobInput{
+font-size:15px !important;
+color:#6b7280;
+border:none !important;
+background:none !important;
+text-align:center;
+padding:0;
+margin-top:-5px;
+font-weight:700;
+letter-spacing:.2px;
+}
+
+.profileBio{
+margin-top:16px;
+background:rgba(255,255,255,.86);
+border:1px solid rgba(229,231,235,.9);
+border-radius:22px;
+padding:14px 16px;
+line-height:1.45;
+box-shadow:
+0 8px 24px rgba(15,23,42,.045),
+inset 0 1px 0 rgba(255,255,255,.75);
+min-height:66px;
+}
+
+.profileStats{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+margin-top:18px;
+}
+
+.profileStatCard{
+background:rgba(255,255,255,.82);
+border:1px solid rgba(229,231,235,.9);
+border-radius:22px;
+padding:16px 10px;
+box-shadow:
+0 10px 26px rgba(15,23,42,.045),
+inset 0 1px 0 rgba(255,255,255,.75);
+}
+
+.profileStats b{
+font-size:25px;
+font-weight:900;
+letter-spacing:-.4px;
+}
+
+.profileStats span{
+display:block;
+color:#777;
+font-size:13px;
+margin-top:4px;
+font-weight:700;
+}
+
+.profileBox{
+margin-top:24px;
+background:white;
+border-radius:28px;
+padding:18px;
+box-shadow:0 8px 28px rgba(0,0,0,0.045);
+text-align:left;
+}
+
+.profileBox h3{
+margin:0 0 8px;
+font-size:20px;
+letter-spacing:-.3px;
+}
+
+.profileBox p{
+margin:0 0 14px;
+color:#6b7280;
+font-size:14px;
+line-height:1.45;
+}
+
+.profileFooter{
+margin-top:28px;
+padding:24px 18px 120px;
+text-align:center;
+color:#8a8a8e;
+font-size:13px;
+line-height:1.6;
+}
+
+.profileFooterLogo{
+width:34px;
+height:34px;
+border-radius:10px;
+margin-bottom:10px;
+opacity:.85;
+}
+
+.profileFooterTitle{
+font-size:15px;
+font-weight:800;
+color:#555;
+letter-spacing:.2px;
+}
+
+.profileFooterSlogan{
+margin-top:4px;
+color:#777;
+}
+
+.profileFooterSmall{
+margin-top:12px;
+font-size:12px;
+color:#9b9b9f;
+}
+
+.toast{
+position:fixed;
+left:50%;
+bottom:112px;
+transform:translateX(-50%) translateY(20px);
+background:rgba(20,20,20,.86);
+color:white;
+padding:13px 18px;
+border-radius:999px;
+font-size:14px;
+font-weight:800;
+z-index:99999;
+opacity:0;
+pointer-events:none;
+backdrop-filter:blur(12px);
+transition:.25s;
+box-shadow:0 10px 30px rgba(0,0,0,.18);
+}
+
+.toast.show{
+opacity:1;
+transform:translateX(-50%) translateY(0);
+}
+
+.screenInRight{animation:screenInRight .32s cubic-bezier(.2,.8,.2,1) both;}
+.screenInLeft{animation:screenInLeft .28s cubic-bezier(.2,.8,.2,1) both;}
+.screenFadeUp{animation:screenFadeUp .28s cubic-bezier(.2,.8,.2,1) both;}
+.screenSoft{animation:screenSoft .22s ease both;}
+
+@keyframes screenInRight{
+from{opacity:0;transform:translateX(34px) scale(.985);filter:blur(2px);}
+to{opacity:1;transform:translateX(0) scale(1);filter:blur(0);}
+}
+
+@keyframes screenInLeft{
+from{opacity:0;transform:translateX(-18px) scale(.99);filter:blur(1px);}
+to{opacity:1;transform:translateX(0) scale(1);filter:blur(0);}
+}
+
+@keyframes screenFadeUp{
+from{opacity:0;transform:translateY(14px) scale(.99);filter:blur(1px);}
+to{opacity:1;transform:translateY(0) scale(1);filter:blur(0);}
+}
+
+@keyframes screenSoft{
+from{opacity:0;transform:scale(.992);}
+to{opacity:1;transform:scale(1);}
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px);}
+to{opacity:1;transform:none;}
+}
+
+/* DARK MODE */
+
+body.darkMode .headerThemeBtn{
+background:rgba(21,27,38,.78);
+border-color:rgba(255,255,255,.08);
+box-shadow:
+0 10px 26px rgba(0,0,0,.28),
+inset 0 1px 1px rgba(255,255,255,.08);
+}
+
+body.darkMode #arama,
+body.darkMode .filterBtn,
+body.darkMode .filterChip,
+body.darkMode .card,
+body.darkMode .aptCard,
+body.darkMode .emptyBox,
+body.darkMode .detailHero,
+body.darkMode .profileBio,
+body.darkMode .profileBox,
+body.darkMode input,
+body.darkMode textarea{
+background:#151b26;
+color:#f8fafc;
+border-color:#263241;
+box-shadow:0 8px 28px rgba(0,0,0,.22);
+}
+
+body.darkMode .statCard{
+background:rgba(21,27,38,.78);
+border-color:rgba(255,255,255,.08);
+box-shadow:
+0 14px 34px rgba(0,0,0,.26),
+inset 0 1px 1px rgba(255,255,255,.06);
+}
+
+body.darkMode input::placeholder,
+body.darkMode textarea::placeholder{
+color:#697386;
+}
+
+body.darkMode .tabbar{
+background:rgba(21,27,38,.76);
+border-color:rgba(255,255,255,.08);
+box-shadow:
+0 12px 35px rgba(0,0,0,.28),
+inset 0 1px 1px rgba(255,255,255,.08);
+}
+
+body.darkMode .aptMeta,
+body.darkMode .aptRight,
+body.darkMode .statLabel,
+body.darkMode .detailLine,
+body.darkMode .detailNote,
+body.darkMode .profileBox p{
+color:#a7b0bf;
+}
+
+body.darkMode .detailNote{
+background:#0f141d;
+}
+
+body.darkMode .infoCard{
+background:#0f141d;
+border-color:#263241;
+box-shadow:
+inset 0 1px 0 rgba(255,255,255,.04),
+0 8px 22px rgba(0,0,0,.18);
+}
+
+body.darkMode .infoLabel{
+color:#7c8797;
+}
+
+body.darkMode .infoValue{
+color:#f8fafc;
+}
+
+body.darkMode .infoPhone{
+color:#60a5fa;
+}
+
+body.darkMode .gray,
+body.darkMode .detailTopBtn{
+background:#263241;
+color:#f8fafc;
+}
+
+body.darkMode .profileStatCard{
+background:#151b26;
+border-color:#263241;
+box-shadow:0 8px 28px rgba(0,0,0,.22);
+}
+
+body.darkMode .profileBio{
+background:#151b26;
+border-color:#263241;
+}
+
+body.darkMode .profileJobInput{
+color:#a7b0bf;
+}
+
+body.darkMode .profileFooterTitle{
+color:#d1d5db;
+}
+
+body.darkMode .profileFooterSlogan,
+body.darkMode .profileFooterSmall{
+color:#7c8797;
+}
+
+body.darkMode .coverEdit{
+background:rgba(21,27,38,.75);
+color:#f8fafc;
+}
+
+@media(max-width:430px){
+.coverArea{height:162px;border-radius:28px;}
+.profilePhoto{width:90px;height:90px;}
+.profileWrap{margin-top:-43px;}
+.profileNameInput{font-size:29px !important;}
+.profileStats{gap:10px;}
+.profileStatCard{padding:14px 8px;}
+
+.detailInfoGrid{grid-template-columns:1fr 1fr;gap:9px;}
+.infoCard{padding:12px 12px;border-radius:16px;}
+.infoValue{font-size:16px;}
+.infoValue.small{font-size:14px;}
+.statGrid{gap:8px;}
+.statCard{padding:12px 6px;}
+.statNumber{font-size:22px;}
+.statLabel{font-size:11px;}
+.aptCard{grid-template-columns:64px 1fr 100px 14px;gap:10px;padding:14px;}
+.aptIcon{width:60px;height:60px;border-radius:20px;}
+.aptName{font-size:18px;}
+.aptMeta,.aptRight{font-size:13px;}
+.badge{font-size:11px;padding:6px 9px;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="splash">
+<div class="splashWrap">
+<div class="elevatorBtn">
+<span class="callLight"></span>
+<span class="arrowUp">▲</span>
+<span class="arrowDown">▼</span>
+</div>
+<div class="splashBrand">AY ASANSÖR</div>
+</div>
+</div>
+
+<div class="header">
+
+<div></div>
+
+<div class="headerBrand">
+<div class="miniElevatorLogo">
+<span class="miniUp">▲</span>
+<span class="miniDown">▼</span>
+</div>
+<span>AY ASANSÖR</span>
+</div>
+
+<button
+id="headerThemeBtn"
+class="headerThemeBtn"
+onclick="temaDegistir()">
+
+<span id="headerThemeIcon">🌙</span>
+
+</button>
+
+</div>
+
+<div class="container">
+
+<div id="searchArea" class="searchRow">
+<input id="arama" placeholder="Apartman ara..." onkeyup="goster()">
+<button class="filterBtn" onclick="toggleFilter()">Filtrele</button>
+</div>
+
+<div id="filterPanel" class="filterPanel">
+
+<button class="filterChip active" data-filter="all" onclick="setFilter('all')">Tümü</button>
+<button class="filterChip" data-filter="unpaid" onclick="setFilter('unpaid')">Ödeme Bekleyen</button>
+<button class="filterChip" data-filter="today" onclick="setFilter('today')">Bugün Bakım</button>
+<button class="filterChip" data-filter="overdue" onclick="setFilter('overdue')">Geciken</button>
+<button class="filterChip" data-filter="done" onclick="setFilter('done')">Bakım Yapılan</button>
+
+</div>
+
+<div id="formBox" class="card" style="display:none">
+
+<div id="formTitle" class="formTitle">Yeni Apartman Ekle</div>
+
+<input id="ad" placeholder="Apartman adı">
+<input id="yonetici" placeholder="Yönetici">
+<input id="tel" placeholder="Telefon">
+<input id="ucret" placeholder="Ücret">
+<input type="date" id="bakimGunu">
+<textarea id="not" placeholder="Teknik not..."></textarea>
+
+<button class="green" onclick="kaydetApartman()">Kaydet</button>
+
+</div>
+
+<div id="liste"></div>
+
+<div id="detayPanel" style="display:none"></div>
+
+<div id="profilPanel" style="display:none">
+
+<div class="coverArea">
+
+<input
+type="file"
+id="coverInput"
+accept="image/*"
+style="
+position:absolute;
+opacity:0;
+width:1px;
+height:1px;
+">
+
+<div id="coverPhoto" class="coverPhoto"></div>
+
+<label for="coverInput" class="coverEdit">📷</label>
+
+</div>
+
+<div class="profileWrap">
+
+<input type="file" id="profileInput" accept="image/*" hidden>
+
+<img
+id="profilePhoto"
+class="profilePhoto"
+src="https://i.imgur.com/jbOSWKN.png"
+onclick="profileInput.click()">
+
+</div>
+
+<div class="profileContent">
+
+<input
+id="profilAd"
+class="profileNameInput"
+placeholder="İsim Soyisim"
+value="Uğur AY">
+
+<input
+id="profilFirma"
+class="profileJobInput"
+placeholder="Firma"
+value="AY ASANSÖR">
+
+<textarea
+id="profilBio"
+class="profileBio"
+placeholder="Bilgi yaz...">Asansör bakım • montaj • servis
+Kütahya / Tavşanlı</textarea>
+
+<div class="profileStats">
+
+<div class="profileStatCard">
+<b id="toplamApartman">0</b>
+<span>Apartman</span>
+</div>
+
+<div class="profileStatCard">
+<b id="toplamKazanc">0 ₺</b>
+<span>Kazanç</span>
+</div>
+
+</div>
+
+<div class="profileBox">
+
+<h3>Ay Sonu Raporu</h3>
+
+<p>
+Bu ay yapılan bakımları, alınan ödemeleri, bekleyen ödemeleri ve geciken işleri PDF olarak görüntüleyebilirsin.
+</p>
+
+<button class="blue" onclick="aySonuRaporu()">
+Ay Sonu Raporu Oluştur
+</button>
+
+</div>
+
+<div class="profileBox">
+
+<h3>Veri Yedekleme</h3>
+
+<p>
+Apartman kayıtlarını, ödeme/bakım bilgilerini, teknik notları ve profil bilgilerini dosya olarak saklayabilirsin.
+</p>
+
+<button class="blue" onclick="yedekle()">
+Verileri Yedekle
+</button>
+
+<button class="gray" onclick="document.getElementById('yedekInput').click()">
+Yedekten Geri Yükle
+</button>
+
+<input
+type="file"
+id="yedekInput"
+accept=".json,application/json"
+style="display:none"
+onchange="yedektenYukle(event)">
+
+</div>
+
+<div class="profileFooter">
+
+<img
+src="https://i.imgur.com/jbOSWKN.png"
+class="profileFooterLogo">
+
+<div class="profileFooterTitle">
+AY ASANSÖR
+</div>
+
+<div class="profileFooterSlogan">
+Güvenli yükseliş, düzenli bakım.
+</div>
+
+<div class="profileFooterSmall">
+© 2026 AY ASANSÖR. Tüm hakları saklıdır.<br>
+Uğur AY • Teknik Servis<br>
+Kütahya / Tavşanlı
+</div>
+
+<div class="profileFooterSmall">
+Bu uygulama AY ASANSÖR servis kayıtlarını takip etmek için hazırlanmıştır.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="tabbar">
+
+<div class="tabItem activeTab" onclick="anaSayfa()">
+<div class="tabIcon tabIconBuilding"></div>
+<div class="tabText">Apartmanlar</div>
+</div>
+
+<div class="middleButton" onclick="formAc()">+</div>
+
+<div class="tabItem" onclick="profilAc()">
+<div class="tabIcon tabIconProfile"></div>
+<div class="tabText">Profil</div>
+</div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+
+let data =
+JSON.parse(
+localStorage.getItem("apartmanlar")
+) || [];
+
+let editIndex = null;
+let aktifDetay = null;
+let aktifFiltre = "all";
+
+function hideSplash(){
+
+const splash = document.getElementById("splash");
+
+if(!splash || splash.dataset.hidden === "1"){
+return;
+}
+
+splash.dataset.hidden = "1";
+splash.classList.add("hide");
+
+setTimeout(()=>{
+if(splash){
+splash.style.display = "none";
+}
+},500);
+
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+setTimeout(hideSplash,1800);
+});
+
+window.addEventListener("load",()=>{
+setTimeout(hideSplash,800);
+});
+
+setTimeout(hideSplash,2600);
+
+function animateIn(el, cls){
+
+if(!el) return;
+
+el.classList.remove(
+"screenInRight",
+"screenInLeft",
+"screenFadeUp",
+"screenSoft"
+);
+
+void el.offsetWidth;
+
+el.classList.add(cls);
+
+}
+
+function haptic(type="light"){
+
+if(!navigator.vibrate){
+return;
+}
+
+if(type === "light"){
+navigator.vibrate(8);
+return;
+}
+
+if(type === "medium"){
+navigator.vibrate(18);
+return;
+}
+
+if(type === "success"){
+navigator.vibrate([10,35,10]);
+return;
+}
+
+if(type === "warning"){
+navigator.vibrate([25,40,25]);
+return;
+}
+
+navigator.vibrate(10);
+
+}
+
+function toast(mesaj){
+
+let t = document.getElementById("toast");
+
+t.innerText = mesaj;
+t.classList.add("show");
+
+setTimeout(()=>{
+t.classList.remove("show");
+},1800);
+
+}
+
+function temaUygula(){
+
+let tema =
+localStorage.getItem("tema") || "light";
+
+let dark =
+tema === "dark";
+
+document.body.classList.toggle("darkMode",dark);
+document.documentElement.classList.toggle("darkRoot",dark);
+
+let headerIcon =
+document.getElementById("headerThemeIcon");
+
+if(headerIcon){
+
+headerIcon.innerText =
+dark ? "☀️" : "🌙";
+
+}
+
+}
+
+function temaDegistir(){
+
+haptic("light");
+
+let mevcut =
+localStorage.getItem("tema") || "light";
+
+let yeni =
+mevcut === "dark" ? "light" : "dark";
+
+localStorage.setItem("tema",yeni);
+
+temaUygula();
+
+toast(
+yeni === "dark"
+? "Dark"
+: "Light"
+);
+
+}
+
+function bugun(){
+return new Date().toLocaleDateString("tr-TR");
+}
+
+function bugunISO(){
+return new Date().toISOString().split("T")[0];
+}
+
+function toplamTahsilat(){
+return data.reduce((toplam,a)=>{
+return toplam + (a.odemeTarihi ? Number(a.ucret || 0) : 0);
+},0);
+}
+
+function tarihBuAyMi(tarih){
+
+if(!tarih) return false;
+
+let simdi = new Date();
+let ay = simdi.getMonth() + 1;
+let yil = simdi.getFullYear();
+
+let parca = tarih.split(".");
+
+if(parca.length < 3) return false;
+
+let tAy = Number(parca[1]);
+let tYil = Number(parca[2]);
+
+return tAy === ay && tYil === yil;
+
+}
+
+function ayAdi(){
+
+let aylar = [
+"Ocak",
+"Şubat",
+"Mart",
+"Nisan",
+"Mayıs",
+"Haziran",
+"Temmuz",
+"Ağustos",
+"Eylül",
+"Ekim",
+"Kasım",
+"Aralık"
+];
+
+let d = new Date();
+
+return aylar[d.getMonth()] + " " + d.getFullYear();
+
+}
+
+function kaydet(){
+localStorage.setItem(
+"apartmanlar",
+JSON.stringify(data)
+);
+goster();
+}
+
+function toggleFilter(){
+
+haptic("light");
+
+let panel = document.getElementById("filterPanel");
+
+panel.style.display =
+panel.style.display === "flex" ? "none" : "flex";
+
+animateIn(panel,"screenFadeUp");
+
+}
+
+function setFilter(f){
+
+haptic("light");
+
+aktifFiltre = f;
+
+document.querySelectorAll(".filterChip").forEach(btn=>{
+btn.classList.remove("active");
+});
+
+document.querySelector(`[data-filter="${f}"]`).classList.add("active");
+
+goster();
+
+}
+
+function filtreKontrol(a){
+
+if(aktifFiltre === "all"){
+return true;
+}
+
+if(aktifFiltre === "unpaid"){
+return !a.odemeTarihi;
+}
+
+if(aktifFiltre === "today"){
+return a.bakimGunu === bugunISO();
+}
+
+if(aktifFiltre === "overdue"){
+return a.bakimGunu &&
+a.bakimGunu < bugunISO() &&
+!a.bakimTarihi;
+}
+
+if(aktifFiltre === "done"){
+return !!a.bakimTarihi;
+}
+
+return true;
+
+}
+
+function formAc(){
+
+haptic("medium");
+
+searchArea.style.display="flex";
+profilPanel.style.display="none";
+detayPanel.style.display="none";
+liste.style.display="block";
+
+if(formBox.style.display=="none"){
+
+formTitle.innerText =
+editIndex === null ? "Yeni Apartman Ekle" : "Apartman Bilgilerini Düzenle";
+
+formBox.style.display="block";
+
+animateIn(formBox,"screenFadeUp");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}else{
+
+formBox.style.display="none";
+
+}
+
+}
+
+function kaydetApartman(){
+
+haptic("success");
+
+if(editIndex===null){
+
+data.push({
+ad: ad.value,
+yonetici: yonetici.value,
+tel: tel.value,
+ucret: Number(ucret.value)||0,
+bakimGunu: bakimGunu.value,
+not: not.value || "",
+odemeTarihi:"",
+bakimTarihi:"",
+kayitlar:[]
+});
+
+toast("Apartman kaydedildi");
+
+}else{
+
+data[editIndex].ad = ad.value;
+data[editIndex].yonetici = yonetici.value;
+data[editIndex].tel = tel.value;
+data[editIndex].ucret = Number(ucret.value)||0;
+data[editIndex].bakimGunu = bakimGunu.value;
+data[editIndex].not = not.value || "";
+
+toast("Apartman güncellendi");
+
+}
+
+ad.value="";
+yonetici.value="";
+tel.value="";
+ucret.value="";
+bakimGunu.value="";
+not.value="";
+
+editIndex=null;
+formTitle.innerText = "Yeni Apartman Ekle";
+formBox.style.display="none";
+
+kaydet();
+
+animateIn(liste,"screenFadeUp");
+
+}
+
+function durumBilgisi(a){
+
+let durum = "Beklemede";
+let badgeClass = "badgeGray";
+
+if(a.bakimTarihi){
+durum = "Bakım Yapıldı";
+badgeClass = "badgeGreen";
+}
+
+if(a.bakimGunu && a.bakimGunu < bugunISO() && !a.bakimTarihi){
+durum = "Gecikmiş";
+badgeClass = "badgeOrange";
+}
+
+if(a.bakimGunu && a.bakimGunu == bugunISO()){
+durum = "Bakım Günü";
+badgeClass = "badgeBlue";
+}
+
+return {
+durum,
+badgeClass
+};
+
+}
+
+function goster(){
+
+if(profilPanel.style.display=="block") return;
+
+searchArea.style.display="flex";
+liste.style.display="block";
+detayPanel.style.display="none";
+
+let aramaMetni = arama.value.toLowerCase();
+
+let toplam =
+toplamTahsilat();
+
+let bugunCount = data.filter(x => x.bakimGunu === bugunISO()).length;
+
+let gecikenCount = data.filter(x =>
+x.bakimGunu &&
+x.bakimGunu < bugunISO() &&
+!x.bakimTarihi
+).length;
+
+let filtreli =
+data
+.map((a,i)=>({a,i}))
+.filter(item=>{
+let a = item.a;
+
+let aramaUygun =
+!aramaMetni ||
+(a.ad || "").toLowerCase().includes(aramaMetni) ||
+(a.yonetici || "").toLowerCase().includes(aramaMetni) ||
+(a.tel || "").toLowerCase().includes(aramaMetni) ||
+(a.not || "").toLowerCase().includes(aramaMetni);
+
+return aramaUygun && filtreKontrol(a);
+
+});
+
+let h = `
+
+<div class="statGrid">
+
+<div class="statCard">
+<div class="statIcon iconBuilding statBlue"></div>
+<div class="statNumber">${data.length}</div>
+<div class="statLabel">Apartman</div>
+</div>
+
+<div class="statCard">
+<div class="statIcon iconTool statGreen"></div>
+<div class="statNumber">${bugunCount}</div>
+<div class="statLabel">Bakım Bugün</div>
+</div>
+
+<div class="statCard">
+<div class="statIcon iconCalendar statOrange"></div>
+<div class="statNumber">${gecikenCount}</div>
+<div class="statLabel">Geciken</div>
+</div>
+
+<div class="statCard">
+<div class="statIcon iconMoney statPurple"></div>
+<div class="statNumber">${toplam} ₺</div>
+<div class="statLabel">Tahsilat</div>
+</div>
+
+</div>
+
+<div class="sectionHead">
+<h2>Apartmanlarım (${filtreli.length})</h2>
+</div>
+
+`;
+
+if(filtreli.length === 0){
+
+h += `
+<div class="emptyBox">
+Henüz apartman yok veya arama sonucu bulunamadı.
+</div>
+`;
+
+}else{
+
+filtreli.forEach((item,sira)=>{
+
+let a = item.a;
+let i = item.i;
+let d = durumBilgisi(a);
+let colorClass = "c" + (sira % 5);
+
+h += `
+
+<div class="aptCard" style="--i:${sira}" onclick="detayAc(${i})">
+
+<div class="aptIcon ${colorClass}"></div>
+
+<div>
+<div class="aptName">${a.ad || "-"}</div>
+<div class="aptMeta">
+<span class="metaLine"><span class="miniMetaIcon person"></span>${a.yonetici || "-"}</span>
+<span class="metaLine"><span class="miniMetaIcon phone"></span>${a.tel || "-"}</span>
+</div>
+</div>
+
+<div class="aptRight">
+<span class="badge ${d.badgeClass}">
+${d.durum}
+</span><br>
+Tarih: ${a.bakimGunu || "-"}<br>
+${a.ucret || 0} ₺
+</div>
+
+<div class="arrow">›</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+liste.innerHTML = h;
+
+toplamApartman.innerText = data.length;
+toplamKazanc.innerText = toplam + " ₺";
+
+}
+
+function detayAc(i){
+
+haptic("light");
+
+aktifDetay = i;
+
+let a = data[i];
+let d = durumBilgisi(a);
+
+searchArea.style.display="none";
+filterPanel.style.display="none";
+liste.style.display="none";
+formBox.style.display="none";
+profilPanel.style.display="none";
+detayPanel.style.display="block";
+
+let odemeText =
+a.odemeTarihi ? "Ödeme Alındı" : "Ödeme Al";
+
+let bakimText =
+a.bakimTarihi ? "Bakım Yapıldı" : "Bakım Yapıldı";
+
+let telTemiz =
+(a.tel || "").replace(/\s/g,"");
+
+detayPanel.innerHTML = `
+
+<div class="detailHero">
+
+<button class="detailTopBtn" onclick="anaSayfa()">
+← Geri
+</button>
+
+<div class="detailTitle">
+${a.ad || "-"}
+</div>
+
+<div style="margin-bottom:14px;">
+<span class="badge ${d.badgeClass}">
+${d.durum}
+</span>
+</div>
+
+<div class="detailInfoGrid">
+
+<div class="infoCard">
+<span class="infoLabel">Yönetici</span>
+<span class="infoValue">${a.yonetici || "-"}</span>
+</div>
+
+<div class="infoCard">
+<span class="infoLabel">Telefon</span>
+<span class="infoValue small">
+<a class="infoPhone" href="tel:${telTemiz}">${a.tel || "-"}</a>
+</span>
+</div>
+
+<div class="infoCard">
+<span class="infoLabel">Ücret</span>
+<span class="infoValue">${a.ucret || 0} ₺</span>
+</div>
+
+<div class="infoCard">
+<span class="infoLabel">Bakım Günü</span>
+<span class="infoValue small">${a.bakimGunu || "-"}</span>
+</div>
+
+<div class="infoCard">
+<span class="infoLabel">Ödeme</span>
+<span class="infoValue small">${a.odemeTarihi || "-"}</span>
+</div>
+
+<div class="infoCard">
+<span class="infoLabel">Son Bakım</span>
+<span class="infoValue small">${a.bakimTarihi || "-"}</span>
+</div>
+
+</div>
+
+<div class="detailNote">
+${a.not || "Teknik not yok"}
+</div>
+
+<div class="detailGrid">
+
+<button class="green ${a.odemeTarihi ? "done" : ""}" onclick="odeme(${i})">
+${odemeText}
+</button>
+
+<button class="blue ${a.bakimTarihi ? "done" : ""}" onclick="bakim(${i})">
+${bakimText}
+</button>
+
+<button class="gray" onclick="duzenle(${i})">
+Düzenle
+</button>
+
+<button class="red" onclick="sil(${i})">
+Sil
+</button>
+
+</div>
+
+<button onclick="pdf(${i})">
+PDF Oluştur
+</button>
+
+</div>
+
+`;
+
+animateIn(detayPanel,"screenInRight");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function duzenle(i){
+
+haptic("medium");
+
+let a = data[i];
+
+ad.value = a.ad;
+yonetici.value = a.yonetici;
+tel.value = a.tel;
+ucret.value = a.ucret;
+bakimGunu.value = a.bakimGunu || "";
+not.value = a.not || "";
+
+editIndex = i;
+formTitle.innerText = "Apartman Bilgilerini Düzenle";
+
+searchArea.style.display="flex";
+detayPanel.style.display="none";
+liste.style.display="block";
+formBox.style.display="block";
+
+animateIn(formBox,"screenFadeUp");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function sil(i){
+
+haptic("warning");
+
+let onay =
+confirm("Bu apartman silinsin mi?");
+
+if(!onay){
+toast("Silme iptal edildi");
+return;
+}
+
+data.splice(i,1);
+
+aktifDetay = null;
+detayPanel.style.display="none";
+liste.style.display="block";
+
+kaydet();
+
+animateIn(liste,"screenInLeft");
+
+toast("Apartman silindi");
+
+}
+
+function odeme(i){
+
+haptic("success");
+
+if(data[i].odemeTarihi){
+toast("Ödeme makbuzu oluşturuldu");
+odemeMakbuzuPdf(i);
+return;
+}
+
+data[i].odemeTarihi = bugun();
+
+data[i].kayitlar.push(
+"Ödeme alındı (" + bugun() + ")"
+);
+
+kaydet();
+
+toast("Ödeme alındı");
+
+odemeMakbuzuPdf(i);
+
+if(aktifDetay !== null && data[aktifDetay]){
+detayAc(aktifDetay);
+}
+
+}
+
+function bakim(i){
+
+haptic("success");
+
+if(data[i].bakimTarihi){
+toast("Bakım raporu oluşturuldu");
+pdf(i);
+return;
+}
+
+data[i].bakimTarihi = bugun();
+
+data[i].kayitlar.push(
+"Bakım yapıldı (" + bugun() + ")"
+);
+
+kaydet();
+
+toast("Bakım kaydedildi");
+
+pdf(i);
+
+if(aktifDetay !== null && data[aktifDetay]){
+detayAc(aktifDetay);
+}
+
+}
+
+function odemeMakbuzuPdf(i){
+
+let a = data[i];
+
+if(!a) return;
+
+let w = window.open("");
+
+w.document.write(`
+
+<body style="
+font-family:-apple-system;
+padding:30px;
+background:#f5f5f7;
+color:#111;
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+font-size:24px;
+font-weight:800;
+">
+
+<img
+src='https://i.imgur.com/jbOSWKN.png'
+width='40'>
+
+AY ASANSÖR
+
+</div>
+
+<div style="
+font-size:14px;
+color:#666;
+">
+
+${bugun()}
+
+</div>
+
+</div>
+
+<div style="
+margin-top:25px;
+background:white;
+padding:24px;
+border-radius:20px;
+box-shadow:0 3px 10px rgba(0,0,0,0.05);
+">
+
+<h2 style="margin-top:0">
+Ödeme Alındı Makbuzu
+</h2>
+
+<hr>
+
+<b>Apartman:</b> ${a.ad || "-"}<br><br>
+
+<b>Yönetici:</b> ${a.yonetici || "-"}<br>
+
+<b>Telefon:</b> ${a.tel || "-"}<br>
+
+<b>Tutar:</b> ${a.ucret || 0} ₺<br>
+
+<b>Ödeme Tarihi:</b> ${a.odemeTarihi || bugun()}<br><br>
+
+<div style="
+background:#eaf8f0;
+padding:16px;
+border-radius:14px;
+color:#168a3a;
+font-weight:700;
+">
+
+Belirtilen bakım ücreti AY ASANSÖR tarafından tahsil edilmiştir.
+
+</div>
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-top:70px;
+font-size:14px;
+">
+
+<div>
+
+_____________________<br>
+AY ASANSÖR
+
+</div>
+
+<div>
+
+_____________________<br>
+Müşteri / Yönetici
+
+</div>
+
+</div>
+
+<br><br>
+
+<button onclick="window.print()">
+PDF / Yazdır
+</button>
+
+</body>
+
+`);
+
+}
+
+
+function pdf(i){
+
+haptic("medium");
+
+let a = data[i];
+
+let w = window.open("");
+
+w.document.write(`
+
+<body style="
+font-family:-apple-system;
+padding:30px;
+background:#f5f5f7;
+color:#111;
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+font-size:24px;
+font-weight:700;
+">
+
+<img
+src='https://i.imgur.com/jbOSWKN.png'
+width='38'>
+
+AY ASANSÖR
+
+</div>
+
+<div style="
+font-size:14px;
+color:#666;
+">
+
+${bugun()}
+
+</div>
+
+</div>
+
+<div style="
+margin-top:25px;
+background:white;
+padding:22px;
+border-radius:18px;
+box-shadow:0 3px 10px rgba(0,0,0,0.05);
+">
+
+<h2 style="margin-top:0">
+Bakım Servis Raporu
+</h2>
+
+<hr>
+
+<b>Apartman:</b> ${a.ad}<br><br>
+
+<b>Yönetici:</b> ${a.yonetici}<br>
+
+<b>Telefon:</b> ${a.tel}<br>
+
+<b>Ücret:</b> ${a.ucret} ₺<br>
+
+<b>Bakım Günü:</b> ${a.bakimGunu || "-"}<br>
+
+<b>Ödeme:</b> ${a.odemeTarihi || "-"}<br>
+
+<b>Bakım:</b> ${a.bakimTarihi || "-"}<br><br>
+
+<b>Teknik Not:</b><br>
+
+<div style="
+background:#f5f5f7;
+padding:14px;
+border-radius:12px;
+margin-top:8px;
+">
+
+${a.not || "-"}
+
+</div>
+
+</div>
+
+<div style="
+margin-top:20px;
+background:white;
+padding:22px;
+border-radius:18px;
+box-shadow:0 3px 10px rgba(0,0,0,0.05);
+">
+
+<b>İşlem Kayıtları</b><br><br>
+
+${a.kayitlar.length ? a.kayitlar.map(x=>"• "+x).join("<br>") : "Kayıt bulunmuyor."}
+
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+margin-top:70px;
+font-size:14px;
+">
+
+<div>
+
+_____________________<br>
+Teknik Servis
+
+</div>
+
+<div>
+
+_____________________<br>
+Müşteri İmza
+
+</div>
+
+</div>
+
+<br><br>
+
+<button onclick="window.print()">
+PDF / Yazdır
+</button>
+
+</body>
+
+`);
+
+}
+
+function aySonuRaporu(){
+
+haptic("medium");
+
+let buAyBakim =
+data.filter(a=>tarihBuAyMi(a.bakimTarihi));
+
+let buAyOdeme =
+data.filter(a=>tarihBuAyMi(a.odemeTarihi));
+
+let tahsilat =
+buAyOdeme.reduce((t,a)=>t + Number(a.ucret || 0),0);
+
+let bekleyen =
+data.filter(a=>!a.odemeTarihi);
+
+let bekleyenTutar =
+bekleyen.reduce((t,a)=>t + Number(a.ucret || 0),0);
+
+let geciken =
+data.filter(a=>
+a.bakimGunu &&
+a.bakimGunu < bugunISO() &&
+!a.bakimTarihi
+);
+
+let notlu =
+data.filter(a=>a.not && a.not.trim() !== "");
+
+let w = window.open("");
+
+w.document.write(`
+
+<body style="
+font-family:-apple-system;
+padding:30px;
+background:#f5f5f7;
+color:#111;
+">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+">
+
+<div style="
+display:flex;
+align-items:center;
+gap:12px;
+font-size:24px;
+font-weight:800;
+">
+
+<img
+src='https://i.imgur.com/jbOSWKN.png'
+width='40'>
+
+AY ASANSÖR
+
+</div>
+
+<div style="
+font-size:14px;
+color:#666;
+">
+
+${bugun()}
+
+</div>
+
+</div>
+
+<h1 style="
+margin-top:30px;
+font-size:30px;
+">
+
+${ayAdi()} Ay Sonu Raporu
+
+</h1>
+
+<div style="
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+margin-top:20px;
+">
+
+<div style="background:white;padding:18px;border-radius:18px;">
+<b>Toplam Apartman</b><br>
+<span style="font-size:28px;font-weight:800;">${data.length}</span>
+</div>
+
+<div style="background:white;padding:18px;border-radius:18px;">
+<b>Bu Ay Bakım</b><br>
+<span style="font-size:28px;font-weight:800;">${buAyBakim.length}</span>
+</div>
+
+<div style="background:white;padding:18px;border-radius:18px;">
+<b>Bu Ay Tahsilat</b><br>
+<span style="font-size:28px;font-weight:800;">${tahsilat} ₺</span>
+</div>
+
+<div style="background:white;padding:18px;border-radius:18px;">
+<b>Bekleyen Ödeme</b><br>
+<span style="font-size:28px;font-weight:800;">${bekleyenTutar} ₺</span>
+</div>
+
+<div style="background:white;padding:18px;border-radius:18px;">
+<b>Geciken Bakım</b><br>
+<span style="font-size:28px;font-weight:800;">${geciken.length}</span>
+</div>
+
+<div style="background:white;padding:18px;border-radius:18px;">
+<b>Teknik Notlu</b><br>
+<span style="font-size:28px;font-weight:800;">${notlu.length}</span>
+</div>
+
+</div>
+
+<div style="
+margin-top:22px;
+background:white;
+padding:20px;
+border-radius:18px;
+">
+
+<h2>Bakım Yapılanlar</h2>
+
+${buAyBakim.length ? buAyBakim.map(a=>`• ${a.ad} — ${a.bakimTarihi}`).join("<br>") : "Bu ay bakım kaydı yok."}
+
+</div>
+
+<div style="
+margin-top:18px;
+background:white;
+padding:20px;
+border-radius:18px;
+">
+
+<h2>Ödeme Alınanlar</h2>
+
+${buAyOdeme.length ? buAyOdeme.map(a=>`• ${a.ad} — ${a.ucret} ₺ — ${a.odemeTarihi}`).join("<br>") : "Bu ay ödeme kaydı yok."}
+
+</div>
+
+<div style="
+margin-top:18px;
+background:white;
+padding:20px;
+border-radius:18px;
+">
+
+<h2>Bekleyen Ödemeler</h2>
+
+${bekleyen.length ? bekleyen.map(a=>`• ${a.ad} — ${a.ucret} ₺`).join("<br>") : "Bekleyen ödeme yok."}
+
+</div>
+
+<div style="
+margin-top:18px;
+background:white;
+padding:20px;
+border-radius:18px;
+">
+
+<h2>Geciken Bakımlar</h2>
+
+${geciken.length ? geciken.map(a=>`• ${a.ad} — ${a.bakimGunu}`).join("<br>") : "Geciken bakım yok."}
+
+</div>
+
+<br><br>
+
+<button onclick="window.print()">
+PDF / Yazdır
+</button>
+
+</body>
+
+`);
+
+toast("Ay sonu raporu oluşturuldu");
+
+}
+
+function yedekle(){
+
+haptic("medium");
+
+let yedek = {
+surum:"2.6-profile-idb",
+olusturmaTarihi:new Date().toISOString(),
+apartmanlar:data,
+profil:{
+ad:localStorage.getItem("profilAd") || profilAd.value || "",
+firma:localStorage.getItem("profilFirma") || profilFirma.value || "",
+bio:localStorage.getItem("profilBio") || profilBio.value || "",
+profilFoto:localStorage.getItem("profilePhoto") || "",
+kapakFoto:localStorage.getItem("coverPhoto") || ""
+},
+tema:localStorage.getItem("tema") || "light"
+};
+
+let blob = new Blob(
+[JSON.stringify(yedek,null,2)],
+{type:"application/json"}
+);
+
+let link = document.createElement("a");
+
+let tarih =
+new Date()
+.toISOString()
+.split("T")[0];
+
+link.href = URL.createObjectURL(blob);
+link.download = "ay-asansor-yedek-" + tarih + ".json";
+link.click();
+
+toast("Yedek indirildi");
+
+}
+
+function yedektenYukle(event){
+
+let file = event.target.files[0];
+
+if(!file){
+return;
+}
+
+let reader = new FileReader();
+
+reader.onload = function(e){
+
+try{
+
+let yedek =
+JSON.parse(e.target.result);
+
+let onay =
+confirm("Yedekten geri yükleme yapılsın mı? Mevcut kayıtlar değişebilir.");
+
+if(!onay){
+toast("Geri yükleme iptal edildi");
+event.target.value = "";
+return;
+}
+
+let yeniData =
+Array.isArray(yedek)
+? yedek
+: (yedek.apartmanlar || []);
+
+data = yeniData;
+
+localStorage.setItem(
+"apartmanlar",
+JSON.stringify(data)
+);
+
+if(yedek.profil){
+
+localStorage.setItem("profilAd",yedek.profil.ad || "");
+localStorage.setItem("profilFirma",yedek.profil.firma || "");
+localStorage.setItem("profilBio",yedek.profil.bio || "");
+
+if(yedek.profil.profilFoto){
+
+localStorage.setItem("profilePhoto",yedek.profil.profilFoto);
+profilePhoto.src = yedek.profil.profilFoto;
+
+}
+
+if(yedek.profil.kapakFoto){
+
+localStorage.setItem("coverPhoto",yedek.profil.kapakFoto);
+coverPhoto.style.backgroundImage = `url('${yedek.profil.kapakFoto}')`;
+
+}
+
+profilAd.value = yedek.profil.ad || "Uğur AY";
+profilFirma.value = yedek.profil.firma || "AY ASANSÖR";
+profilBio.value = yedek.profil.bio || "Asansör bakım • montaj • servis\nKütahya / Tavşanlı";
+
+}
+
+if(yedek.tema){
+localStorage.setItem("tema",yedek.tema);
+temaUygula();
+}
+
+aktifDetay = null;
+profilPanel.style.display = "none";
+detayPanel.style.display = "none";
+searchArea.style.display = "flex";
+liste.style.display = "block";
+
+goster();
+
+animateIn(liste,"screenFadeUp");
+
+toast("Yedek geri yüklendi");
+
+}catch(err){
+
+toast("Yedek dosyası okunamadı");
+
+}
+
+event.target.value = "";
+
+};
+
+reader.readAsText(file);
+
+}
+
+function anaSayfa(){
+
+haptic("light");
+
+aktifDetay = null;
+searchArea.style.display="flex";
+profilPanel.style.display="none";
+detayPanel.style.display="none";
+formBox.style.display="none";
+liste.style.display="block";
+goster();
+
+animateIn(liste,"screenInLeft");
+animateIn(searchArea,"screenSoft");
+
+}
+
+function profilAc(){
+
+haptic("light");
+
+aktifDetay = null;
+searchArea.style.display="none";
+filterPanel.style.display="none";
+formBox.style.display="none";
+detayPanel.style.display="none";
+liste.style.display="none";
+profilPanel.style.display="block";
+
+temaUygula();
+
+animateIn(profilPanel,"screenFadeUp");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+const AY_DB_NAME = "ay_asansor_db";
+const AY_DB_STORE = "ayarlar";
+
+function ayDbAc(){
+
+return new Promise((resolve,reject)=>{
+
+const req =
+indexedDB.open(AY_DB_NAME,1);
+
+req.onupgradeneeded = function(e){
+
+const db = e.target.result;
+
+if(!db.objectStoreNames.contains(AY_DB_STORE)){
+db.createObjectStore(AY_DB_STORE);
+}
+
+};
+
+req.onsuccess = function(){
+resolve(req.result);
+};
+
+req.onerror = function(){
+reject(req.error);
+};
+
+});
+
+}
+
+async function ayDbKaydet(key,value){
+
+const db = await ayDbAc();
+
+return new Promise((resolve,reject)=>{
+
+const tx =
+db.transaction(AY_DB_STORE,"readwrite");
+
+tx.objectStore(AY_DB_STORE).put(value,key);
+
+tx.oncomplete = function(){
+resolve();
+};
+
+tx.onerror = function(){
+reject(tx.error);
+};
+
+});
+
+}
+
+async function ayDbOku(key){
+
+const db = await ayDbAc();
+
+return new Promise((resolve,reject)=>{
+
+const tx =
+db.transaction(AY_DB_STORE,"readonly");
+
+const req =
+tx.objectStore(AY_DB_STORE).get(key);
+
+req.onsuccess = function(){
+resolve(req.result);
+};
+
+req.onerror = function(){
+reject(req.error);
+};
+
+});
+
+}
+
+
+function imageDosyasiniKucult(file,maxWidth,maxHeight,quality,callback){
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+const img = new Image();
+
+img.onload = function(){
+
+let width = img.width;
+let height = img.height;
+
+if(width > maxWidth || height > maxHeight){
+
+const ratio = Math.min(
+maxWidth / width,
+maxHeight / height
+);
+
+width = Math.round(width * ratio);
+height = Math.round(height * ratio);
+
+}
+
+const canvas = document.createElement("canvas");
+canvas.width = width;
+canvas.height = height;
+
+const ctx = canvas.getContext("2d");
+ctx.drawImage(img,0,0,width,height);
+
+let dataUrl =
+canvas.toDataURL("image/jpeg",quality);
+
+callback(dataUrl);
+
+};
+
+img.src = e.target.result;
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+
+profileInput.onchange = e => {
+
+let file = e.target.files[0];
+
+if(!file) return;
+
+imageDosyasiniKucult(file,420,420,.72,async function(dataUrl){
+
+profilePhoto.src = dataUrl;
+
+try{
+
+await ayDbKaydet("profilePhoto",dataUrl);
+
+try{
+localStorage.setItem("profilePhoto",dataUrl);
+}catch(e){}
+
+toast("Profil fotoğrafı kaydedildi");
+
+}catch(err){
+
+toast("Fotoğraf kaydedilemedi");
+
+}
+
+});
+
+};
+
+document
+.getElementById("coverInput")
+.addEventListener("change", function(e){
+
+const file = e.target.files[0];
+
+if(!file) return;
+
+imageDosyasiniKucult(file,900,520,.68,async function(dataUrl){
+
+document.getElementById(
+"coverPhoto"
+).style.backgroundImage =
+`url('${dataUrl}')`;
+
+try{
+
+await ayDbKaydet("coverPhoto",dataUrl);
+
+try{
+localStorage.setItem("coverPhoto",dataUrl);
+}catch(e){}
+
+toast("Kapak fotoğrafı kaydedildi");
+
+}catch(err){
+
+toast("Kapak fotoğrafı kaydedilemedi");
+
+}
+
+});
+
+});
+
+profilAd.oninput = kaydetProfil;
+profilFirma.oninput = kaydetProfil;
+profilBio.oninput = kaydetProfil;
+
+function kaydetProfil(){
+
+localStorage.setItem("profilAd",profilAd.value);
+localStorage.setItem("profilFirma",profilFirma.value);
+localStorage.setItem("profilBio",profilBio.value);
+
+}
+
+window.addEventListener("load",()=>{
+
+temaUygula();
+
+const savedCover =
+localStorage.getItem("coverPhoto");
+
+if(savedCover){
+
+document.getElementById(
+"coverPhoto"
+).style.backgroundImage =
+`url('${savedCover}')`;
+
+}
+
+let p1 =
+localStorage.getItem("profilePhoto");
+
+if(p1){
+
+profilePhoto.src = p1;
+
+}
+
+ayDbOku("coverPhoto")
+.then(savedCoverDb=>{
+
+if(savedCoverDb){
+
+document.getElementById(
+"coverPhoto"
+).style.backgroundImage =
+`url('${savedCoverDb}')`;
+
+}
+
+})
+.catch(()=>{});
+
+ayDbOku("profilePhoto")
+.then(savedProfileDb=>{
+
+if(savedProfileDb){
+
+profilePhoto.src = savedProfileDb;
+
+}
+
+})
+.catch(()=>{});
+
+let p3 =
+localStorage.getItem("profilAd");
+
+if(p3){
+
+profilAd.value = p3;
+
+}
+
+let p4 =
+localStorage.getItem("profilFirma");
+
+if(p4){
+
+profilFirma.value = p4;
+
+}
+
+let p5 =
+localStorage.getItem("profilBio");
+
+if(p5){
+
+profilBio.value = p5;
+
+}
+
+goster();
+
+animateIn(liste,"screenFadeUp");
+
+setTimeout(hideSplash,800);
+
+});
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+temaUygula();
+
+});
+
+</script>
+
+</body>
+</html>
