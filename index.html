@@ -582,7 +582,7 @@ letter-spacing:-.3px;
 .aptCard{
 background:white;
 border-radius:28px;
-padding:16px;
+padding:16px 16px 16px 20px;
 margin-bottom:14px;
 box-shadow:0 8px 28px rgba(0,0,0,.045);
 display:grid;
@@ -597,6 +597,40 @@ cursor:pointer;
 animation:cardRise .36s cubic-bezier(.2,.8,.2,1) both;
 animation-delay:calc(var(--i,0) * 45ms);
 will-change:transform, opacity;
+position:relative;
+overflow:hidden;
+}
+
+.aptCard:before{
+content:"";
+position:absolute;
+left:0;
+top:14px;
+bottom:14px;
+width:5px;
+border-radius:0 999px 999px 0;
+background:#d1d5db;
+box-shadow:0 0 18px rgba(148,163,184,.18);
+}
+
+.aptCard.statusDone:before{
+background:#34c759;
+box-shadow:0 0 18px rgba(52,199,89,.24);
+}
+
+.aptCard.statusToday:before{
+background:#007aff;
+box-shadow:0 0 18px rgba(0,122,255,.24);
+}
+
+.aptCard.statusOverdue:before{
+background:#ff9500;
+box-shadow:0 0 18px rgba(255,149,0,.28);
+}
+
+.aptCard.statusWaiting:before{
+background:#c7c7cc;
+box-shadow:0 0 18px rgba(199,199,204,.18);
 }
 
 .aptCard:active{
@@ -1289,6 +1323,26 @@ box-shadow:
 inset 0 1px 1px rgba(255,255,255,.08);
 }
 
+body.darkMode .aptCard.statusDone:before{
+background:#30d158;
+box-shadow:0 0 20px rgba(48,209,88,.30);
+}
+
+body.darkMode .aptCard.statusToday:before{
+background:#0a84ff;
+box-shadow:0 0 20px rgba(10,132,255,.30);
+}
+
+body.darkMode .aptCard.statusOverdue:before{
+background:#ff9f0a;
+box-shadow:0 0 20px rgba(255,159,10,.32);
+}
+
+body.darkMode .aptCard.statusWaiting:before{
+background:#636b77;
+box-shadow:0 0 20px rgba(99,107,119,.20);
+}
+
 body.darkMode .aptMeta,
 body.darkMode .aptRight,
 body.darkMode .statLabel,
@@ -1373,7 +1427,7 @@ color:#f8fafc;
 .statCard{padding:12px 6px;}
 .statNumber{font-size:22px;}
 .statLabel{font-size:11px;}
-.aptCard{grid-template-columns:64px 1fr 100px 14px;gap:10px;padding:14px;}
+.aptCard{grid-template-columns:64px 1fr 100px 14px;gap:10px;padding:14px 14px 14px 18px;}
 .aptIcon{width:60px;height:60px;border-radius:20px;}
 .aptName{font-size:18px;}
 .aptMeta,.aptRight{font-size:13px;}
@@ -1960,6 +2014,24 @@ animateIn(liste,"screenFadeUp");
 
 }
 
+function durumClass(a){
+
+if(a.bakimTarihi){
+return "statusDone";
+}
+
+if(a.bakimGunu && a.bakimGunu == bugunISO()){
+return "statusToday";
+}
+
+if(a.bakimGunu && a.bakimGunu < bugunISO() && !a.bakimTarihi){
+return "statusOverdue";
+}
+
+return "statusWaiting";
+
+}
+
 function durumBilgisi(a){
 
 let durum = "Beklemede";
@@ -2080,7 +2152,7 @@ let colorClass = "c" + (sira % 5);
 
 h += `
 
-<div class="aptCard" style="--i:${sira}" onclick="detayAc(${i})">
+<div class="aptCard ${durumClass(a)}" style="--i:${sira}" onclick="detayAc(${i})">
 
 <div class="aptIcon ${colorClass}"></div>
 
@@ -2752,7 +2824,7 @@ function yedekle(){
 haptic("medium");
 
 let yedek = {
-surum:"1.1.2-blob-photo",
+surum:"1.1.3-status-strip",
 olusturmaTarihi:new Date().toISOString(),
 apartmanlar:data,
 profil:{
