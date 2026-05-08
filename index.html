@@ -1148,8 +1148,8 @@ line-height:1.45;
 }
 
 .profileFooter{
-margin-top:28px;
-padding:24px 18px 120px;
+margin-top:26px;
+padding:22px 18px 120px;
 text-align:center;
 color:#8a8a8e;
 font-size:13px;
@@ -1157,29 +1157,34 @@ line-height:1.6;
 }
 
 .profileFooterLogo{
-width:34px;
-height:34px;
-border-radius:10px;
-margin-bottom:10px;
-opacity:.85;
+width:54px;
+height:54px;
+border-radius:16px;
+margin-bottom:14px;
+opacity:.92;
+box-shadow:0 10px 24px rgba(15,23,42,.08);
 }
 
 .profileFooterTitle{
-font-size:15px;
-font-weight:800;
-color:#555;
-letter-spacing:.2px;
+font-size:22px;
+font-weight:900;
+color:#3f3f46;
+letter-spacing:-.25px;
 }
 
 .profileFooterSlogan{
-margin-top:4px;
+margin:10px auto 0;
+max-width:310px;
 color:#777;
+font-size:15px;
+line-height:1.45;
 }
 
 .profileFooterSmall{
-margin-top:12px;
+margin-top:18px;
 font-size:12px;
 color:#9b9b9f;
+line-height:1.65;
 }
 
 .toast{
@@ -1566,7 +1571,7 @@ AY ASANSÖR
 </div>
 
 <div class="profileFooterSlogan">
-Güvenli yükseliş, düzenli bakım.
+Bakım, tahsilat ve servis takip sistemi
 </div>
 
 <div class="profileFooterSmall">
@@ -1576,7 +1581,7 @@ Kütahya / Tavşanlı
 </div>
 
 <div class="profileFooterSmall">
-Bu uygulama AY ASANSÖR servis kayıtlarını takip etmek için hazırlanmıştır.
+Güvenli yükseliş, düzenli bakım.
 </div>
 
 </div>
@@ -1615,6 +1620,9 @@ localStorage.getItem("apartmanlar")
 let editIndex = null;
 let aktifDetay = null;
 let aktifFiltre = "all";
+
+const APP_NAME = "AY ASANSÖR";
+const APP_VERSION = "v1.0.0";
 
 function hideSplash(){
 
@@ -2799,7 +2807,7 @@ function yedekle(){
 haptic("medium");
 
 let yedek = {
-surum:"2.6-profile-idb",
+surum:"1.0.1",
 olusturmaTarihi:new Date().toISOString(),
 apartmanlar:data,
 profil:{
