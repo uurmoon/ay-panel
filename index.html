@@ -577,6 +577,86 @@ font-size:22px;
 letter-spacing:-.3px;
 }
 
+.lastActionCard{
+background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(248,250,252,.92));
+border:1px solid rgba(229,231,235,.9);
+border-radius:26px;
+padding:17px 18px;
+margin:4px 0 18px;
+box-shadow:
+0 12px 30px rgba(15,23,42,.055),
+inset 0 1px 0 rgba(255,255,255,.75);
+display:flex;
+align-items:center;
+gap:14px;
+animation:screenFadeUp .28s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.lastActionIcon{
+width:42px;
+height:42px;
+border-radius:16px;
+background:#eef4ff;
+color:#007aff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+font-weight:900;
+flex-shrink:0;
+}
+
+.lastActionText{
+flex:1;
+min-width:0;
+}
+
+.lastActionLabel{
+font-size:12px;
+font-weight:900;
+color:#8a94a6;
+letter-spacing:.25px;
+text-transform:uppercase;
+margin-bottom:4px;
+}
+
+.lastActionValue{
+font-size:15px;
+font-weight:850;
+color:#111827;
+line-height:1.35;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.lastActionDate{
+font-size:12px;
+font-weight:700;
+color:#8a94a6;
+margin-top:3px;
+}
+
+.payBadge{
+display:inline-block;
+padding:6px 9px;
+border-radius:999px;
+font-size:11px;
+font-weight:900;
+white-space:nowrap;
+margin-top:4px;
+}
+
+.payPaid{
+background:#eaf8f0;
+color:#22a859;
+}
+
+.payWaiting{
+background:#fff4e8;
+color:#ff7a00;
+}
+
 /* APARTMENT CARDS */
 
 .aptCard{
@@ -1343,6 +1423,38 @@ background:#636b77;
 box-shadow:0 0 20px rgba(99,107,119,.20);
 }
 
+body.darkMode .lastActionCard{
+background:linear-gradient(135deg,rgba(21,27,38,.88),rgba(15,20,29,.88));
+border-color:#263241;
+box-shadow:
+0 12px 30px rgba(0,0,0,.24),
+inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+body.darkMode .lastActionIcon{
+background:#12223a;
+color:#60a5fa;
+}
+
+body.darkMode .lastActionValue{
+color:#f8fafc;
+}
+
+body.darkMode .lastActionLabel,
+body.darkMode .lastActionDate{
+color:#7c8797;
+}
+
+body.darkMode .payPaid{
+background:#10281a;
+color:#4ade80;
+}
+
+body.darkMode .payWaiting{
+background:#2b1e0f;
+color:#fbbf24;
+}
+
 body.darkMode .aptMeta,
 body.darkMode .aptRight,
 body.darkMode .statLabel,
@@ -1826,6 +1938,74 @@ return toplam + (a.odemeTarihi ? Number(a.ucret || 0) : 0);
 },0);
 }
 
+function odemeBadge(a){
+
+if(a.odemeTarihi){
+return `<span class="payBadge payPaid">Ödeme Alındı</span>`;
+}
+
+return `<span class="payBadge payWaiting">Ödeme Bekliyor</span>`;
+
+}
+
+function sonIslemBul(){
+
+let sonuc = null;
+
+data.forEach((a)=>{
+
+if(a.kayitlar && a.kayitlar.length){
+
+let son =
+a.kayitlar[a.kayitlar.length - 1];
+
+sonuc = {
+ad:a.ad || "-",
+islem:son,
+tarih:son.match(/\((.*?)\)/)?.[1] || ""
+};
+
+}
+
+});
+
+return sonuc;
+
+}
+
+function sonIslemHtml(){
+
+let son =
+sonIslemBul();
+
+if(!son){
+
+return `
+<div class="lastActionCard">
+<div class="lastActionIcon">✓</div>
+<div class="lastActionText">
+<div class="lastActionLabel">Son İşlem</div>
+<div class="lastActionValue">Henüz işlem kaydı yok</div>
+<div class="lastActionDate">Bakım veya ödeme kaydı oluşunca burada görünür.</div>
+</div>
+</div>
+`;
+
+}
+
+return `
+<div class="lastActionCard">
+<div class="lastActionIcon">✓</div>
+<div class="lastActionText">
+<div class="lastActionLabel">Son İşlem</div>
+<div class="lastActionValue">${son.ad} • ${son.islem.replace(/\s*\(.*?\)/,"")}</div>
+<div class="lastActionDate">${son.tarih || "Tarih yok"}</div>
+</div>
+</div>
+`;
+
+}
+
 function tarihBuAyMi(tarih){
 
 if(!tarih) return false;
@@ -2127,6 +2307,8 @@ let h = `
 
 </div>
 
+${sonIslemHtml()}
+
 <div class="sectionHead">
 <h2>Apartmanlarım (${filtreli.length})</h2>
 </div>
@@ -2168,6 +2350,7 @@ h += `
 <span class="badge ${d.badgeClass}">
 ${d.durum}
 </span><br>
+${odemeBadge(a)}<br>
 Tarih: ${a.bakimGunu || "-"}<br>
 ${a.ucret || 0} ₺
 </div>
@@ -2824,7 +3007,7 @@ function yedekle(){
 haptic("medium");
 
 let yedek = {
-surum:"1.1.3-status-strip",
+surum:"1.1.4-last-action-pay-badge",
 olusturmaTarihi:new Date().toISOString(),
 apartmanlar:data,
 profil:{
