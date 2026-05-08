@@ -1951,6 +1951,189 @@ font-size:13.5px;
 .aptMeta,.aptRight{font-size:13px;}
 .badge{font-size:11px;padding:6px 9px;}
 }
+
+/* KOMPAKT APARTMAN KARTLARI - Uğur isteği */
+.aptCard{
+border-radius:24px;
+padding:12px 13px 12px 18px;
+margin-bottom:10px;
+grid-template-columns:58px minmax(0,1fr) 104px 12px;
+gap:9px;
+min-height:0;
+}
+
+.aptCard:before{
+top:12px;
+bottom:12px;
+width:4px;
+}
+
+.aptIcon{
+width:54px;
+height:54px;
+border-radius:18px;
+}
+
+.aptIcon:before{
+width:23px;
+height:28px;
+bottom:12px;
+border-radius:6px;
+border-width:2px;
+}
+
+.aptIcon:after{
+width:3px;
+height:3px;
+top:16px;
+left:20px;
+box-shadow:
+7px 0 currentColor,
+0 8px currentColor,
+7px 8px currentColor,
+0 16px currentColor,
+7px 16px currentColor;
+}
+
+.aptName{
+font-size:18px;
+margin-bottom:5px;
+letter-spacing:-.25px;
+line-height:1.12;
+}
+
+.aptMeta{
+font-size:12.5px;
+line-height:1.42;
+}
+
+.metaLine{
+gap:6px;
+}
+
+.miniMetaIcon{
+width:14px;
+height:14px;
+border-radius:5px;
+border-width:1.6px;
+}
+
+.miniMetaIcon.person:before{
+width:4px;
+height:4px;
+left:4px;
+top:2px;
+}
+
+.miniMetaIcon.person:after{
+width:8px;
+height:4px;
+left:2.3px;
+bottom:2px;
+}
+
+.miniMetaIcon.phone:before{
+width:5px;
+height:9px;
+left:3px;
+top:1px;
+border-width:1.5px;
+}
+
+.aptRight{
+font-size:12.5px;
+line-height:1.42;
+}
+
+.badge{
+font-size:11px;
+padding:5.5px 8.5px;
+margin-bottom:5px;
+}
+
+.payBadge{
+font-size:10.5px;
+padding:5px 8px;
+margin-top:2px;
+}
+
+.kartDate{
+white-space:nowrap;
+}
+
+.arrow{
+font-size:24px;
+}
+
+@media(max-width:430px){
+.aptCard{
+grid-template-columns:52px minmax(0,1fr) 92px 10px;
+gap:8px;
+padding:11px 11px 11px 16px;
+margin-bottom:9px;
+border-radius:23px;
+}
+
+.aptCard:before{
+top:11px;
+bottom:11px;
+width:4px;
+}
+
+.aptIcon{
+width:50px;
+height:50px;
+border-radius:17px;
+}
+
+.aptIcon:before{
+width:21px;
+height:26px;
+bottom:11px;
+border-radius:6px;
+}
+
+.aptIcon:after{
+width:3px;
+height:3px;
+top:15px;
+left:19px;
+box-shadow:
+7px 0 currentColor,
+0 7px currentColor,
+7px 7px currentColor,
+0 14px currentColor,
+7px 14px currentColor;
+}
+
+.aptName{
+font-size:16.5px;
+margin-bottom:4px;
+line-height:1.1;
+}
+
+.aptMeta,
+.aptRight{
+font-size:11.8px;
+line-height:1.36;
+}
+
+.badge{
+font-size:10.5px;
+padding:5px 7.5px;
+margin-bottom:4px;
+}
+
+.payBadge{
+font-size:10px;
+padding:4.5px 7px;
+}
+
+.arrow{
+font-size:22px;
+}
+}
+
 </style>
 </head>
 
@@ -2383,6 +2566,15 @@ function bugunISO(){
 return new Date().toISOString().split("T")[0];
 }
 
+function kartTarih(tarih){
+if(!tarih) return "-";
+let parca = String(tarih).split("-");
+if(parca.length === 3){
+return `${parca[2]}.${parca[1]}.${parca[0].slice(2)}`;
+}
+return tarih;
+}
+
 function toplamTahsilat(){
 return data.reduce((toplam,a)=>{
 return toplam + (a.odemeTarihi ? Number(a.ucret || 0) : 0);
@@ -2802,7 +2994,7 @@ h += `
 ${d.durum}
 </span><br>
 ${odemeBadge(a)}<br>
-Tarih: ${a.bakimGunu || "-"}<br>
+<span class="kartDate">Tarih: ${kartTarih(a.bakimGunu)}</span><br>
 ${a.ucret || 0} ₺
 </div>
 
