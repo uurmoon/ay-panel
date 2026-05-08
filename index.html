@@ -2848,19 +2848,34 @@ display:none !important;
 left:50%;
 right:auto;
 transform:translateX(-50%);
-width:calc(100% - 44px);
-max-width:350px;
-height:68px;
+width:calc(100% - 42px);
+max-width:364px;
+height:70px;
 bottom:calc(16px + env(safe-area-inset-bottom));
-grid-template-columns:1fr 1fr 70px 1fr;
-padding:0 10px;
+grid-template-columns:1fr 1fr 84px 1fr;
+padding:0 12px;
 box-sizing:border-box;
+align-items:end;
 }
 
 .tabItem{
 min-width:0;
 width:100%;
 font-size:10.5px;
+}
+
+.tabText{
+display:block;
+white-space:nowrap;
+line-height:1.05;
+}
+
+.tabItem[data-tab="apartman"]{
+transform:translateX(-12px);
+}
+
+.tabItem[data-tab="profil"]{
+transform:translateX(4px);
 }
 
 .tabIcon{
@@ -2870,7 +2885,7 @@ margin-bottom:2px;
 }
 
 .tabGap{
-width:70px;
+width:84px;
 }
 
 .middleButton{
@@ -2908,15 +2923,17 @@ min-height:54px;
 .maintMeta{font-size:10.6px;}
 .maintPill{font-size:9.6px;padding:4.5px 6.5px;}
 .tabbar{
-width:calc(100% - 54px);
-max-width:340px;
-height:66px;
-grid-template-columns:1fr 1fr 66px 1fr;
-padding:0 8px;
+width:calc(100% - 46px);
+max-width:352px;
+height:67px;
+grid-template-columns:1fr 1fr 80px 1fr;
+padding:0 10px;
 }
-.tabGap{width:66px;}
+.tabGap{width:80px;}
 .middleButton{width:60px;height:60px;top:-21px;font-size:36px;}
 .tabItem{font-size:10px;}
+.tabItem[data-tab="apartman"]{transform:translateX(-10px);}
+.tabItem[data-tab="profil"]{transform:translateX(4px);}
 }
 
 body.darkMode .maintDone{
@@ -2936,6 +2953,22 @@ body.darkMode .maintToday .maintCheck,
 body.darkMode .maintOverdue .maintCheck{
 background:#3a1717;
 color:#ff7b72;
+}
+
+.backupInfo{
+margin-top:12px;
+padding:10px 12px;
+border-radius:16px;
+background:#f5f7fb;
+color:#6b7280;
+font-size:12px;
+font-weight:800;
+line-height:1.45;
+}
+
+body.darkMode .backupInfo{
+background:#0f141d;
+color:#9ca3af;
 }
 
 </style>
@@ -3104,7 +3137,7 @@ Ay Sonu Raporu Oluştur
 <h3>Veri Yedekleme</h3>
 
 <p>
-Apartman kayıtlarını, ödeme/bakım bilgilerini, teknik notları ve profil bilgilerini dosya olarak saklayabilirsin.
+Apartman kayıtların artık otomatik yedeklenir. İstersen ayrıca el ile dosya yedeği de indirebilirsin.
 </p>
 
 <button class="blue" onclick="yedekle()">
@@ -3114,6 +3147,8 @@ Verileri Yedekle
 <button class="gray" onclick="document.getElementById('yedekInput').click()">
 Yedekten Geri Yükle
 </button>
+
+<div id="autoBackupInfo" class="backupInfo">Otomatik yedek hazırlanıyor...</div>
 
 <input
 type="file"
@@ -3233,6 +3268,9 @@ let aktifDetay = null;
 let aktifFiltre = "all";
 let aktifEkran = "apartman";
 let oncekiEkran = "apartman";
+const AUTO_YEDEK_KEY = "ayAutoBackupLatest";
+const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
+const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "AY ASANSÖR";
 const APP_VERSION = "v1.0.0";
@@ -3532,11 +3570,75 @@ return aylar[d.getMonth()] + " " + d.getFullYear();
 
 }
 
+function formatAutoYedekZamani(ts){
+if(!ts) return "Henüz alınmadı";
+let d = new Date(ts);
+if(isNaN(d.getTime())) return "Henüz alınmadı";
+let tarih = d.toLocaleDateString("tr-TR");
+let saat = d.toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit"});
+return tarih + " • " + saat;
+}
+
+function autoYedekVerisi(){
+return {
+surum:"1.1.5-auto-backup",
+tur:"otomatik",
+olusturmaTarihi:new Date().toISOString(),
+apartmanlar:data,
+profil:{
+ad:localStorage.getItem("profilAd") || (typeof profilAd !== "undefined" ? profilAd.value : "") || "",
+firma:localStorage.getItem("profilFirma") || (typeof profilFirma !== "undefined" ? profilFirma.value : "") || "",
+bio:localStorage.getItem("profilBio") || (typeof profilBio !== "undefined" ? profilBio.value : "") || "",
+profilFoto:localStorage.getItem("profilePhoto") || "",
+kapakFoto:localStorage.getItem("coverPhoto") || ""
+},
+tema:localStorage.getItem("tema") || "light"
+};
+}
+
+function autoYedekBilgiGuncelle(){
+let el = document.getElementById("autoBackupInfo");
+if(!el) return;
+let son = localStorage.getItem("ayAutoBackupAt");
+el.textContent = son
+? "Son otomatik yedek: " + formatAutoYedekZamani(son)
+: "Otomatik yedek henüz oluşmadı";
+}
+
+function autoYedekAl(sessiz=true){
+try{
+let yedek = autoYedekVerisi();
+localStorage.setItem(AUTO_YEDEK_KEY, JSON.stringify(yedek));
+let gecmis = [];
+try{
+gecmis = JSON.parse(localStorage.getItem(AUTO_YEDEK_HISTORY_KEY) || "[]");
+if(!Array.isArray(gecmis)) gecmis = [];
+}catch(err){
+gecmis = [];
+}
+gecmis.unshift({
+olusturmaTarihi:yedek.olusturmaTarihi,
+apartmanSayisi:Array.isArray(data) ? data.length : 0,
+veri:yedek
+});
+gecmis = gecmis.slice(0, AUTO_YEDEK_LIMIT);
+localStorage.setItem(AUTO_YEDEK_HISTORY_KEY, JSON.stringify(gecmis));
+localStorage.setItem("ayAutoBackupAt", yedek.olusturmaTarihi);
+autoYedekBilgiGuncelle();
+if(!sessiz){
+toast("Otomatik yedek alındı");
+}
+}catch(err){
+console.log("Otomatik yedek alınamadı", err);
+}
+}
+
 function kaydet(){
 localStorage.setItem(
 "apartmanlar",
 JSON.stringify(data)
 );
+autoYedekAl(true);
 goster();
 }
 
@@ -4697,7 +4799,7 @@ function yedekle(){
 haptic("medium");
 
 let yedek = {
-surum:"1.1.4-last-action-pay-badge",
+surum:"1.1.5-auto-backup",
 olusturmaTarihi:new Date().toISOString(),
 apartmanlar:data,
 profil:{
@@ -4806,6 +4908,7 @@ searchArea.style.display = "flex";
 liste.style.display = "block";
 
 goster();
+autoYedekAl(true);
 
 animateIn(liste,"screenFadeUp");
 
@@ -5087,6 +5190,7 @@ try{
 await ayDbKaydet("profilePhotoBlob",blob);
 
 toast("Profil fotoğrafı kaydedildi");
+autoYedekAl(true);
 
 }catch(err){
 
@@ -5115,6 +5219,7 @@ try{
 await ayDbKaydet("coverPhotoBlob",blob);
 
 toast("Kapak fotoğrafı kaydedildi");
+autoYedekAl(true);
 
 }catch(err){
 
@@ -5135,12 +5240,18 @@ function kaydetProfil(){
 localStorage.setItem("profilAd",profilAd.value);
 localStorage.setItem("profilFirma",profilFirma.value);
 localStorage.setItem("profilBio",profilBio.value);
+autoYedekAl(true);
+autoYedekBilgiGuncelle();
 
 }
 
 window.addEventListener("load",()=>{
 
 temaUygula();
+autoYedekBilgiGuncelle();
+if(!localStorage.getItem(AUTO_YEDEK_KEY)){
+autoYedekAl(true);
+}
 
 ayDbOku("coverPhotoBlob")
 .then(blob=>{
