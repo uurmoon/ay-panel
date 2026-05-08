@@ -2752,7 +2752,7 @@ function yedekle(){
 haptic("medium");
 
 let yedek = {
-surum:"1.1.1-pdf-photo-fix",
+surum:"1.1.2-blob-photo",
 olusturmaTarihi:new Date().toISOString(),
 apartmanlar:data,
 profil:{
@@ -3048,29 +3048,96 @@ reader.readAsDataURL(file);
 }
 
 
+function imageDosyasiniBlobYap(file,maxWidth,maxHeight,quality,callback){
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+const img = new Image();
+
+img.onload = function(){
+
+let width = img.width;
+let height = img.height;
+
+if(width > maxWidth || height > maxHeight){
+
+const ratio = Math.min(
+maxWidth / width,
+maxHeight / height
+);
+
+width = Math.round(width * ratio);
+height = Math.round(height * ratio);
+
+}
+
+const canvas = document.createElement("canvas");
+canvas.width = width;
+canvas.height = height;
+
+const ctx = canvas.getContext("2d");
+ctx.drawImage(img,0,0,width,height);
+
+canvas.toBlob(function(blob){
+
+callback(blob);
+
+},"image/jpeg",quality);
+
+};
+
+img.src = e.target.result;
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+function blobuGoster(key,blob){
+
+if(!blob) return;
+
+const url =
+URL.createObjectURL(blob);
+
+if(key === "profilePhotoBlob"){
+profilePhoto.src = url;
+}
+
+if(key === "coverPhotoBlob"){
+
+document.getElementById(
+"coverPhoto"
+).style.backgroundImage =
+`url('${url}')`;
+
+}
+
+}
+
+
 profileInput.onchange = e => {
 
 let file = e.target.files[0];
 
 if(!file) return;
 
-imageDosyasiniKucult(file,420,420,.72,async function(dataUrl){
+imageDosyasiniBlobYap(file,420,420,.72,async function(blob){
 
-profilePhoto.src = dataUrl;
-
-try{
-
-await ayDbKaydet("profilePhoto",dataUrl);
+blobuGoster("profilePhotoBlob",blob);
 
 try{
-localStorage.setItem("profilePhoto",dataUrl);
-}catch(e){}
+
+await ayDbKaydet("profilePhotoBlob",blob);
 
 toast("Profil fotoğrafı kaydedildi");
 
 }catch(err){
 
-toast("Fotoğraf kaydedilemedi");
+toast("Profil fotoğrafı kaydedilemedi");
 
 }
 
@@ -3086,20 +3153,13 @@ const file = e.target.files[0];
 
 if(!file) return;
 
-imageDosyasiniKucult(file,900,520,.68,async function(dataUrl){
+imageDosyasiniBlobYap(file,900,520,.68,async function(blob){
 
-document.getElementById(
-"coverPhoto"
-).style.backgroundImage =
-`url('${dataUrl}')`;
+blobuGoster("coverPhotoBlob",blob);
 
 try{
 
-await ayDbKaydet("coverPhoto",dataUrl);
-
-try{
-localStorage.setItem("coverPhoto",dataUrl);
-}catch(e){}
+await ayDbKaydet("coverPhotoBlob",blob);
 
 toast("Kapak fotoğrafı kaydedildi");
 
@@ -3129,6 +3189,26 @@ window.addEventListener("load",()=>{
 
 temaUygula();
 
+ayDbOku("coverPhotoBlob")
+.then(blob=>{
+
+if(blob){
+blobuGoster("coverPhotoBlob",blob);
+}
+
+})
+.catch(()=>{});
+
+ayDbOku("profilePhotoBlob")
+.then(blob=>{
+
+if(blob){
+blobuGoster("profilePhotoBlob",blob);
+}
+
+})
+.catch(()=>{});
+
 const savedCover =
 localStorage.getItem("coverPhoto");
 
@@ -3149,33 +3229,6 @@ if(p1){
 profilePhoto.src = p1;
 
 }
-
-ayDbOku("coverPhoto")
-.then(savedCoverDb=>{
-
-if(savedCoverDb){
-
-document.getElementById(
-"coverPhoto"
-).style.backgroundImage =
-`url('${savedCoverDb}')`;
-
-}
-
-})
-.catch(()=>{});
-
-ayDbOku("profilePhoto")
-.then(savedProfileDb=>{
-
-if(savedProfileDb){
-
-profilePhoto.src = savedProfileDb;
-
-}
-
-})
-.catch(()=>{});
 
 let p3 =
 localStorage.getItem("profilAd");
