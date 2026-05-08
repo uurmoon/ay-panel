@@ -2134,6 +2134,489 @@ font-size:22px;
 }
 }
 
+
+
+/* === AY COMPACT V2 + BAKIM LİSTESİ === */
+.container{
+padding:10px 12px;
+padding-bottom:132px;
+}
+
+.sectionHead{
+margin:4px 2px 10px;
+}
+
+.sectionHead h2{
+font-size:20px;
+letter-spacing:-.35px;
+}
+
+.aptCard{
+border-radius:22px;
+padding:10px 10px 10px 14px;
+margin-bottom:9px;
+grid-template-columns:48px minmax(0,1fr) 86px 12px;
+gap:8px;
+min-height:82px;
+}
+
+.aptCard:before{
+top:11px;
+bottom:11px;
+width:4px;
+}
+
+.aptIcon{
+width:48px;
+height:48px;
+border-radius:17px;
+}
+
+.aptIcon:before{
+width:21px;
+height:25px;
+border-width:1.7px;
+border-radius:5px;
+bottom:11px;
+}
+
+.aptIcon:after{
+width:3px;
+height:3px;
+top:15px;
+left:17px;
+box-shadow:
+7px 0 currentColor,
+0 7px currentColor,
+7px 7px currentColor,
+0 14px currentColor,
+7px 14px currentColor;
+}
+
+.aptName{
+font-size:16px;
+margin-bottom:4px;
+line-height:1.1;
+}
+
+.aptMeta{
+font-size:12.5px;
+line-height:1.45;
+}
+
+.metaLine{
+gap:5px;
+}
+
+.miniMetaIcon{
+width:13px;
+height:13px;
+border-radius:5px;
+border-width:1.6px;
+}
+
+.miniMetaIcon.person:before{
+width:4px;
+height:4px;
+left:3.5px;
+top:2px;
+}
+
+.miniMetaIcon.person:after{
+width:8px;
+height:4px;
+left:2px;
+bottom:2px;
+}
+
+.miniMetaIcon.phone:before{
+width:5px;
+height:8px;
+left:3px;
+top:1px;
+border-width:1.5px;
+}
+
+.aptRight{
+font-size:11.5px;
+line-height:1.42;
+}
+
+.badge,
+.payBadge{
+font-size:10.5px;
+padding:5px 8px;
+margin-bottom:4px;
+}
+
+.arrow{
+font-size:21px;
+}
+
+.lastActionCard{
+border-radius:22px;
+padding:12px 14px;
+gap:11px;
+margin:2px 0 14px;
+}
+
+.lastActionIcon{
+width:34px;
+height:34px;
+border-radius:13px;
+font-size:17px;
+}
+
+.lastActionValue{
+font-size:14px;
+}
+
+.statGrid{
+gap:7px;
+margin:8px 0 18px;
+}
+
+.statCard{
+border-radius:21px;
+min-height:88px;
+padding:10px 5px;
+}
+
+.statIcon{
+width:32px;
+height:32px;
+border-radius:12px;
+margin-bottom:6px;
+}
+
+.statNumber{
+font-size:20px;
+}
+
+.statLabel{
+font-size:10.5px;
+}
+
+.tabbar{
+width:calc(100% - 36px);
+max-width:360px;
+height:70px;
+display:grid;
+grid-template-columns:1fr 1fr 1fr 1fr;
+justify-items:center;
+}
+
+.tabItem{
+width:auto;
+min-width:64px;
+font-size:11px;
+}
+
+.tabGap{
+width:64px;
+height:1px;
+pointer-events:none;
+}
+
+.middleButton{
+width:64px;
+height:64px;
+font-size:39px;
+top:-24px;
+}
+
+.tabIconCheck:before{
+content:"";
+position:absolute;
+width:17px;
+height:17px;
+border:2px solid currentColor;
+border-radius:6px;
+left:2px;
+top:3px;
+}
+
+.tabIconCheck:after{
+content:"";
+position:absolute;
+width:11px;
+height:6px;
+border-left:2.4px solid currentColor;
+border-bottom:2.4px solid currentColor;
+left:7px;
+top:8px;
+transform:rotate(-45deg);
+}
+
+.maintHeader{
+background:linear-gradient(135deg,rgba(255,255,255,.94),rgba(247,250,255,.94));
+border:1px solid rgba(229,231,235,.9);
+border-radius:26px;
+padding:17px;
+box-shadow:0 12px 30px rgba(15,23,42,.055);
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:14px;
+margin:4px 0 12px;
+}
+
+.maintKicker{
+font-size:12px;
+font-weight:900;
+color:#007aff;
+letter-spacing:.3px;
+text-transform:uppercase;
+margin-bottom:4px;
+}
+
+.maintHeader h2{
+font-size:25px;
+line-height:1.05;
+margin:0;
+letter-spacing:-.55px;
+}
+
+.maintHeader p{
+font-size:13px;
+line-height:1.35;
+color:#6b7280;
+margin:7px 0 0;
+}
+
+.maintCircle{
+width:60px;
+height:60px;
+border-radius:22px;
+background:#eaf2ff;
+color:#007aff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:17px;
+font-weight:950;
+flex-shrink:0;
+}
+
+.maintStats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin:0 0 12px;
+}
+
+.maintStat{
+background:white;
+border-radius:20px;
+padding:12px 8px;
+box-shadow:0 8px 24px rgba(0,0,0,.045);
+text-align:center;
+}
+
+.maintStat b{
+display:block;
+font-size:21px;
+letter-spacing:-.3px;
+}
+
+.maintStat span{
+display:block;
+font-size:11px;
+font-weight:800;
+color:#6b7280;
+margin-top:2px;
+}
+
+.maintRow{
+background:white;
+border-radius:21px;
+padding:11px 12px;
+margin-bottom:9px;
+box-shadow:0 8px 24px rgba(0,0,0,.045);
+display:grid;
+grid-template-columns:38px minmax(0,1fr) auto;
+gap:10px;
+align-items:center;
+position:relative;
+overflow:hidden;
+}
+
+.maintRow:before{
+content:"";
+position:absolute;
+left:0;
+top:10px;
+bottom:10px;
+width:4px;
+border-radius:0 999px 999px 0;
+background:#c7c7cc;
+}
+
+.maintDone:before{background:#34c759;}
+.maintToday:before{background:#007aff;}
+.maintOverdue:before{background:#ff9500;}
+
+.maintCheck{
+width:38px;
+height:38px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+font-weight:950;
+background:#f1f1f1;
+color:#8e8e93;
+}
+
+.maintDone .maintCheck{
+background:#eaf8f0;
+color:#22a859;
+}
+
+.maintToday .maintCheck{
+background:#eaf2ff;
+color:#007aff;
+}
+
+.maintOverdue .maintCheck{
+background:#fff4e8;
+color:#ff7a00;
+}
+
+.maintName{
+font-size:15.8px;
+font-weight:900;
+letter-spacing:-.25px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.maintMeta{
+font-size:12px;
+line-height:1.45;
+color:#6b7280;
+margin-top:3px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+.maintSide{
+display:flex;
+flex-direction:column;
+align-items:flex-end;
+gap:6px;
+}
+
+.maintPill{
+display:inline-block;
+padding:5px 8px;
+border-radius:999px;
+font-size:10.5px;
+font-weight:900;
+white-space:nowrap;
+background:#f1f1f1;
+color:#737373;
+}
+
+.maintPillDone{background:#eaf8f0;color:#22a859;}
+.maintPillToday{background:#eaf2ff;color:#007aff;}
+.maintPillOverdue{background:#fff4e8;color:#ff7a00;}
+
+.maintMiniBtn{
+width:auto;
+margin:0;
+padding:7px 9px;
+border-radius:12px;
+font-size:11.5px;
+font-weight:900;
+white-space:nowrap;
+}
+
+.maintMiniBtn.green{
+background:#34c759;
+color:white;
+}
+
+.maintMiniBtn.gray{
+background:#e5e5ea;
+color:#111827;
+}
+
+body.darkMode .maintHeader,
+body.darkMode .maintStat,
+body.darkMode .maintRow{
+background:#151b26;
+color:#f8fafc;
+border-color:#263241;
+box-shadow:0 8px 28px rgba(0,0,0,.22);
+}
+
+body.darkMode .maintHeader{
+background:linear-gradient(135deg,rgba(21,27,38,.88),rgba(15,20,29,.88));
+}
+
+body.darkMode .maintHeader p,
+body.darkMode .maintStat span,
+body.darkMode .maintMeta{
+color:#a7b0bf;
+}
+
+body.darkMode .maintCircle{
+background:#12223a;
+color:#60a5fa;
+}
+
+body.darkMode .maintCheck,
+body.darkMode .maintPill,
+body.darkMode .maintMiniBtn.gray{
+background:#263241;
+color:#f8fafc;
+}
+
+body.darkMode .maintDone .maintCheck,
+body.darkMode .maintPillDone{
+background:#10281a;
+color:#4ade80;
+}
+
+body.darkMode .maintToday .maintCheck,
+body.darkMode .maintPillToday{
+background:#12223a;
+color:#60a5fa;
+}
+
+body.darkMode .maintOverdue .maintCheck,
+body.darkMode .maintPillOverdue{
+background:#2b1e0f;
+color:#fbbf24;
+}
+
+@media(max-width:430px){
+.aptCard{
+grid-template-columns:44px minmax(0,1fr) 80px 10px;
+padding:9px 9px 9px 13px;
+gap:7px;
+min-height:78px;
+}
+.aptIcon{width:44px;height:44px;border-radius:16px;}
+.aptIcon:before{width:20px;height:24px;bottom:10px;}
+.aptIcon:after{top:14px;left:15.5px;}
+.aptName{font-size:15.2px;}
+.aptMeta{font-size:12px;}
+.aptRight{font-size:10.8px;}
+.badge,.payBadge{font-size:10px;padding:4.5px 7px;}
+.maintHeader h2{font-size:23px;}
+.maintCircle{width:56px;height:56px;border-radius:20px;font-size:16px;}
+.maintRow{grid-template-columns:36px minmax(0,1fr) auto;padding:10px 11px;gap:8px;}
+.maintName{font-size:15px;}
+.maintMeta{font-size:11.5px;}
+.maintMiniBtn{font-size:11px;padding:6px 8px;}
+.tabItem{min-width:58px;font-size:10.5px;}
+}
+
 </style>
 </head>
 
@@ -2354,14 +2837,21 @@ Güvenli yükseliş, düzenli bakım.
 
 <div class="tabbar">
 
-<div class="tabItem activeTab" onclick="anaSayfa()">
+<div class="tabItem" data-tab="bakim" onclick="bakimListesiAc()">
+<div class="tabIcon tabIconCheck"></div>
+<div class="tabText">Bakım</div>
+</div>
+
+<div class="tabItem activeTab" data-tab="apartman" onclick="anaSayfa()">
 <div class="tabIcon tabIconBuilding"></div>
 <div class="tabText">Apartmanlar</div>
 </div>
 
+<div class="tabGap"></div>
+
 <div class="middleButton" onclick="formAc()">+</div>
 
-<div class="tabItem" onclick="profilAc()">
+<div class="tabItem" data-tab="profil" onclick="profilAc()">
 <div class="tabIcon tabIconProfile"></div>
 <div class="tabText">Profil</div>
 </div>
@@ -2420,6 +2910,8 @@ localStorage.getItem("apartmanlar")
 let editIndex = null;
 let aktifDetay = null;
 let aktifFiltre = "all";
+let aktifEkran = "apartman";
+let oncekiEkran = "apartman";
 
 const APP_NAME = "AY ASANSÖR";
 const APP_VERSION = "v1.0.0";
@@ -2556,6 +3048,34 @@ yeni === "dark"
 : "Light"
 );
 
+}
+
+
+function setAktifTab(tab){
+
+let items =
+document.querySelectorAll(".tabItem");
+
+items.forEach(item=>{
+item.classList.remove("activeTab");
+});
+
+if(!tab) return;
+
+let aktif =
+document.querySelector(`.tabItem[data-tab="${tab}"]`);
+
+if(aktif){
+aktif.classList.add("activeTab");
+}
+
+}
+
+function localVeriKaydet(){
+localStorage.setItem(
+"apartmanlar",
+JSON.stringify(data)
+);
 }
 
 function bugun(){
@@ -2760,10 +3280,15 @@ function formAc(){
 
 haptic("medium");
 
+aktifEkran = "apartman";
+setAktifTab("apartman");
+
 searchArea.style.display="flex";
 profilPanel.style.display="none";
 detayPanel.style.display="none";
 liste.style.display="block";
+
+goster();
 
 if(formBox.style.display=="none"){
 
@@ -2994,7 +3519,7 @@ h += `
 ${d.durum}
 </span><br>
 ${odemeBadge(a)}<br>
-<span class="kartDate">Tarih: ${kartTarih(a.bakimGunu)}</span><br>
+<span class="kartDate">${kartTarih(a.bakimGunu)}</span><br>
 ${a.ucret || 0} ₺
 </div>
 
@@ -3015,9 +3540,215 @@ toplamKazanc.innerText = toplam + " ₺";
 
 }
 
+
+function bakimBuAyYapildi(a){
+return tarihBuAyMi(a.bakimTarihi);
+}
+
+function bakimKontrolBilgisi(a){
+
+if(bakimBuAyYapildi(a)){
+return {
+text:"Yapıldı",
+cls:"maintDone",
+pill:"maintPillDone",
+icon:"✓",
+rank:3
+};
+}
+
+if(a.bakimGunu && a.bakimGunu < bugunISO()){
+return {
+text:"Gecikti",
+cls:"maintOverdue",
+pill:"maintPillOverdue",
+icon:"!",
+rank:0
+};
+}
+
+if(a.bakimGunu && a.bakimGunu === bugunISO()){
+return {
+text:"Bugün",
+cls:"maintToday",
+pill:"maintPillToday",
+icon:"•",
+rank:1
+};
+}
+
+return {
+text:"Bekliyor",
+cls:"maintWaiting",
+pill:"",
+icon:"–",
+rank:2
+};
+
+}
+
+function bakimListesiAc(){
+
+haptic("light");
+
+aktifDetay = null;
+aktifEkran = "bakim";
+setAktifTab("bakim");
+
+searchArea.style.display="none";
+filterPanel.style.display="none";
+formBox.style.display="none";
+detayPanel.style.display="none";
+profilPanel.style.display="none";
+liste.style.display="block";
+
+let satirlar =
+data
+.map((a,i)=>({a,i,b:bakimKontrolBilgisi(a)}))
+.sort((x,y)=>{
+if(x.b.rank !== y.b.rank){
+return x.b.rank - y.b.rank;
+}
+return String(x.a.bakimGunu || "").localeCompare(String(y.a.bakimGunu || ""));
+});
+
+let yapildi = satirlar.filter(x=>x.b.text === "Yapıldı").length;
+let geciken = satirlar.filter(x=>x.b.text === "Gecikti").length;
+let bekleyen = data.length - yapildi;
+
+let h = `
+<div class="maintHeader">
+<div>
+<div class="maintKicker">Kontrol</div>
+<h2>Bakım Listesi</h2>
+<p>Bu ay hangi apartmanda bakım yapıldı, hangisi bekliyor hızlıca gör.</p>
+</div>
+<div class="maintCircle">${yapildi}/${data.length}</div>
+</div>
+
+<div class="maintStats">
+<div class="maintStat"><b>${yapildi}</b><span>Yapıldı</span></div>
+<div class="maintStat"><b>${bekleyen}</b><span>Bekliyor</span></div>
+<div class="maintStat"><b>${geciken}</b><span>Geciken</span></div>
+</div>
+`;
+
+if(!satirlar.length){
+
+h += `
+<div class="emptyBox">
+Bakım listesi için önce apartman eklemen gerekiyor.
+</div>
+`;
+
+}else{
+
+satirlar.forEach(item=>{
+
+let a = item.a;
+let i = item.i;
+let b = item.b;
+let sonBakim = a.bakimTarihi || "Yok";
+let plan = kartTarih(a.bakimGunu);
+let buton =
+b.text === "Yapıldı"
+? `<button class="maintMiniBtn gray" onclick="bakimRaporAc(event,${i})">Rapor</button>`
+: `<button class="maintMiniBtn green" onclick="bakimKontrolIsaretle(event,${i})">Yapıldı</button>`;
+
+h += `
+<div class="maintRow ${b.cls}" onclick="detayAc(${i})">
+<div class="maintCheck">${b.icon}</div>
+<div>
+<div class="maintName">${a.ad || "-"}</div>
+<div class="maintMeta">Plan: ${plan} • Son bakım: ${sonBakim}</div>
+</div>
+<div class="maintSide">
+<span class="maintPill ${b.pill}">${b.text}</span>
+${buton}
+</div>
+</div>
+`;
+
+});
+
+}
+
+liste.innerHTML = h;
+
+animateIn(liste,"screenFadeUp");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function bakimKontrolIsaretle(e,i){
+
+if(e){
+e.stopPropagation();
+}
+
+haptic("success");
+
+if(!data[i]) return;
+
+if(!data[i].kayitlar){
+data[i].kayitlar = [];
+}
+
+if(bakimBuAyYapildi(data[i])){
+toast("Bu ay bakım zaten işaretli");
+return;
+}
+
+data[i].bakimTarihi = bugun();
+
+data[i].kayitlar.push(
+"Bakım yapıldı (" + bugun() + ")"
+);
+
+localVeriKaydet();
+
+toast("Bakım işaretlendi");
+
+bakimListesiAc();
+
+}
+
+function bakimRaporAc(e,i){
+
+if(e){
+e.stopPropagation();
+}
+
+haptic("light");
+
+pdf(i);
+
+}
+
+function geriDon(){
+
+if(oncekiEkran === "bakim"){
+bakimListesiAc();
+return;
+}
+
+anaSayfa();
+
+}
+
 function detayAc(i){
 
 haptic("light");
+
+if(aktifEkran !== "detay"){
+oncekiEkran = aktifEkran || "apartman";
+}
+
+aktifEkran = "detay";
 
 aktifDetay = i;
 
@@ -3044,7 +3775,7 @@ detayPanel.innerHTML = `
 
 <div class="detailHero">
 
-<button class="detailTopBtn" onclick="anaSayfa()">
+<button class="detailTopBtn" onclick="geriDon()">
 ← Geri
 </button>
 
@@ -3782,6 +4513,10 @@ function anaSayfa(){
 
 haptic("light");
 
+aktifEkran = "apartman";
+oncekiEkran = "apartman";
+setAktifTab("apartman");
+
 aktifDetay = null;
 searchArea.style.display="flex";
 profilPanel.style.display="none";
@@ -3798,6 +4533,10 @@ animateIn(searchArea,"screenSoft");
 function profilAc(){
 
 haptic("light");
+
+aktifEkran = "profil";
+oncekiEkran = "profil";
+setAktifTab("profil");
 
 aktifDetay = null;
 searchArea.style.display="none";
@@ -4547,6 +5286,7 @@ result.classList.add("show");
 document.addEventListener("DOMContentLoaded",()=>{
 
 temaUygula();
+setAktifTab("apartman");
 
 });
 
