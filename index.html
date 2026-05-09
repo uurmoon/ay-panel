@@ -10,14 +10,14 @@ document.documentElement.classList.add("darkRoot");
 }
 </script>
 
-<title>ElevatorX</title>
+<title>AY ASANSÖR</title>
 
 <link rel="icon" type="image/png" href="https://i.imgur.com/jbOSWKN.png">
 <link rel="apple-touch-icon" href="https://i.imgur.com/jbOSWKN.png?v=2">
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ElevatorX">
+<meta name="apple-mobile-web-app-title" content="AY ASANSÖR">
 
 <style>
 html.darkRoot{
@@ -1539,27 +1539,6 @@ color:#9b9b9f;
 line-height:1.65;
 }
 
-.profileSupportMail{
-margin:16px auto 0;
-display:inline-flex;
-align-items:center;
-justify-content:center;
-gap:8px;
-min-height:44px;
-padding:0 16px;
-border-radius:999px;
-background:#0f172a;
-color:#fff !important;
-font-size:13px;
-font-weight:900;
-text-decoration:none;
-box-shadow:0 10px 24px rgba(15,23,42,.16);
-}
-
-.profileSupportMail:active{
-transform:scale(.98);
-}
-
 .toast{
 position:fixed;
 left:50%;
@@ -1775,12 +1754,6 @@ color:#d1d5db;
 body.darkMode .profileFooterSlogan,
 body.darkMode .profileFooterSmall{
 color:#7c8797;
-}
-
-body.darkMode .profileSupportMail{
-background:#1d4ed8;
-color:#fff !important;
-box-shadow:0 10px 24px rgba(29,78,216,.22);
 }
 
 body.darkMode .coverEdit{
@@ -2875,19 +2848,34 @@ display:none !important;
 left:50%;
 right:auto;
 transform:translateX(-50%);
-width:calc(100% - 44px);
-max-width:350px;
-height:68px;
+width:calc(100% - 42px);
+max-width:364px;
+height:70px;
 bottom:calc(16px + env(safe-area-inset-bottom));
-grid-template-columns:1fr 1fr 70px 1fr;
-padding:0 10px;
+grid-template-columns:1fr 1fr 84px 1fr;
+padding:0 12px;
 box-sizing:border-box;
+align-items:end;
 }
 
 .tabItem{
 min-width:0;
 width:100%;
 font-size:10.5px;
+}
+
+.tabText{
+display:block;
+white-space:nowrap;
+line-height:1.05;
+}
+
+.tabItem[data-tab="apartman"]{
+transform:translateX(-12px);
+}
+
+.tabItem[data-tab="profil"]{
+transform:translateX(4px);
 }
 
 .tabIcon{
@@ -2897,7 +2885,7 @@ margin-bottom:2px;
 }
 
 .tabGap{
-width:70px;
+width:84px;
 }
 
 .middleButton{
@@ -2935,15 +2923,17 @@ min-height:54px;
 .maintMeta{font-size:10.6px;}
 .maintPill{font-size:9.6px;padding:4.5px 6.5px;}
 .tabbar{
-width:calc(100% - 54px);
-max-width:340px;
-height:66px;
-grid-template-columns:1fr 1fr 66px 1fr;
-padding:0 8px;
+width:calc(100% - 46px);
+max-width:352px;
+height:67px;
+grid-template-columns:1fr 1fr 80px 1fr;
+padding:0 10px;
 }
-.tabGap{width:66px;}
+.tabGap{width:80px;}
 .middleButton{width:60px;height:60px;top:-21px;font-size:36px;}
 .tabItem{font-size:10px;}
+.tabItem[data-tab="apartman"]{transform:translateX(-10px);}
+.tabItem[data-tab="profil"]{transform:translateX(4px);}
 }
 
 body.darkMode .maintDone{
@@ -2965,6 +2955,22 @@ background:#3a1717;
 color:#ff7b72;
 }
 
+.backupInfo{
+margin-top:12px;
+padding:10px 12px;
+border-radius:16px;
+background:#f5f7fb;
+color:#6b7280;
+font-size:12px;
+font-weight:800;
+line-height:1.45;
+}
+
+body.darkMode .backupInfo{
+background:#0f141d;
+color:#9ca3af;
+}
+
 </style>
 </head>
 
@@ -2977,7 +2983,7 @@ color:#ff7b72;
 <span class="arrowUp">▲</span>
 <span class="arrowDown">▼</span>
 </div>
-<div class="splashBrand">ElevatorX</div>
+<div class="splashBrand">AY ASANSÖR</div>
 </div>
 </div>
 
@@ -2990,7 +2996,7 @@ color:#ff7b72;
 <span class="miniUp">▲</span>
 <span class="miniDown">▼</span>
 </div>
-<span>ElevatorX</span>
+<span>AY ASANSÖR</span>
 </div>
 
 <button
@@ -3090,7 +3096,7 @@ value="Uğur AY">
 id="profilFirma"
 class="profileJobInput"
 placeholder="Firma"
-value="ElevatorX">
+value="AY ASANSÖR">
 
 <textarea
 id="profilBio"
@@ -3131,7 +3137,7 @@ Ay Sonu Raporu Oluştur
 <h3>Veri Yedekleme</h3>
 
 <p>
-Apartman kayıtlarını, ödeme/bakım bilgilerini, teknik notları ve profil bilgilerini dosya olarak saklayabilirsin.
+Apartman kayıtların artık otomatik yedeklenir. İstersen ayrıca el ile dosya yedeği de indirebilirsin.
 </p>
 
 <button class="blue" onclick="yedekle()">
@@ -3142,6 +3148,8 @@ Verileri Yedekle
 Yedekten Geri Yükle
 </button>
 
+<div id="autoBackupInfo" class="backupInfo">Otomatik yedek hazırlanıyor...</div>
+
 <input
 type="file"
 id="yedekInput"
@@ -3151,12 +3159,6 @@ onchange="yedektenYukle(event)">
 
 </div>
 
-<div class="profileBox profileSupportBox">
-<h3>Destek</h3>
-<p>ElevatorX için destek ve geri bildirim hesabı.</p>
-<a class="profileSupportMail" href="mailto:supportelevatorx@gmail.com?subject=ElevatorX%20Destek">Destek Maili Gönder</a>
-</div>
-
 <div class="profileFooter">
 
 <img
@@ -3164,7 +3166,7 @@ src="https://i.imgur.com/jbOSWKN.png"
 class="profileFooterLogo">
 
 <div class="profileFooterTitle">
-ElevatorX
+AY ASANSÖR
 </div>
 
 <div class="profileFooterSlogan">
@@ -3172,8 +3174,7 @@ Bakım, tahsilat ve servis takip sistemi
 </div>
 
 <div class="profileFooterSmall">
-© 2026 ElevatorX. Tüm hakları saklıdır.<br>
-Destek: supportelevatorx@gmail.com<br>
+© 2026 AY ASANSÖR. Tüm hakları saklıdır.<br>
 Uğur AY • Teknik Servis<br>
 Kütahya / Tavşanlı
 </div>
@@ -3267,8 +3268,11 @@ let aktifDetay = null;
 let aktifFiltre = "all";
 let aktifEkran = "apartman";
 let oncekiEkran = "apartman";
+const AUTO_YEDEK_KEY = "ayAutoBackupLatest";
+const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
+const AUTO_YEDEK_LIMIT = 8;
 
-const APP_NAME = "ElevatorX";
+const APP_NAME = "AY ASANSÖR";
 const APP_VERSION = "v1.0.0";
 
 function hideSplash(){
@@ -3566,11 +3570,75 @@ return aylar[d.getMonth()] + " " + d.getFullYear();
 
 }
 
+function formatAutoYedekZamani(ts){
+if(!ts) return "Henüz alınmadı";
+let d = new Date(ts);
+if(isNaN(d.getTime())) return "Henüz alınmadı";
+let tarih = d.toLocaleDateString("tr-TR");
+let saat = d.toLocaleTimeString("tr-TR",{hour:"2-digit",minute:"2-digit"});
+return tarih + " • " + saat;
+}
+
+function autoYedekVerisi(){
+return {
+surum:"1.1.5-auto-backup",
+tur:"otomatik",
+olusturmaTarihi:new Date().toISOString(),
+apartmanlar:data,
+profil:{
+ad:localStorage.getItem("profilAd") || (typeof profilAd !== "undefined" ? profilAd.value : "") || "",
+firma:localStorage.getItem("profilFirma") || (typeof profilFirma !== "undefined" ? profilFirma.value : "") || "",
+bio:localStorage.getItem("profilBio") || (typeof profilBio !== "undefined" ? profilBio.value : "") || "",
+profilFoto:localStorage.getItem("profilePhoto") || "",
+kapakFoto:localStorage.getItem("coverPhoto") || ""
+},
+tema:localStorage.getItem("tema") || "light"
+};
+}
+
+function autoYedekBilgiGuncelle(){
+let el = document.getElementById("autoBackupInfo");
+if(!el) return;
+let son = localStorage.getItem("ayAutoBackupAt");
+el.textContent = son
+? "Son otomatik yedek: " + formatAutoYedekZamani(son)
+: "Otomatik yedek henüz oluşmadı";
+}
+
+function autoYedekAl(sessiz=true){
+try{
+let yedek = autoYedekVerisi();
+localStorage.setItem(AUTO_YEDEK_KEY, JSON.stringify(yedek));
+let gecmis = [];
+try{
+gecmis = JSON.parse(localStorage.getItem(AUTO_YEDEK_HISTORY_KEY) || "[]");
+if(!Array.isArray(gecmis)) gecmis = [];
+}catch(err){
+gecmis = [];
+}
+gecmis.unshift({
+olusturmaTarihi:yedek.olusturmaTarihi,
+apartmanSayisi:Array.isArray(data) ? data.length : 0,
+veri:yedek
+});
+gecmis = gecmis.slice(0, AUTO_YEDEK_LIMIT);
+localStorage.setItem(AUTO_YEDEK_HISTORY_KEY, JSON.stringify(gecmis));
+localStorage.setItem("ayAutoBackupAt", yedek.olusturmaTarihi);
+autoYedekBilgiGuncelle();
+if(!sessiz){
+toast("Otomatik yedek alındı");
+}
+}catch(err){
+console.log("Otomatik yedek alınamadı", err);
+}
+}
+
 function kaydet(){
 localStorage.setItem(
 "apartmanlar",
 JSON.stringify(data)
 );
+autoYedekAl(true);
 goster();
 }
 
@@ -4352,7 +4420,7 @@ w.document.write(`
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ödeme Makbuzu - ElevatorX</title>
+<title>Ödeme Makbuzu - AY ASANSÖR</title>
 
 <style>
 *{box-sizing:border-box}
@@ -4389,7 +4457,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <div class="brand">
 <img src="https://i.imgur.com/jbOSWKN.png">
 <div>
-<div class="brandTitle">ElevatorX</div>
+<div class="brandTitle">AY ASANSÖR</div>
 <div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
@@ -4422,17 +4490,17 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 
 <div class="noteBox">
 <div class="noteTitle">Açıklama</div>
-<div class="noteText">Ödeme kaydı ElevatorX servis takip sistemi üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
+<div class="noteText">Ödeme kaydı AY ASANSÖR servis takip sistemi üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
 </div>
 
 <div class="signatureArea">
-<div class="signatureBox">ElevatorX<br>Teknik Servis</div>
+<div class="signatureBox">AY ASANSÖR<br>Teknik Servis</div>
 <div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
 </div>
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı<br>Destek: supportelevatorx@gmail.com</div>
+<div>© 2026 AY ASANSÖR. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı</div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
@@ -4477,7 +4545,7 @@ w.document.write(`
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bakım Servis Raporu - ElevatorX</title>
+<title>Bakım Servis Raporu - AY ASANSÖR</title>
 
 <style>
 *{box-sizing:border-box}
@@ -4514,7 +4582,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <div class="brand">
 <img src="https://i.imgur.com/jbOSWKN.png">
 <div>
-<div class="brandTitle">ElevatorX</div>
+<div class="brandTitle">AY ASANSÖR</div>
 <div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
@@ -4533,7 +4601,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <div class="statusIcon iconBlue">✓</div>
 <div>
 <div class="statusTitle titleBlue">${durum}</div>
-<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde ElevatorX tarafından kayıt altına alınmıştır.</div>
+<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde AY ASANSÖR tarafından kayıt altına alınmıştır.</div>
 </div>
 </div>
 
@@ -4559,13 +4627,13 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 </div>
 
 <div class="signatureArea">
-<div class="signatureBox">ElevatorX<br>Teknik Servis</div>
+<div class="signatureBox">AY ASANSÖR<br>Teknik Servis</div>
 <div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
 </div>
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı<br>Destek: supportelevatorx@gmail.com</div>
+<div>© 2026 AY ASANSÖR. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı</div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
@@ -4627,7 +4695,7 @@ w.document.write(`
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ay Sonu Raporu - ElevatorX</title>
+<title>Ay Sonu Raporu - AY ASANSÖR</title>
 
 <style>
 *{box-sizing:border-box}
@@ -4664,7 +4732,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <div class="brand">
 <img src="https://i.imgur.com/jbOSWKN.png">
 <div>
-<div class="brandTitle">ElevatorX</div>
+<div class="brandTitle">AY ASANSÖR</div>
 <div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
@@ -4706,7 +4774,7 @@ ${geciken.length ? geciken.map(a=>`<div class="listItem">${a.ad || "-"} — ${a.
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı<br>Destek: supportelevatorx@gmail.com</div>
+<div>© 2026 AY ASANSÖR. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı</div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
@@ -4731,7 +4799,7 @@ function yedekle(){
 haptic("medium");
 
 let yedek = {
-surum:"1.1.4-last-action-pay-badge",
+surum:"1.1.5-auto-backup",
 olusturmaTarihi:new Date().toISOString(),
 apartmanlar:data,
 profil:{
@@ -4823,7 +4891,7 @@ coverPhoto.style.backgroundImage = `url('${yedek.profil.kapakFoto}')`;
 }
 
 profilAd.value = yedek.profil.ad || "Uğur AY";
-profilFirma.value = yedek.profil.firma || "ElevatorX";
+profilFirma.value = yedek.profil.firma || "AY ASANSÖR";
 profilBio.value = yedek.profil.bio || "Asansör bakım • montaj • servis\nKütahya / Tavşanlı";
 
 }
@@ -4840,6 +4908,7 @@ searchArea.style.display = "flex";
 liste.style.display = "block";
 
 goster();
+autoYedekAl(true);
 
 animateIn(liste,"screenFadeUp");
 
@@ -5121,6 +5190,7 @@ try{
 await ayDbKaydet("profilePhotoBlob",blob);
 
 toast("Profil fotoğrafı kaydedildi");
+autoYedekAl(true);
 
 }catch(err){
 
@@ -5149,6 +5219,7 @@ try{
 await ayDbKaydet("coverPhotoBlob",blob);
 
 toast("Kapak fotoğrafı kaydedildi");
+autoYedekAl(true);
 
 }catch(err){
 
@@ -5169,12 +5240,18 @@ function kaydetProfil(){
 localStorage.setItem("profilAd",profilAd.value);
 localStorage.setItem("profilFirma",profilFirma.value);
 localStorage.setItem("profilBio",profilBio.value);
+autoYedekAl(true);
+autoYedekBilgiGuncelle();
 
 }
 
 window.addEventListener("load",()=>{
 
 temaUygula();
+autoYedekBilgiGuncelle();
+if(!localStorage.getItem(AUTO_YEDEK_KEY)){
+autoYedekAl(true);
+}
 
 ayDbOku("coverPhotoBlob")
 .then(blob=>{
