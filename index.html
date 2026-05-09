@@ -1952,7 +1952,7 @@ font-size:13.5px;
 .badge{font-size:11px;padding:6px 9px;}
 }
 
-/* KOMPAKT APARTMAN KARTLARI - Uğur isteği */
+/* KOMPAKT APARTMAN KARTLARI -  isteği */
 .aptCard{
 border-radius:24px;
 padding:12px 13px 12px 18px;
@@ -2972,9 +2972,10 @@ color:#9ca3af;
 }
 
 
-
-/* FINAL ElevatorX UI fixes */
-.miniElevatorLogo{
+/* ElevatorX profile setup + final polish */
+.miniElevatorLogo,
+.profileFooterLogo,
+.brand img{
 display:none!important;
 }
 
@@ -2986,102 +2987,214 @@ gap:0!important;
 }
 
 .elevatorXWordmark{
-font-weight:950!important;
-letter-spacing:-1.15px!important;
-line-height:1!important;
-color:#0f172a!important;
+font-weight:950;
+letter-spacing:-1.1px;
+line-height:1;
+color:#0f172a;
 }
+
 .elevatorXWordmark span{
-color:#007aff!important;
+color:#007aff;
 }
+
 .headerBrand .elevatorXWordmark{
-font-size:31px!important;
+font-size:30px;
 }
+
 .splashBrand.elevatorXWordmark{
-font-size:42px!important;
-margin-top:20px!important;
+font-size:42px;
+margin-top:20px;
 }
+
 body.darkMode .elevatorXWordmark,
 html.darkRoot .elevatorXWordmark{
-color:#f8fafc!important;
+color:#f8fafc;
 }
 
-.profileFooterLogo{display:none!important;}
-.profileFooter{
-padding-bottom:128px!important;
-}
-.profileFooterTitle{
-font-size:23px!important;
-font-weight:950!important;
-color:#0f172a!important;
-}
-.profileFooterSlogan{
-font-weight:800!important;
-color:#64748b!important;
-}
-.profileFooterSmall{
-max-width:330px!important;
-margin-left:auto!important;
-margin-right:auto!important;
-}
-body.darkMode .profileFooterTitle{color:#f8fafc!important;}
-
-.appVersionCard{
-margin:18px 0 20px;
-padding:14px 16px;
-border-radius:22px;
-background:rgba(255,255,255,.88);
-border:1px solid rgba(15,23,42,.06);
-box-shadow:0 10px 24px rgba(15,23,42,.06);
-display:flex;
+.profileSetupOverlay{
+position:fixed;
+inset:0;
+z-index:1000001;
+background:rgba(246,247,251,.86);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
 align-items:center;
-justify-content:space-between;
-gap:12px;
+justify-content:center;
+padding:24px;
 }
-.versionLeft{display:flex;flex-direction:column;gap:3px;min-width:0;}
-.versionLeft strong{font-size:15px;font-weight:900;color:#0f172a;letter-spacing:-.2px;}
-.versionLeft span{font-size:12px;font-weight:700;color:#64748b;}
-.versionBadge{flex-shrink:0;font-size:12px;font-weight:900;color:#007aff;background:#eef6ff;padding:8px 10px;border-radius:999px;}
-body.darkMode .appVersionCard{background:rgba(21,27,38,.78);border-color:rgba(255,255,255,.08);}
-body.darkMode .versionLeft strong{color:#f8fafc;}
-body.darkMode .versionLeft span{color:#94a3b8;}
-body.darkMode .versionBadge{background:rgba(0,122,255,.16);color:#5ac8fa;}
 
-/* Bottom tab bar final alignment */
+body.darkMode .profileSetupOverlay,
+html.darkRoot .profileSetupOverlay{
+background:rgba(11,15,23,.86);
+}
+
+.profileSetupCard{
+width:min(420px,100%);
+background:rgba(255,255,255,.96);
+border:1px solid rgba(15,23,42,.08);
+border-radius:34px;
+box-shadow:0 26px 70px rgba(15,23,42,.18);
+padding:24px;
+}
+
+body.darkMode .profileSetupCard,
+html.darkRoot .profileSetupCard{
+background:rgba(21,27,38,.96);
+border-color:rgba(255,255,255,.08);
+}
+
+.setupKicker{
+font-size:12px;
+font-weight:950;
+letter-spacing:.6px;
+text-transform:uppercase;
+color:#007aff;
+margin-bottom:8px;
+}
+
+.profileSetupCard h2{
+margin:0 0 8px;
+font-size:30px;
+letter-spacing:-.9px;
+color:#0f172a;
+}
+
+.profileSetupCard p{
+margin:0 0 18px;
+font-size:14px;
+font-weight:700;
+line-height:1.45;
+color:#64748b;
+}
+
+.profileSetupCard input,
+.profileSetupCard textarea{
+width:100%;
+border:1px solid rgba(148,163,184,.26);
+background:#f8fafc;
+border-radius:18px;
+padding:14px 15px;
+font-size:15px;
+font-weight:800;
+margin-bottom:10px;
+outline:none;
+color:#0f172a;
+box-sizing:border-box;
+}
+
+.profileSetupCard textarea{
+min-height:82px;
+resize:none;
+font-family:inherit;
+}
+
+.setupPrimary{
+width:100%;
+margin-top:6px;
+border:none;
+border-radius:18px;
+background:#007aff;
+color:white;
+font-size:16px;
+font-weight:950;
+padding:15px;
+box-shadow:0 12px 30px rgba(0,122,255,.28);
+}
+
+.profileHintBox{
+margin:6px 0 18px;
+padding:12px 14px;
+border-radius:18px;
+background:#eef6ff;
+color:#376083;
+font-size:12.5px;
+font-weight:800;
+line-height:1.45;
+text-align:left;
+}
+
+body.darkMode .profileHintBox,
+html.darkRoot .profileHintBox{
+background:rgba(0,122,255,.14);
+color:#9bd0ff;
+}
+
+body.darkMode .profileSetupCard h2,
+html.darkRoot .profileSetupCard h2,
+body.darkMode .profileSetupCard input,
+body.darkMode .profileSetupCard textarea,
+html.darkRoot .profileSetupCard input,
+html.darkRoot .profileSetupCard textarea{
+color:#f8fafc;
+}
+
+body.darkMode .profileSetupCard input,
+body.darkMode .profileSetupCard textarea,
+html.darkRoot .profileSetupCard input,
+html.darkRoot .profileSetupCard textarea{
+background:#0f141d;
+border-color:rgba(255,255,255,.08);
+}
+
+body.darkMode .profileSetupCard p,
+html.darkRoot .profileSetupCard p{
+color:#94a3b8;
+}
+
+/* Final tabbar optimize */
 .tabbar{
 left:50%!important;
 right:auto!important;
 transform:translateX(-50%)!important;
-bottom:calc(12px + env(safe-area-inset-bottom))!important;
-width:min(390px, calc(100% - 28px))!important;
-height:84px!important;
 display:grid!important;
-grid-template-columns:minmax(72px,1fr) minmax(98px,1fr) 88px minmax(72px,1fr)!important;
+grid-template-columns:1fr 1fr 92px 1fr!important;
 align-items:end!important;
 justify-items:center!important;
-padding:0 16px 10px!important;
+width:calc(100% - 28px)!important;
+max-width:390px!important;
+height:86px!important;
+bottom:calc(12px + env(safe-area-inset-bottom))!important;
+padding:0 18px 10px!important;
 box-sizing:border-box!important;
-border-radius:40px!important;
+border-radius:36px!important;
 }
+
 .tabItem{
 width:100%!important;
-min-width:0!important;
-height:66px!important;
+min-width:76px!important;
+height:100%!important;
 display:flex!important;
 flex-direction:column!important;
 align-items:center!important;
 justify-content:flex-end!important;
-padding-bottom:8px!important;
-font-size:12.2px!important;
+font-size:12px!important;
 font-weight:850!important;
-letter-spacing:-.18px!important;
+padding-bottom:10px!important;
+transform:none!important;
 }
-.tabItem[data-tab="bakim"]{transform:translateX(-3px)!important;}
-.tabItem[data-tab="apartman"]{transform:translateX(-12px)!important;}
-.tabItem[data-tab="profil"]{transform:translateX(6px)!important;}
-.tabText{display:block!important;white-space:nowrap!important;line-height:1.05!important;}
-.tabIcon{width:28px!important;height:28px!important;margin-bottom:4px!important;}
-.tabGap{width:88px!important;height:1px!important;}
+
+.tabItem[data-tab="bakim"],
+.tabItem[data-tab="apartman"],
+.tabItem[data-tab="profil"]{
+transform:none!important;
+}
+
+.tabIcon{
+width:27px!important;
+height:27px!important;
+margin-bottom:4px!important;
+}
+
+.tabText{
+white-space:nowrap!important;
+line-height:1.1!important;
+letter-spacing:-.15px!important;
+}
+
+.tabGap{
+width:92px!important;
+}
+
 .middleButton{
 width:64px!important;
 height:64px!important;
@@ -3090,20 +3203,51 @@ font-size:39px!important;
 }
 
 @media(max-width:430px){
-.tabbar{width:calc(100% - 30px)!important;max-width:372px!important;height:82px!important;grid-template-columns:minmax(66px,1fr) minmax(96px,1fr) 84px minmax(66px,1fr)!important;padding:0 12px 9px!important;}
-.tabItem{font-size:11.8px!important;height:64px!important;}
-.tabIcon{width:27px!important;height:27px!important;}
-.tabItem[data-tab="bakim"]{transform:translateX(-2px)!important;}
-.tabItem[data-tab="apartman"]{transform:translateX(-10px)!important;}
-.tabItem[data-tab="profil"]{transform:translateX(5px)!important;}
-.tabGap{width:84px!important;}
-.middleButton{width:62px!important;height:62px!important;top:-19px!important;font-size:38px!important;}
+.tabbar{
+width:calc(100% - 22px)!important;
+max-width:386px!important;
+height:84px!important;
+grid-template-columns:1fr 1fr 86px 1fr!important;
+padding:0 14px 9px!important;
+}
+.tabItem{
+min-width:68px!important;
+font-size:11.4px!important;
+padding-bottom:9px!important;
+}
+.tabIcon{
+width:25px!important;
+height:25px!important;
+}
+.tabGap{
+width:86px!important;
+}
+.middleButton{
+width:60px!important;
+height:60px!important;
+top:-18px!important;
+font-size:36px!important;
+}
 }
 
 </style>
 </head>
 
 <body>
+
+<div id="profileSetupOverlay" class="profileSetupOverlay" style="display:none">
+  <div class="profileSetupCard">
+    <div class="setupKicker">İlk Kurulum</div>
+    <h2>Profilini oluştur</h2>
+    <p>Bu bilgiler sadece bu cihazda saklanır. Uygulama raporları ve profil ekranı bu bilgilere göre düzenlenir.</p>
+    <input id="setupAd" placeholder="İsim Soyisim">
+    <input id="setupFirma" placeholder="Firma">
+    <input id="setupTelefon" placeholder="Telefon">
+    <textarea id="setupBio" placeholder="Kısa bilgi / hizmet alanı">Asansör bakım • montaj • servis</textarea>
+    <button class="setupPrimary" onclick="ilkProfilKaydet()">Devam Et</button>
+  </div>
+</div>
+
 
 <div id="splash">
 <div class="splashWrap">
@@ -3204,7 +3348,7 @@ height:1px;
 <img
 id="profilePhoto"
 class="profilePhoto"
-src="https://i.imgur.com/jbOSWKN.png"
+src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20160%20160%22%3E%0A%3Crect%20width%3D%22160%22%20height%3D%22160%22%20rx%3D%2280%22%20fill%3D%22%230f172a%22/%3E%0A%3Ccircle%20cx%3D%2280%22%20cy%3D%2262%22%20r%3D%2228%22%20fill%3D%22%23f8fafc%22/%3E%0A%3Cpath%20d%3D%22M35%20132c7-28%2025-43%2045-43s38%2015%2045%2043%22%20fill%3D%22%23f8fafc%22/%3E%0A%3Ccircle%20cx%3D%2280%22%20cy%3D%2280%22%20r%3D%2274%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%227%22%20opacity%3D%22.55%22/%3E%0A%3C/svg%3E"
 onclick="profileInput.click()">
 
 </div>
@@ -3215,19 +3359,27 @@ onclick="profileInput.click()">
 id="profilAd"
 class="profileNameInput"
 placeholder="İsim Soyisim"
-value="Uğur AY">
+value="">
 
 <input
 id="profilFirma"
 class="profileJobInput"
 placeholder="Firma"
-value="ElevatorX">
+value="">
+
+<input
+id="profilTelefon"
+class="profileJobInput"
+placeholder="Telefon">
 
 <textarea
 id="profilBio"
 class="profileBio"
-placeholder="Bilgi yaz...">Asansör bakım • montaj • servis
-Kütahya / Tavşanlı</textarea>
+placeholder="Bilgi yaz..."></textarea>
+
+<div class="profileHintBox">
+Profil bilgilerini buradan düzenleyebilirsin. Bu bilgiler raporlara ve yedeklere otomatik işlenir.
+</div>
 
 <div class="profileStats">
 
@@ -3284,43 +3436,25 @@ onchange="yedektenYukle(event)">
 
 </div>
 
-
-<div class="appVersionCard">
-  <div class="versionLeft">
-    <strong>ElevatorX</strong>
-    <span>Asansör takip sistemi</span>
-  </div>
-  <div class="versionBadge">Sürüm v1.0.52</div>
-</div>
-
 <div class="profileFooter">
 <div class="profileFooterTitle">ElevatorX</div>
 
 <div class="profileFooterSlogan">Asansör takip sistemi</div>
 
-
-
-
-
-</div>
-
-</div>
-
-</div>
-
-
 <div class="profileFooterSmall">
-ElevatorX, apartman bakım, tahsilat ve servis kayıtlarını tek ekrandan takip etmek için hazırlanmıştır.
-</div>
-
-<div class="profileFooterSmall">
-Sürüm v1.0.52<br>
+© 2026 ElevatorX. Tüm hakları saklıdır.<br>
+Asansör takip sistemi<br>
+Sürüm v1.0.53<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
-<div class="profileFooterSmall">
-© 2026 ElevatorX. Tüm hakları saklıdır.
+
 </div>
+
+</div>
+
+</div>
+
 </div>
 
 <div class="tabbar">
@@ -3405,7 +3539,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.52";
+const APP_VERSION = "v1.0.53";
 
 function hideSplash(){
 
@@ -3720,6 +3854,7 @@ apartmanlar:data,
 profil:{
 ad:localStorage.getItem("profilAd") || (typeof profilAd !== "undefined" ? profilAd.value : "") || "",
 firma:localStorage.getItem("profilFirma") || (typeof profilFirma !== "undefined" ? profilFirma.value : "") || "",
+telefon:localStorage.getItem("profilTelefon") || (typeof profilTelefon !== "undefined" ? profilTelefon.value : "") || "",
 bio:localStorage.getItem("profilBio") || (typeof profilBio !== "undefined" ? profilBio.value : "") || "",
 profilFoto:localStorage.getItem("profilePhoto") || "",
 kapakFoto:localStorage.getItem("coverPhoto") || ""
@@ -4479,7 +4614,6 @@ haptic("success");
 if(data[i].odemeTarihi){
 toast("Ödeme makbuzu oluşturuldu");
 odemeMakbuzuPdf(i);
-if(aktifDetay !== null && data[aktifDetay]){detayAc(aktifDetay);}
 return;
 }
 
@@ -4508,7 +4642,6 @@ haptic("success");
 if(data[i].bakimTarihi){
 toast("Bakım raporu oluşturuldu");
 pdf(i);
-if(aktifDetay !== null && data[aktifDetay]){detayAc(aktifDetay);}
 return;
 }
 
@@ -4535,6 +4668,11 @@ function odemeMakbuzuPdf(i){
 let a = data[i];
 
 if(!a) return;
+
+let profil = profilBilgileri();
+let servisFirma = profil.firma || APP_NAME;
+let servisAd = profil.ad || "Teknik Servis";
+let servisTel = profil.telefon || "";
 
 let raporNo =
 "AY-ODM-" +
@@ -4575,64 +4713,19 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 .section{margin:0 30px 18px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;overflow:hidden}.sectionTitle{padding:16px 18px;font-size:17px;font-weight:950;border-bottom:1px solid #edf0f5;background:#fff}.list{padding:14px 18px;font-size:14px;color:#4b5563;line-height:1.8}.listItem{padding:7px 0;border-bottom:1px solid rgba(229,231,235,.8)}.listItem:last-child{border-bottom:none}.empty{color:#9ca3af;font-style:italic}
 .signatureArea{padding:6px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.signatureBox{border-top:1.5px solid #cfd5df;padding-top:10px;font-size:13px;color:#6b7280;font-weight:800;text-align:center}
 .footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}
-@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn{display:none}}
+@page{size:A4;margin:7mm}
+.pdfBackBtn{position:fixed;left:16px;top:16px;z-index:9999;border:none;border-radius:999px;background:#ffffff;color:#111827;padding:12px 16px;font-size:15px;font-weight:900;box-shadow:0 10px 30px rgba(15,23,42,.16)}
+@media print{html,body{background:#fff!important;padding:0!important;margin:0!important;zoom:.72}.page{max-width:none!important;width:100%!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}.topBand{height:5px!important}.header{padding:12px 18px 10px!important}.brandTitle{font-size:18px!important}.brandSub{font-size:10.5px!important}.reportMeta{font-size:10px!important}.titleBox{padding:12px 18px 8px!important}.docTitle{font-size:22px!important}.docDesc{font-size:12px!important;margin-top:4px!important}.statusBox{margin:6px 18px 10px!important;padding:10px!important;border-radius:14px!important}.statusIcon{width:26px!important;height:26px!important;font-size:15px!important}.statusTitle{font-size:14px!important}.statusText{font-size:11.5px!important;line-height:1.32!important}.infoGrid{padding:0 18px 10px!important;gap:7px!important}.infoCard{padding:9px 10px!important;min-height:auto!important;border-radius:12px!important}.label{font-size:9.5px!important;margin-bottom:3px!important}.value{font-size:13px!important}.amountCard .value,.summaryValue{font-size:20px!important}.noteBox{margin:0 18px 10px!important;padding:10px!important;border-radius:12px!important}.noteTitle{font-size:11px!important;margin-bottom:4px!important}.noteText,.list{font-size:10.5px!important;line-height:1.35!important}.checkList{margin:0 18px 10px!important;gap:6px!important}.checkItem{padding:7px 8px!important;font-size:10.5px!important;border-radius:10px!important}.checkDot{width:14px!important;height:14px!important;font-size:9px!important}.signatureArea{padding:4px 18px 10px!important;gap:12px!important}.signatureBox{font-size:10px!important;padding-top:6px!important}.footer{padding:8px 18px!important;font-size:9.5px!important}.summaryGrid{padding:0 18px 10px!important;gap:7px!important}.summaryCard{padding:10px!important;border-radius:12px!important}.summaryLabel{font-size:9.5px!important;margin-bottom:3px!important}.section{margin:0 18px 8px!important;border-radius:12px!important}.sectionTitle{padding:8px 10px!important;font-size:12px!important}.list{padding:7px 10px!important}.listItem{padding:3px 0!important}.printBtn,.pdfBackBtn{display:none!important}}
 @media(max-width:720px){body{padding:14px}.header,.footer{flex-direction:column;align-items:flex-start;text-align:left}.reportMeta{text-align:left}.summaryGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.infoGrid,.checkList,.signatureArea{grid-template-columns:1fr}.signatureArea{gap:34px}}
 @media(max-width:480px){.summaryGrid{grid-template-columns:1fr}}
-
-
-/* Tek sayfa PDF ve geri butonu */
-@page{size:A4;margin:0;}
-.backBtn{position:fixed;left:18px;top:18px;z-index:9999;background:#111827;color:#fff;border:none;border-radius:999px;padding:10px 14px;font-size:14px;font-weight:900;box-shadow:0 10px 24px rgba(15,23,42,.22)}
-.brand img{display:none!important;}
-.brand{gap:0!important;}
-.brandTitle{color:#111827;}
-@media print{
-*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-html,body{width:210mm!important;height:297mm!important;margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;}
-.page{width:210mm!important;height:297mm!important;max-width:none!important;margin:0!important;border-radius:0!important;box-shadow:none!important;overflow:hidden!important;}
-.topBand{height:6px!important;}
-.header{padding:12mm 12mm 5mm!important;gap:10px!important;}
-.brandTitle{font-size:22px!important;}
-.brandSub{font-size:10.5px!important;margin-top:1px!important;}
-.reportMeta{font-size:10.5px!important;line-height:1.45!important;}
-.titleBox{padding:5mm 12mm 3mm!important;}
-.docTitle{font-size:22px!important;letter-spacing:-.4px!important;}
-.docDesc{font-size:11.5px!important;line-height:1.28!important;margin-top:5px!important;}
-.statusBox{margin:2mm 12mm 4mm!important;padding:3.5mm!important;border-radius:14px!important;gap:9px!important;}
-.statusIcon{width:28px!important;height:28px!important;font-size:16px!important;}
-.statusTitle{font-size:15px!important;margin-bottom:2px!important;}
-.statusText{font-size:11px!important;line-height:1.25!important;}
-.infoGrid{padding:0 12mm 4mm!important;gap:6px!important;}
-.infoCard{padding:7px 9px!important;min-height:42px!important;border-radius:10px!important;}
-.label{font-size:8.8px!important;margin-bottom:2px!important;letter-spacing:.22px!important;}
-.value{font-size:11.5px!important;line-height:1.16!important;}
-.amountCard .value{font-size:18px!important;}
-.noteBox{margin:0 12mm 4mm!important;padding:8px 10px!important;border-radius:12px!important;}
-.noteTitle{font-size:10.5px!important;margin-bottom:4px!important;}
-.noteText{font-size:10.5px!important;line-height:1.22!important;}
-.checkList{margin:0 12mm 4mm!important;gap:5px!important;}
-.checkItem{padding:6px 8px!important;font-size:9.8px!important;border-radius:9px!important;gap:6px!important;}
-.checkDot{width:14px!important;height:14px!important;font-size:9px!important;}
-.summaryGrid{padding:0 12mm 4mm!important;gap:6px!important;}
-.summaryCard{padding:8px 9px!important;border-radius:10px!important;}
-.summaryLabel{font-size:8.5px!important;margin-bottom:3px!important;}
-.summaryValue{font-size:17px!important;}
-.section{margin:0 12mm 3mm!important;border-radius:10px!important;}
-.sectionTitle{padding:7px 9px!important;font-size:12px!important;}
-.list{padding:6px 9px!important;font-size:9.8px!important;line-height:1.35!important;max-height:27mm!important;overflow:hidden!important;}
-.listItem{padding:3px 0!important;}
-.signatureArea{padding:1mm 12mm 4mm!important;gap:14px!important;}
-.signatureBox{font-size:9.5px!important;padding-top:5px!important;}
-.footer{padding:3.5mm 12mm!important;margin-top:0!important;font-size:9.5px!important;line-height:1.32!important;}
-.printBtn,.backBtn{display:none!important;}
-}
 </style>
 
 </head>
 <body>
 
-<button class="backBtn" onclick="if(window.opener){window.close();}else{history.back();}">← Geri</button>
+<button class="pdfBackBtn" onclick="window.close();">← Geri</button>
+
 <div class="page">
 <div class="topBand"></div>
 
@@ -4640,7 +4733,7 @@ html,body{width:210mm!important;height:297mm!important;margin:0!important;paddin
 <div class="brand">
 <img src="https://i.imgur.com/jbOSWKN.png">
 <div>
-<div class="brandTitle">ElevatorX</div>
+<div class="brandTitle">${servisFirma}</div>
 <div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
@@ -4673,17 +4766,17 @@ html,body{width:210mm!important;height:297mm!important;margin:0!important;paddin
 
 <div class="noteBox">
 <div class="noteTitle">Açıklama</div>
-<div class="noteText">Ödeme kaydı ElevatorX servis takip sistemi üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
+<div class="noteText">Ödeme kaydı ${APP_NAME} üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
 </div>
 
 <div class="signatureArea">
-<div class="signatureBox">ElevatorX<br>Teknik Servis</div>
+<div class="signatureBox">${servisFirma}<br>${servisAd}</div>
 <div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
 </div>
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Sürüm v1.0.52 • Destek: supportelevatorx@gmail.com</div><div>Asansör takip sistemi</div>
+<div>© 2026 ${APP_NAME}. Tüm hakları saklıdır.<br>Sürüm ${APP_VERSION} • Destek: supportelevatorx@gmail.com</div><div>Asansör takip sistemi</div>
 </div>
 
 
@@ -4705,6 +4798,11 @@ function pdf(i){
 haptic("medium");
 
 let a = data[i];
+
+let profil = profilBilgileri();
+let servisFirma = profil.firma || APP_NAME;
+let servisAd = profil.ad || "Teknik Servis";
+let servisTel = profil.telefon || "";
 
 let raporNo =
 "AY-BKM-" +
@@ -4748,64 +4846,19 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 .section{margin:0 30px 18px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;overflow:hidden}.sectionTitle{padding:16px 18px;font-size:17px;font-weight:950;border-bottom:1px solid #edf0f5;background:#fff}.list{padding:14px 18px;font-size:14px;color:#4b5563;line-height:1.8}.listItem{padding:7px 0;border-bottom:1px solid rgba(229,231,235,.8)}.listItem:last-child{border-bottom:none}.empty{color:#9ca3af;font-style:italic}
 .signatureArea{padding:6px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.signatureBox{border-top:1.5px solid #cfd5df;padding-top:10px;font-size:13px;color:#6b7280;font-weight:800;text-align:center}
 .footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}
-@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn{display:none}}
+@page{size:A4;margin:7mm}
+.pdfBackBtn{position:fixed;left:16px;top:16px;z-index:9999;border:none;border-radius:999px;background:#ffffff;color:#111827;padding:12px 16px;font-size:15px;font-weight:900;box-shadow:0 10px 30px rgba(15,23,42,.16)}
+@media print{html,body{background:#fff!important;padding:0!important;margin:0!important;zoom:.72}.page{max-width:none!important;width:100%!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}.topBand{height:5px!important}.header{padding:12px 18px 10px!important}.brandTitle{font-size:18px!important}.brandSub{font-size:10.5px!important}.reportMeta{font-size:10px!important}.titleBox{padding:12px 18px 8px!important}.docTitle{font-size:22px!important}.docDesc{font-size:12px!important;margin-top:4px!important}.statusBox{margin:6px 18px 10px!important;padding:10px!important;border-radius:14px!important}.statusIcon{width:26px!important;height:26px!important;font-size:15px!important}.statusTitle{font-size:14px!important}.statusText{font-size:11.5px!important;line-height:1.32!important}.infoGrid{padding:0 18px 10px!important;gap:7px!important}.infoCard{padding:9px 10px!important;min-height:auto!important;border-radius:12px!important}.label{font-size:9.5px!important;margin-bottom:3px!important}.value{font-size:13px!important}.amountCard .value,.summaryValue{font-size:20px!important}.noteBox{margin:0 18px 10px!important;padding:10px!important;border-radius:12px!important}.noteTitle{font-size:11px!important;margin-bottom:4px!important}.noteText,.list{font-size:10.5px!important;line-height:1.35!important}.checkList{margin:0 18px 10px!important;gap:6px!important}.checkItem{padding:7px 8px!important;font-size:10.5px!important;border-radius:10px!important}.checkDot{width:14px!important;height:14px!important;font-size:9px!important}.signatureArea{padding:4px 18px 10px!important;gap:12px!important}.signatureBox{font-size:10px!important;padding-top:6px!important}.footer{padding:8px 18px!important;font-size:9.5px!important}.summaryGrid{padding:0 18px 10px!important;gap:7px!important}.summaryCard{padding:10px!important;border-radius:12px!important}.summaryLabel{font-size:9.5px!important;margin-bottom:3px!important}.section{margin:0 18px 8px!important;border-radius:12px!important}.sectionTitle{padding:8px 10px!important;font-size:12px!important}.list{padding:7px 10px!important}.listItem{padding:3px 0!important}.printBtn,.pdfBackBtn{display:none!important}}
 @media(max-width:720px){body{padding:14px}.header,.footer{flex-direction:column;align-items:flex-start;text-align:left}.reportMeta{text-align:left}.summaryGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.infoGrid,.checkList,.signatureArea{grid-template-columns:1fr}.signatureArea{gap:34px}}
 @media(max-width:480px){.summaryGrid{grid-template-columns:1fr}}
-
-
-/* Tek sayfa PDF ve geri butonu */
-@page{size:A4;margin:0;}
-.backBtn{position:fixed;left:18px;top:18px;z-index:9999;background:#111827;color:#fff;border:none;border-radius:999px;padding:10px 14px;font-size:14px;font-weight:900;box-shadow:0 10px 24px rgba(15,23,42,.22)}
-.brand img{display:none!important;}
-.brand{gap:0!important;}
-.brandTitle{color:#111827;}
-@media print{
-*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-html,body{width:210mm!important;height:297mm!important;margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;}
-.page{width:210mm!important;height:297mm!important;max-width:none!important;margin:0!important;border-radius:0!important;box-shadow:none!important;overflow:hidden!important;}
-.topBand{height:6px!important;}
-.header{padding:12mm 12mm 5mm!important;gap:10px!important;}
-.brandTitle{font-size:22px!important;}
-.brandSub{font-size:10.5px!important;margin-top:1px!important;}
-.reportMeta{font-size:10.5px!important;line-height:1.45!important;}
-.titleBox{padding:5mm 12mm 3mm!important;}
-.docTitle{font-size:22px!important;letter-spacing:-.4px!important;}
-.docDesc{font-size:11.5px!important;line-height:1.28!important;margin-top:5px!important;}
-.statusBox{margin:2mm 12mm 4mm!important;padding:3.5mm!important;border-radius:14px!important;gap:9px!important;}
-.statusIcon{width:28px!important;height:28px!important;font-size:16px!important;}
-.statusTitle{font-size:15px!important;margin-bottom:2px!important;}
-.statusText{font-size:11px!important;line-height:1.25!important;}
-.infoGrid{padding:0 12mm 4mm!important;gap:6px!important;}
-.infoCard{padding:7px 9px!important;min-height:42px!important;border-radius:10px!important;}
-.label{font-size:8.8px!important;margin-bottom:2px!important;letter-spacing:.22px!important;}
-.value{font-size:11.5px!important;line-height:1.16!important;}
-.amountCard .value{font-size:18px!important;}
-.noteBox{margin:0 12mm 4mm!important;padding:8px 10px!important;border-radius:12px!important;}
-.noteTitle{font-size:10.5px!important;margin-bottom:4px!important;}
-.noteText{font-size:10.5px!important;line-height:1.22!important;}
-.checkList{margin:0 12mm 4mm!important;gap:5px!important;}
-.checkItem{padding:6px 8px!important;font-size:9.8px!important;border-radius:9px!important;gap:6px!important;}
-.checkDot{width:14px!important;height:14px!important;font-size:9px!important;}
-.summaryGrid{padding:0 12mm 4mm!important;gap:6px!important;}
-.summaryCard{padding:8px 9px!important;border-radius:10px!important;}
-.summaryLabel{font-size:8.5px!important;margin-bottom:3px!important;}
-.summaryValue{font-size:17px!important;}
-.section{margin:0 12mm 3mm!important;border-radius:10px!important;}
-.sectionTitle{padding:7px 9px!important;font-size:12px!important;}
-.list{padding:6px 9px!important;font-size:9.8px!important;line-height:1.35!important;max-height:27mm!important;overflow:hidden!important;}
-.listItem{padding:3px 0!important;}
-.signatureArea{padding:1mm 12mm 4mm!important;gap:14px!important;}
-.signatureBox{font-size:9.5px!important;padding-top:5px!important;}
-.footer{padding:3.5mm 12mm!important;margin-top:0!important;font-size:9.5px!important;line-height:1.32!important;}
-.printBtn,.backBtn{display:none!important;}
-}
 </style>
 
 </head>
 <body>
 
-<button class="backBtn" onclick="if(window.opener){window.close();}else{history.back();}">← Geri</button>
+<button class="pdfBackBtn" onclick="window.close();">← Geri</button>
+
 <div class="page">
 <div class="topBand"></div>
 
@@ -4813,7 +4866,7 @@ html,body{width:210mm!important;height:297mm!important;margin:0!important;paddin
 <div class="brand">
 <img src="https://i.imgur.com/jbOSWKN.png">
 <div>
-<div class="brandTitle">ElevatorX</div>
+<div class="brandTitle">${servisFirma}</div>
 <div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
@@ -4832,7 +4885,7 @@ html,body{width:210mm!important;height:297mm!important;margin:0!important;paddin
 <div class="statusIcon iconBlue">✓</div>
 <div>
 <div class="statusTitle titleBlue">${durum}</div>
-<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde ElevatorX tarafından kayıt altına alınmıştır.</div>
+<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde ${servisFirma} tarafından kayıt altına alınmıştır.</div>
 </div>
 </div>
 
@@ -4858,13 +4911,13 @@ html,body{width:210mm!important;height:297mm!important;margin:0!important;paddin
 </div>
 
 <div class="signatureArea">
-<div class="signatureBox">ElevatorX<br>Teknik Servis</div>
+<div class="signatureBox">${servisFirma}<br>${servisAd}</div>
 <div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
 </div>
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Sürüm v1.0.52 • Destek: supportelevatorx@gmail.com</div><div>Asansör takip sistemi</div>
+<div>© 2026 ${APP_NAME}. Tüm hakları saklıdır.<br>Sürüm ${APP_VERSION} • Destek: supportelevatorx@gmail.com</div><div>Asansör takip sistemi</div>
 </div>
 
 
@@ -4884,6 +4937,11 @@ html,body{width:210mm!important;height:297mm!important;margin:0!important;paddin
 function aySonuRaporu(){
 
 haptic("medium");
+
+let profil = profilBilgileri();
+let servisFirma = profil.firma || APP_NAME;
+let servisAd = profil.ad || "Teknik Servis";
+let servisTel = profil.telefon || "";
 
 let buAyBakim =
 data.filter(a=>tarihBuAyMi(a.bakimTarihi));
@@ -4946,64 +5004,19 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 .section{margin:0 30px 18px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;overflow:hidden}.sectionTitle{padding:16px 18px;font-size:17px;font-weight:950;border-bottom:1px solid #edf0f5;background:#fff}.list{padding:14px 18px;font-size:14px;color:#4b5563;line-height:1.8}.listItem{padding:7px 0;border-bottom:1px solid rgba(229,231,235,.8)}.listItem:last-child{border-bottom:none}.empty{color:#9ca3af;font-style:italic}
 .signatureArea{padding:6px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.signatureBox{border-top:1.5px solid #cfd5df;padding-top:10px;font-size:13px;color:#6b7280;font-weight:800;text-align:center}
 .footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}
-@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn{display:none}}
+@page{size:A4;margin:7mm}
+.pdfBackBtn{position:fixed;left:16px;top:16px;z-index:9999;border:none;border-radius:999px;background:#ffffff;color:#111827;padding:12px 16px;font-size:15px;font-weight:900;box-shadow:0 10px 30px rgba(15,23,42,.16)}
+@media print{html,body{background:#fff!important;padding:0!important;margin:0!important;zoom:.72}.page{max-width:none!important;width:100%!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}.topBand{height:5px!important}.header{padding:12px 18px 10px!important}.brandTitle{font-size:18px!important}.brandSub{font-size:10.5px!important}.reportMeta{font-size:10px!important}.titleBox{padding:12px 18px 8px!important}.docTitle{font-size:22px!important}.docDesc{font-size:12px!important;margin-top:4px!important}.statusBox{margin:6px 18px 10px!important;padding:10px!important;border-radius:14px!important}.statusIcon{width:26px!important;height:26px!important;font-size:15px!important}.statusTitle{font-size:14px!important}.statusText{font-size:11.5px!important;line-height:1.32!important}.infoGrid{padding:0 18px 10px!important;gap:7px!important}.infoCard{padding:9px 10px!important;min-height:auto!important;border-radius:12px!important}.label{font-size:9.5px!important;margin-bottom:3px!important}.value{font-size:13px!important}.amountCard .value,.summaryValue{font-size:20px!important}.noteBox{margin:0 18px 10px!important;padding:10px!important;border-radius:12px!important}.noteTitle{font-size:11px!important;margin-bottom:4px!important}.noteText,.list{font-size:10.5px!important;line-height:1.35!important}.checkList{margin:0 18px 10px!important;gap:6px!important}.checkItem{padding:7px 8px!important;font-size:10.5px!important;border-radius:10px!important}.checkDot{width:14px!important;height:14px!important;font-size:9px!important}.signatureArea{padding:4px 18px 10px!important;gap:12px!important}.signatureBox{font-size:10px!important;padding-top:6px!important}.footer{padding:8px 18px!important;font-size:9.5px!important}.summaryGrid{padding:0 18px 10px!important;gap:7px!important}.summaryCard{padding:10px!important;border-radius:12px!important}.summaryLabel{font-size:9.5px!important;margin-bottom:3px!important}.section{margin:0 18px 8px!important;border-radius:12px!important}.sectionTitle{padding:8px 10px!important;font-size:12px!important}.list{padding:7px 10px!important}.listItem{padding:3px 0!important}.printBtn,.pdfBackBtn{display:none!important}}
 @media(max-width:720px){body{padding:14px}.header,.footer{flex-direction:column;align-items:flex-start;text-align:left}.reportMeta{text-align:left}.summaryGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.infoGrid,.checkList,.signatureArea{grid-template-columns:1fr}.signatureArea{gap:34px}}
 @media(max-width:480px){.summaryGrid{grid-template-columns:1fr}}
-
-
-/* Tek sayfa PDF ve geri butonu */
-@page{size:A4;margin:0;}
-.backBtn{position:fixed;left:18px;top:18px;z-index:9999;background:#111827;color:#fff;border:none;border-radius:999px;padding:10px 14px;font-size:14px;font-weight:900;box-shadow:0 10px 24px rgba(15,23,42,.22)}
-.brand img{display:none!important;}
-.brand{gap:0!important;}
-.brandTitle{color:#111827;}
-@media print{
-*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
-html,body{width:210mm!important;height:297mm!important;margin:0!important;padding:0!important;background:#fff!important;overflow:hidden!important;}
-.page{width:210mm!important;height:297mm!important;max-width:none!important;margin:0!important;border-radius:0!important;box-shadow:none!important;overflow:hidden!important;}
-.topBand{height:6px!important;}
-.header{padding:12mm 12mm 5mm!important;gap:10px!important;}
-.brandTitle{font-size:22px!important;}
-.brandSub{font-size:10.5px!important;margin-top:1px!important;}
-.reportMeta{font-size:10.5px!important;line-height:1.45!important;}
-.titleBox{padding:5mm 12mm 3mm!important;}
-.docTitle{font-size:22px!important;letter-spacing:-.4px!important;}
-.docDesc{font-size:11.5px!important;line-height:1.28!important;margin-top:5px!important;}
-.statusBox{margin:2mm 12mm 4mm!important;padding:3.5mm!important;border-radius:14px!important;gap:9px!important;}
-.statusIcon{width:28px!important;height:28px!important;font-size:16px!important;}
-.statusTitle{font-size:15px!important;margin-bottom:2px!important;}
-.statusText{font-size:11px!important;line-height:1.25!important;}
-.infoGrid{padding:0 12mm 4mm!important;gap:6px!important;}
-.infoCard{padding:7px 9px!important;min-height:42px!important;border-radius:10px!important;}
-.label{font-size:8.8px!important;margin-bottom:2px!important;letter-spacing:.22px!important;}
-.value{font-size:11.5px!important;line-height:1.16!important;}
-.amountCard .value{font-size:18px!important;}
-.noteBox{margin:0 12mm 4mm!important;padding:8px 10px!important;border-radius:12px!important;}
-.noteTitle{font-size:10.5px!important;margin-bottom:4px!important;}
-.noteText{font-size:10.5px!important;line-height:1.22!important;}
-.checkList{margin:0 12mm 4mm!important;gap:5px!important;}
-.checkItem{padding:6px 8px!important;font-size:9.8px!important;border-radius:9px!important;gap:6px!important;}
-.checkDot{width:14px!important;height:14px!important;font-size:9px!important;}
-.summaryGrid{padding:0 12mm 4mm!important;gap:6px!important;}
-.summaryCard{padding:8px 9px!important;border-radius:10px!important;}
-.summaryLabel{font-size:8.5px!important;margin-bottom:3px!important;}
-.summaryValue{font-size:17px!important;}
-.section{margin:0 12mm 3mm!important;border-radius:10px!important;}
-.sectionTitle{padding:7px 9px!important;font-size:12px!important;}
-.list{padding:6px 9px!important;font-size:9.8px!important;line-height:1.35!important;max-height:27mm!important;overflow:hidden!important;}
-.listItem{padding:3px 0!important;}
-.signatureArea{padding:1mm 12mm 4mm!important;gap:14px!important;}
-.signatureBox{font-size:9.5px!important;padding-top:5px!important;}
-.footer{padding:3.5mm 12mm!important;margin-top:0!important;font-size:9.5px!important;line-height:1.32!important;}
-.printBtn,.backBtn{display:none!important;}
-}
 </style>
 
 </head>
 <body>
 
-<button class="backBtn" onclick="if(window.opener){window.close();}else{history.back();}">← Geri</button>
+<button class="pdfBackBtn" onclick="window.close();">← Geri</button>
+
 <div class="page">
 <div class="topBand"></div>
 
@@ -5011,7 +5024,7 @@ html,body{width:210mm!important;height:297mm!important;margin:0!important;paddin
 <div class="brand">
 <img src="https://i.imgur.com/jbOSWKN.png">
 <div>
-<div class="brandTitle">ElevatorX</div>
+<div class="brandTitle">${servisFirma}</div>
 <div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
@@ -5053,7 +5066,7 @@ ${geciken.length ? geciken.map(a=>`<div class="listItem">${a.ad || "-"} — ${a.
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Sürüm v1.0.52 • Destek: supportelevatorx@gmail.com</div><div>Asansör takip sistemi</div>
+<div>© 2026 ${APP_NAME}. Tüm hakları saklıdır.<br>Sürüm ${APP_VERSION} • Destek: supportelevatorx@gmail.com</div><div>Asansör takip sistemi</div>
 </div>
 
 
@@ -5083,6 +5096,7 @@ apartmanlar:data,
 profil:{
 ad:localStorage.getItem("profilAd") || profilAd.value || "",
 firma:localStorage.getItem("profilFirma") || profilFirma.value || "",
+telefon:localStorage.getItem("profilTelefon") || (window.profilTelefon ? profilTelefon.value : "") || "",
 bio:localStorage.getItem("profilBio") || profilBio.value || "",
 profilFoto:localStorage.getItem("profilePhoto") || "",
 kapakFoto:localStorage.getItem("coverPhoto") || ""
@@ -5103,7 +5117,7 @@ new Date()
 .split("T")[0];
 
 link.href = URL.createObjectURL(blob);
-link.download = "ay-asansor-yedek-" + tarih + ".json";
+link.download = "elevatorx-yedek-" + tarih + ".json";
 link.click();
 
 toast("Yedek indirildi");
@@ -5153,6 +5167,7 @@ if(yedek.profil){
 localStorage.setItem("profilAd",yedek.profil.ad || "");
 localStorage.setItem("profilFirma",yedek.profil.firma || "");
 localStorage.setItem("profilBio",yedek.profil.bio || "");
+localStorage.setItem("profilTelefon",yedek.profil.telefon || "");
 
 if(yedek.profil.profilFoto){
 
@@ -5168,9 +5183,10 @@ coverPhoto.style.backgroundImage = `url('${yedek.profil.kapakFoto}')`;
 
 }
 
-profilAd.value = yedek.profil.ad || "Uğur AY";
-profilFirma.value = yedek.profil.firma || "ElevatorX";
-profilBio.value = yedek.profil.bio || "Asansör bakım • montaj • servis\nKütahya / Tavşanlı";
+profilAd.value = yedek.profil.ad || "";
+profilFirma.value = yedek.profil.firma || "";
+if(window.profilTelefon) profilTelefon.value = yedek.profil.telefon || "";
+profilBio.value = yedek.profil.bio || "";
 
 }
 
@@ -5509,15 +5525,94 @@ toast("Kapak fotoğrafı kaydedilemedi");
 
 });
 
-profilAd.oninput = kaydetProfil;
-profilFirma.oninput = kaydetProfil;
-profilBio.oninput = kaydetProfil;
+if(window.profilAd) profilAd.oninput = kaydetProfil;
+if(window.profilFirma) profilFirma.oninput = kaydetProfil;
+if(window.profilTelefon) profilTelefon.oninput = kaydetProfil;
+if(window.profilBio) profilBio.oninput = kaydetProfil;
+
+
+function profilBilgileri(){
+return {
+ad:(localStorage.getItem("profilAd") || (window.profilAd ? profilAd.value : "") || "").trim(),
+firma:(localStorage.getItem("profilFirma") || (window.profilFirma ? profilFirma.value : "") || "").trim(),
+telefon:(localStorage.getItem("profilTelefon") || (window.profilTelefon ? profilTelefon.value : "") || "").trim(),
+bio:(localStorage.getItem("profilBio") || (window.profilBio ? profilBio.value : "") || "").trim()
+};
+}
+
+function profilAlanlariniDoldur(){
+let p = profilBilgileri();
+if(window.profilAd) profilAd.value = p.ad;
+if(window.profilFirma) profilFirma.value = p.firma;
+if(window.profilTelefon) profilTelefon.value = p.telefon;
+if(window.profilBio) profilBio.value = p.bio;
+}
+
+function profilKurulumKontrol(){
+profilAlanlariniDoldur();
+let kuruldu = localStorage.getItem("profilKuruldu") === "1";
+let p = profilBilgileri();
+if(!kuruldu && !p.ad && !p.firma){
+let overlay = document.getElementById("profileSetupOverlay");
+if(overlay){
+overlay.style.display = "flex";
+}
+}
+}
+
+function ilkProfilKaydet(){
+let adEl = document.getElementById("setupAd");
+let firmaEl = document.getElementById("setupFirma");
+let telefonEl = document.getElementById("setupTelefon");
+let bioEl = document.getElementById("setupBio");
+
+let ad = (adEl ? adEl.value : "").trim();
+let firma = (firmaEl ? firmaEl.value : "").trim();
+let telefon = (telefonEl ? telefonEl.value : "").trim();
+let bio = (bioEl ? bioEl.value : "").trim();
+
+if(!ad){
+toast("İsim soyisim girmen gerekiyor");
+return;
+}
+
+localStorage.setItem("profilAd",ad);
+localStorage.setItem("profilFirma",firma);
+localStorage.setItem("profilTelefon",telefon);
+localStorage.setItem("profilBio",bio);
+localStorage.setItem("profilKuruldu","1");
+
+if(window.profilAd) profilAd.value = ad;
+if(window.profilFirma) profilFirma.value = firma;
+if(window.profilTelefon) profilTelefon.value = telefon;
+if(window.profilBio) profilBio.value = bio;
+
+let overlay = document.getElementById("profileSetupOverlay");
+if(overlay){
+overlay.style.display = "none";
+}
+
+kaydetProfil();
+toast("Profil oluşturuldu");
+}
+
+function profilKurulumuAc(){
+let p = profilBilgileri();
+let overlay = document.getElementById("profileSetupOverlay");
+if(document.getElementById("setupAd")) setupAd.value = p.ad;
+if(document.getElementById("setupFirma")) setupFirma.value = p.firma;
+if(document.getElementById("setupTelefon")) setupTelefon.value = p.telefon;
+if(document.getElementById("setupBio")) setupBio.value = p.bio || "Asansör bakım • montaj • servis";
+if(overlay) overlay.style.display = "flex";
+}
 
 function kaydetProfil(){
 
-localStorage.setItem("profilAd",profilAd.value);
-localStorage.setItem("profilFirma",profilFirma.value);
-localStorage.setItem("profilBio",profilBio.value);
+if(window.profilAd) localStorage.setItem("profilAd",profilAd.value);
+if(window.profilFirma) localStorage.setItem("profilFirma",profilFirma.value);
+if(window.profilTelefon) localStorage.setItem("profilTelefon",profilTelefon.value);
+if(window.profilBio) localStorage.setItem("profilBio",profilBio.value);
+localStorage.setItem("profilKuruldu","1");
 autoYedekAl(true);
 autoYedekBilgiGuncelle();
 
@@ -5599,11 +5694,21 @@ profilBio.value = p5;
 
 }
 
+let p6 =
+localStorage.getItem("profilTelefon");
+
+if(p6 && window.profilTelefon){
+
+profilTelefon.value = p6;
+
+}
+
 goster();
 
 animateIn(liste,"screenFadeUp");
 
 setTimeout(hideSplash,800);
+profilKurulumKontrol();
 
 });
 
