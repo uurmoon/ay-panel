@@ -12,9 +12,10 @@ document.documentElement.classList.add("darkRoot");
 
 <title>ElevatorX</title>
 
-<link rel="icon" type="image/png" href="https://i.imgur.com/jbOSWKN.png">
-<link rel="apple-touch-icon" href="https://i.imgur.com/jbOSWKN.png?v=2">
 
+<link rel="icon" type="image/png" href="elevatorx-icon-v58.png?v=67">
+<link rel="apple-touch-icon" href="elevatorx-icon-v58.png?v=67">
+<link rel="apple-touch-icon" sizes="180x180" href="elevatorx-icon-v58.png?v=67">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="ElevatorX">
@@ -161,58 +162,6 @@ html.darkRoot .splashBrand{
 color:#f8fafc;
 }
 
-.splashLogo{
-width:108px;
-height:108px;
-object-fit:contain;
-filter:drop-shadow(0 18px 30px rgba(13,56,145,.16));
-}
-
-.splashSub{
-margin-top:8px;
-font-size:13px;
-font-weight:700;
-letter-spacing:.2px;
-color:#64748b;
-}
-
-html.darkRoot .splashSub{
-color:#94a3b8;
-}
-
-.appLogoMark{
-width:42px;
-height:42px;
-object-fit:contain;
-flex-shrink:0;
-filter:drop-shadow(0 8px 18px rgba(13,56,145,.16));
-}
-
-.headerBrandText{
-display:flex;
-align-items:baseline;
-font-size:30px;
-font-weight:900;
-letter-spacing:-.8px;
-line-height:1;
-}
-
-.brandLift{
-color:#0a2468;
-}
-
-.brandGo{
-color:#1d9cff;
-}
-
-html.darkRoot .brandLift{
-color:#f8fafc;
-}
-
-html.darkRoot .brandGo{
-color:#60c6ff;
-}
-
 @keyframes elevatorPulse{
 0%,100%{
 transform:scale(1);
@@ -272,7 +221,6 @@ align-items:center;
 justify-content:center;
 gap:12px;
 }
-
 
 .headerThemeBtn{
 width:40px;
@@ -3025,7 +2973,59 @@ color:#9ca3af;
 }
 
 
-/* Profile setup restored */
+/* ElevatorX v67 logo + profile setup */
+.miniElevatorLogo{display:none!important;}
+
+.headerBrand{
+display:flex!important;
+align-items:center!important;
+justify-content:center!important;
+gap:10px!important;
+}
+
+.headerNewLogo{
+width:42px;
+height:42px;
+border-radius:13px;
+object-fit:cover;
+box-shadow:0 10px 24px rgba(15,23,42,.10);
+}
+
+.splashNewLogo{
+width:108px;
+height:108px;
+border-radius:28px;
+object-fit:cover;
+box-shadow:0 18px 42px rgba(15,23,42,.13);
+animation:liftGoFloat 2.8s ease-in-out infinite, liftGoGlow 2.8s ease-in-out infinite;
+}
+
+.elevatorXWordmark{
+font-weight:950;
+letter-spacing:-1.1px;
+line-height:1;
+color:#0f172a;
+}
+
+.elevatorXWordmark span{color:#007aff;}
+
+.headerBrand .elevatorXWordmark{font-size:30px;}
+
+.splashBrand.elevatorXWordmark{
+font-size:42px;
+margin-top:20px;
+}
+
+.profileFooterNewLogo{
+width:58px;
+height:58px;
+border-radius:17px;
+object-fit:cover;
+margin:0 auto 14px;
+display:block;
+box-shadow:0 10px 24px rgba(15,23,42,.08);
+}
+
 .profileSetupOverlay{
 position:fixed;
 inset:0;
@@ -3038,11 +3038,6 @@ justify-content:center;
 padding:24px;
 }
 
-body.darkMode .profileSetupOverlay,
-html.darkRoot .profileSetupOverlay{
-background:rgba(11,15,23,.88);
-}
-
 .profileSetupCard{
 width:min(420px,100%);
 background:rgba(255,255,255,.97);
@@ -3050,12 +3045,6 @@ border:1px solid rgba(15,23,42,.08);
 border-radius:34px;
 box-shadow:0 26px 70px rgba(15,23,42,.18);
 padding:24px;
-}
-
-body.darkMode .profileSetupCard,
-html.darkRoot .profileSetupCard{
-background:rgba(21,27,38,.97);
-border-color:rgba(255,255,255,.08);
 }
 
 .setupKicker{
@@ -3128,19 +3117,27 @@ line-height:1.45;
 text-align:left;
 }
 
-body.darkMode .profileHintBox,
-html.darkRoot .profileHintBox{
-background:rgba(0,122,255,.14);
-color:#9bd0ff;
+body.darkMode .elevatorXWordmark,
+html.darkRoot .elevatorXWordmark,
+body.darkMode .profileSetupCard h2,
+html.darkRoot .profileSetupCard h2{
+color:#f8fafc;
 }
 
-body.darkMode .profileSetupCard h2,
-html.darkRoot .profileSetupCard h2,
-body.darkMode .profileSetupCard input,
-body.darkMode .profileSetupCard textarea,
-html.darkRoot .profileSetupCard input,
-html.darkRoot .profileSetupCard textarea{
-color:#f8fafc;
+body.darkMode .profileSetupOverlay,
+html.darkRoot .profileSetupOverlay{
+background:rgba(11,15,23,.88);
+}
+
+body.darkMode .profileSetupCard,
+html.darkRoot .profileSetupCard{
+background:rgba(21,27,38,.97);
+border-color:rgba(255,255,255,.08);
+}
+
+body.darkMode .profileSetupCard p,
+html.darkRoot .profileSetupCard p{
+color:#94a3b8;
 }
 
 body.darkMode .profileSetupCard input,
@@ -3149,11 +3146,13 @@ html.darkRoot .profileSetupCard input,
 html.darkRoot .profileSetupCard textarea{
 background:#0f141d;
 border-color:rgba(255,255,255,.08);
+color:#f8fafc;
 }
 
-body.darkMode .profileSetupCard p,
-html.darkRoot .profileSetupCard p{
-color:#94a3b8;
+body.darkMode .profileHintBox,
+html.darkRoot .profileHintBox{
+background:rgba(0,122,255,.14);
+color:#9bd0ff;
 }
 
 </style>
@@ -3177,9 +3176,9 @@ color:#94a3b8;
 
 <div id="splash">
 <div class="splashWrap">
-<img id="splashLogo" class="splashLogo" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20128%22%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22g1%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b3b9f%22%2F%3E%0A%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230a2468%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3ClinearGradient%20id%3D%22g2%22%20x1%3D%220%22%20y1%3D%221%22%20x2%3D%221%22%20y2%3D%220%22%3E%0A%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2314b8ff%22%2F%3E%0A%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231d9cff%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3C%2Fdefs%3E%0A%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2228%22%20fill%3D%22%23ffffff%22%2F%3E%0A%3Cpath%20d%3D%22M32%2018h64c9.9%200%2018%208.1%2018%2018v56c0%207.2-2.8%2013.7-7.5%2018.5a18%2018%200%200%201-12.5%205.5h-4.2v-10.5h4.1c4%200%207.3-1.4%209.9-4.2A13.5%2013.5%200%200%200%20107%2092V36c0-6.1-4.9-11-11-11H32c-6.1%200-11%204.9-11%2011V92c0%203.9%201.3%207.1%204%209.9%202.7%202.7%205.9%204.1%209.7%204.1h4.5V116h-4.6c-7%200-13.2-2.4-18-7.3C11.8%20103.7%209%2097.1%209%2089.8V36c0-9.9%208.1-18%2018-18Z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M45%2040h17v36H45z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M66%2040h17v36H66z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M60%2072%2034%2098h18v20h24V98h18L68%2072c-2.3-2.3-5.7-2.3-8%200Z%22%20fill%3D%22url(%23g2)%22%2F%3E%0A%3Cpath%20d%3D%22m53%2031-7%2010h14z%22%20fill%3D%22url(%23g2)%22%2F%3E%0A%3Cpath%20d%3D%22m75%2041%207-10H68z%22%20fill%3D%22url(%23g1)%22%20opacity%3D%22.9%22%2F%3E%0A%3C%2Fsvg%3E" alt="ElevatorX logo">
-<div class="splashBrand"><span class="brandLift">Lift</span><span class="brandGo">Go</span></div>
-<div class="splashSub">Ay Asansör servis takip sistemi</div>
+<img class="splashNewLogo" src="elevatorx-icon-v58.png?v=67" alt="ElevatorX logo">
+<div class="splashBrand elevatorXWordmark">Elevator<span>X</span></div>
+</div>
 </div>
 </div>
 
@@ -3188,8 +3187,8 @@ color:#94a3b8;
 <div></div>
 
 <div class="headerBrand">
-<img id="headerLogo" class="appLogoMark" src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20128%22%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22g1%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b3b9f%22%2F%3E%0A%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230a2468%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3ClinearGradient%20id%3D%22g2%22%20x1%3D%220%22%20y1%3D%221%22%20x2%3D%221%22%20y2%3D%220%22%3E%0A%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2314b8ff%22%2F%3E%0A%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231d9cff%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3C%2Fdefs%3E%0A%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2228%22%20fill%3D%22%23ffffff%22%2F%3E%0A%3Cpath%20d%3D%22M32%2018h64c9.9%200%2018%208.1%2018%2018v56c0%207.2-2.8%2013.7-7.5%2018.5a18%2018%200%200%201-12.5%205.5h-4.2v-10.5h4.1c4%200%207.3-1.4%209.9-4.2A13.5%2013.5%200%200%200%20107%2092V36c0-6.1-4.9-11-11-11H32c-6.1%200-11%204.9-11%2011V92c0%203.9%201.3%207.1%204%209.9%202.7%202.7%205.9%204.1%209.7%204.1h4.5V116h-4.6c-7%200-13.2-2.4-18-7.3C11.8%20103.7%209%2097.1%209%2089.8V36c0-9.9%208.1-18%2018-18Z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M45%2040h17v36H45z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M66%2040h17v36H66z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M60%2072%2034%2098h18v20h24V98h18L68%2072c-2.3-2.3-5.7-2.3-8%200Z%22%20fill%3D%22url(%23g2)%22%2F%3E%0A%3Cpath%20d%3D%22m53%2031-7%2010h14z%22%20fill%3D%22url(%23g2)%22%2F%3E%0A%3Cpath%20d%3D%22m75%2041%207-10H68z%22%20fill%3D%22url(%23g1)%22%20opacity%3D%22.9%22%2F%3E%0A%3C%2Fsvg%3E" alt="ElevatorX logo">
-<div class="headerBrandText"><span class="brandLift">Lift</span><span class="brandGo">Go</span></div>
+<img class="headerNewLogo" src="elevatorx-icon-v58.png?v=67" alt="ElevatorX logo">
+<span class="elevatorXWordmark">Elevator<span>X</span></span>
 </div>
 
 <button
@@ -3272,7 +3271,7 @@ height:1px;
 <img
 id="profilePhoto"
 class="profilePhoto"
-src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20180%20180%22%3E%0A%3Crect%20width%3D%22180%22%20height%3D%22180%22%20rx%3D%2242%22%20fill%3D%22%23ffffff%22/%3E%0A%3Cpath%20d%3D%22M32%2032%20L148%2032%20L148%20148%20L32%20148%20Z%22%20fill%3D%22none%22%20stroke%3D%22%23071a3a%22%20stroke-width%3D%2210%22/%3E%0A%3Cpath%20d%3D%22M58%2058%20L122%20122%20M122%2058%20L58%20122%22%20stroke%3D%22%23007aff%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22square%22/%3E%0A%3Cpath%20d%3D%22M90%2045%20L102%2060%20H78%20Z%20M90%20135%20L78%20120%20H102%20Z%22%20fill%3D%22%23071a3a%22/%3E%0A%3C/svg%3E"
+src="elevatorx-icon-v58.png?v=67"
 onclick="profileInput.click()">
 
 </div>
@@ -3371,7 +3370,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooter">
 
 <img
-src="https://i.imgur.com/jbOSWKN.png"
+src="elevatorx-icon-v58.png"
 class="profileFooterLogo">
 
 <div class="profileFooterTitle">ElevatorX</div>
@@ -3381,7 +3380,7 @@ class="profileFooterLogo">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.66<br>
+Sürüm v1.0.67<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -3479,9 +3478,8 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_BRAND_SUB = "Ay Asansör servis takip sistemi";
-const APP_LOGO = "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20128%20128%22%3E%0A%3Cdefs%3E%0A%3ClinearGradient%20id%3D%22g1%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b3b9f%22%2F%3E%0A%3Cstop%20offset%3D%221%22%20stop-color%3D%22%230a2468%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3ClinearGradient%20id%3D%22g2%22%20x1%3D%220%22%20y1%3D%221%22%20x2%3D%221%22%20y2%3D%220%22%3E%0A%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2314b8ff%22%2F%3E%0A%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231d9cff%22%2F%3E%0A%3C%2FlinearGradient%3E%0A%3C%2Fdefs%3E%0A%3Crect%20x%3D%2214%22%20y%3D%2214%22%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2228%22%20fill%3D%22%23ffffff%22%2F%3E%0A%3Cpath%20d%3D%22M32%2018h64c9.9%200%2018%208.1%2018%2018v56c0%207.2-2.8%2013.7-7.5%2018.5a18%2018%200%200%201-12.5%205.5h-4.2v-10.5h4.1c4%200%207.3-1.4%209.9-4.2A13.5%2013.5%200%200%200%20107%2092V36c0-6.1-4.9-11-11-11H32c-6.1%200-11%204.9-11%2011V92c0%203.9%201.3%207.1%204%209.9%202.7%202.7%205.9%204.1%209.7%204.1h4.5V116h-4.6c-7%200-13.2-2.4-18-7.3C11.8%20103.7%209%2097.1%209%2089.8V36c0-9.9%208.1-18%2018-18Z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M45%2040h17v36H45z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M66%2040h17v36H66z%22%20fill%3D%22url(%23g1)%22%2F%3E%0A%3Cpath%20d%3D%22M60%2072%2034%2098h18v20h24V98h18L68%2072c-2.3-2.3-5.7-2.3-8%200Z%22%20fill%3D%22url(%23g2)%22%2F%3E%0A%3Cpath%20d%3D%22m53%2031-7%2010h14z%22%20fill%3D%22url(%23g2)%22%2F%3E%0A%3Cpath%20d%3D%22m75%2041%207-10H68z%22%20fill%3D%22url(%23g1)%22%20opacity%3D%22.9%22%2F%3E%0A%3C%2Fsvg%3E";
-const APP_VERSION = "v1.0.66";
+const APP_VERSION = "v1.0.67";
+const APP_LOGO = new URL("elevatorx-icon-v58.png?v=67", location.href).href;
 
 function hideSplash(){
 
@@ -3796,7 +3794,6 @@ apartmanlar:data,
 profil:{
 ad:localStorage.getItem("profilAd") || (typeof profilAd !== "undefined" ? profilAd.value : "") || "",
 firma:localStorage.getItem("profilFirma") || (typeof profilFirma !== "undefined" ? profilFirma.value : "") || "",
-telefon:localStorage.getItem("profilTelefon") || (typeof profilTelefon !== "undefined" ? profilTelefon.value : "") || "",
 bio:localStorage.getItem("profilBio") || (typeof profilBio !== "undefined" ? profilBio.value : "") || "",
 profilFoto:localStorage.getItem("profilePhoto") || "",
 kapakFoto:localStorage.getItem("coverPhoto") || ""
@@ -4649,8 +4646,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 .summaryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 30px 26px}.summaryCard{background:#f8fafc;border:1px solid #edf0f5;border-radius:18px;padding:16px}.summaryLabel{font-size:12px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;color:#8a94a6;margin-bottom:8px}.summaryValue{font-size:26px;font-weight:950;letter-spacing:-.5px;color:#111827}
 .section{margin:0 30px 18px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;overflow:hidden}.sectionTitle{padding:16px 18px;font-size:17px;font-weight:950;border-bottom:1px solid #edf0f5;background:#fff}.list{padding:14px 18px;font-size:14px;color:#4b5563;line-height:1.8}.listItem{padding:7px 0;border-bottom:1px solid rgba(229,231,235,.8)}.listItem:last-child{border-bottom:none}.empty{color:#9ca3af;font-style:italic}
 .signatureArea{padding:6px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.signatureBox{border-top:1.5px solid #cfd5df;padding-top:10px;font-size:13px;color:#6b7280;font-weight:800;text-align:center}
-.footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}
-@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn{display:none}}
+.footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}.backBtn{position:fixed;left:24px;bottom:24px;background:#111827;color:white;border:none;border-radius:999px;padding:14px 18px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(17,24,39,.18)}
+@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn,.backBtn{display:none}}
 @media(max-width:720px){body{padding:14px}.header,.footer{flex-direction:column;align-items:flex-start;text-align:left}.reportMeta{text-align:left}.summaryGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.infoGrid,.checkList,.signatureArea{grid-template-columns:1fr}.signatureArea{gap:34px}}
 @media(max-width:480px){.summaryGrid{grid-template-columns:1fr}}
@@ -4667,7 +4664,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <img src="${APP_LOGO}">
 <div>
 <div class="brandTitle">ElevatorX</div>
-<div class="brandSub">Ay Asansör servis takip sistemi</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
 <div class="reportMeta">
@@ -4699,23 +4696,24 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 
 <div class="noteBox">
 <div class="noteTitle">Açıklama</div>
-<div class="noteText">Ödeme kaydı ElevatorX üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
+<div class="noteText">Ödeme kaydı ElevatorX servis takip sistemi üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
 </div>
 
 <div class="signatureArea">
-<div class="signatureBox">ElevatorX<br>Ay Asansör Teknik Servis</div>
+<div class="signatureBox">ElevatorX<br>Teknik Servis</div>
 <div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
 </div>
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Ay Asansör • Teknik Servis • </div>
+<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br> • Teknik Servis • </div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
 
 </div>
 
+<button class="backBtn" onclick="if(window.history.length>1){window.history.back()}else{window.close()}">← Geri</button>
 <button class="printBtn" onclick="window.print()">PDF / Yazdır</button>
 
 </body>
@@ -4774,8 +4772,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 .summaryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 30px 26px}.summaryCard{background:#f8fafc;border:1px solid #edf0f5;border-radius:18px;padding:16px}.summaryLabel{font-size:12px;font-weight:900;letter-spacing:.35px;text-transform:uppercase;color:#8a94a6;margin-bottom:8px}.summaryValue{font-size:26px;font-weight:950;letter-spacing:-.5px;color:#111827}
 .section{margin:0 30px 18px;background:#f8fafc;border:1px solid #edf0f5;border-radius:20px;overflow:hidden}.sectionTitle{padding:16px 18px;font-size:17px;font-weight:950;border-bottom:1px solid #edf0f5;background:#fff}.list{padding:14px 18px;font-size:14px;color:#4b5563;line-height:1.8}.listItem{padding:7px 0;border-bottom:1px solid rgba(229,231,235,.8)}.listItem:last-child{border-bottom:none}.empty{color:#9ca3af;font-style:italic}
 .signatureArea{padding:6px 30px 30px;display:grid;grid-template-columns:1fr 1fr;gap:22px}.signatureBox{border-top:1.5px solid #cfd5df;padding-top:10px;font-size:13px;color:#6b7280;font-weight:800;text-align:center}
-.footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}
-@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn{display:none}}
+.footer{background:#f8fafc;padding:18px 30px;display:flex;justify-content:space-between;gap:16px;font-size:12px;color:#8a94a6;line-height:1.5;border-top:1px solid #eef0f4;margin-top:10px}.printBtn{position:fixed;right:24px;bottom:24px;background:#007aff;color:white;border:none;border-radius:999px;padding:14px 20px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(0,122,255,.28)}.backBtn{position:fixed;left:24px;bottom:24px;background:#111827;color:white;border:none;border-radius:999px;padding:14px 18px;font-size:15px;font-weight:900;box-shadow:0 12px 28px rgba(17,24,39,.18)}
+@media print{body{background:#fff;padding:0}.page{max-width:none;box-shadow:none;border-radius:0}.printBtn,.backBtn{display:none}}
 @media(max-width:720px){body{padding:14px}.header,.footer{flex-direction:column;align-items:flex-start;text-align:left}.reportMeta{text-align:left}.summaryGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.infoGrid,.checkList,.signatureArea{grid-template-columns:1fr}.signatureArea{gap:34px}}
 @media(max-width:480px){.summaryGrid{grid-template-columns:1fr}}
@@ -4792,7 +4790,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <img src="${APP_LOGO}">
 <div>
 <div class="brandTitle">ElevatorX</div>
-<div class="brandSub">Ay Asansör servis takip sistemi</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
 <div class="reportMeta">
@@ -4810,7 +4808,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <div class="statusIcon iconBlue">✓</div>
 <div>
 <div class="statusTitle titleBlue">${durum}</div>
-<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde ElevatorX üzerinden kayıt altına alınmıştır.</div>
+<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde ElevatorX tarafından kayıt altına alınmıştır.</div>
 </div>
 </div>
 
@@ -4836,13 +4834,13 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 </div>
 
 <div class="signatureArea">
-<div class="signatureBox">ElevatorX<br>Ay Asansör Teknik Servis</div>
+<div class="signatureBox">ElevatorX<br>Teknik Servis</div>
 <div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
 </div>
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Ay Asansör • Teknik Servis • </div>
+<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br> • Teknik Servis • </div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
@@ -4942,7 +4940,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <img src="${APP_LOGO}">
 <div>
 <div class="brandTitle">ElevatorX</div>
-<div class="brandSub">Ay Asansör servis takip sistemi</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
 <div class="reportMeta">
@@ -4983,7 +4981,7 @@ ${geciken.length ? geciken.map(a=>`<div class="listItem">${a.ad || "-"} — ${a.
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Ay Asansör • Teknik Servis • </div>
+<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br> • Teknik Servis • </div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
@@ -5014,7 +5012,6 @@ apartmanlar:data,
 profil:{
 ad:localStorage.getItem("profilAd") || profilAd.value || "",
 firma:localStorage.getItem("profilFirma") || profilFirma.value || "",
-telefon:localStorage.getItem("profilTelefon") || (window.profilTelefon ? profilTelefon.value : "") || "",
 bio:localStorage.getItem("profilBio") || profilBio.value || "",
 profilFoto:localStorage.getItem("profilePhoto") || "",
 kapakFoto:localStorage.getItem("coverPhoto") || ""
