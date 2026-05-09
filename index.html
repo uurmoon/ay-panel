@@ -150,159 +150,15 @@ animation:callDownSoft 1.35s ease-in-out infinite;
 }
 
 .splashBrand{
-display:none;
-}
-
-html.darkRoot .splashBrand{
-display:none;
-}
-
-.splashLogo{
-width:min(300px,72vw);
-height:auto;
-object-fit:contain;
-filter:drop-shadow(0 18px 30px rgba(13,56,145,.12));
-animation:liftGoFloat 2.8s ease-in-out infinite, liftGoGlow 2.8s ease-in-out infinite;
-}
-
-@keyframes liftGoFloat{
-0%,100%{transform:translateY(0) scale(1);}
-50%{transform:translateY(-6px) scale(1.02);}
-}
-
-@keyframes liftGoGlow{
-0%,100%{filter:drop-shadow(0 18px 30px rgba(13,56,145,.16));}
-50%{filter:drop-shadow(0 22px 38px rgba(29,156,255,.24));}
-}
-
-.splashSub{
-margin-top:14px;
-font-size:13px;
-font-weight:700;
-letter-spacing:.2px;
-color:#64748b;
-}
-
-html.darkRoot .splashSub{
-color:#94a3b8;
-}
-
-.appLogoMark{
-width:min(220px,58vw);
-height:auto;
-object-fit:contain;
-flex-shrink:0;
-filter:drop-shadow(0 8px 18px rgba(13,56,145,.10));
-animation:miniLogoPulse 3.4s ease-in-out infinite;
-}
-
-@keyframes miniLogoPulse{
-0%,100%{transform:translateY(0) scale(1); filter:drop-shadow(0 8px 18px rgba(13,56,145,.16));}
-50%{transform:translateY(-1px) scale(1.04); filter:drop-shadow(0 10px 22px rgba(29,156,255,.22));}
-}
-
-@keyframes liftGoTextIn{
-0%{opacity:0; transform:translateY(8px);}
-100%{opacity:1; transform:translateY(0);}
-}
-
-.headerBrandText{
-display:none;
-}
-
-.brandLift{
-color:#0a2468;
-}
-
-.brandGo{
-color:#1d9cff;
-}
-
-/* ElevatorX brand */
-.elevatorXLogo{
-display:flex;
-align-items:baseline;
-justify-content:center;
-font-weight:950;
-letter-spacing:-1.4px;
-line-height:1;
-animation:liftGoTextIn .7s ease;
-}
-
-.elevatorXWord{
+margin-top:24px;
+font-size:26px;
+font-weight:900;
+letter-spacing:-.5px;
 color:#0f172a;
 }
 
-.elevatorXAccent{
-color:#007aff;
-margin-left:1px;
-}
-
-.splashElevatorX{
-font-size:48px;
-animation:liftGoFloat 2.8s ease-in-out infinite, liftGoTextIn .7s ease;
-}
-
-.headerElevatorX{
-font-size:28px;
-}
-
-.elevatorXMark{
-width:38px;
-height:38px;
-border-radius:14px;
-background:linear-gradient(145deg,#0f172a,#020617);
-color:#5ac8fa;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-font-weight:950;
-letter-spacing:-1px;
-box-shadow:0 8px 18px rgba(13,56,145,.16);
-position:relative;
-overflow:hidden;
-animation:miniLogoPulse 3.4s ease-in-out infinite;
-}
-
-.elevatorXMark:before{
-content:"▲";
-position:absolute;
-top:5px;
-left:50%;
-transform:translateX(-50%);
-font-size:8px;
-color:#5ac8fa;
-}
-
-.elevatorXMark:after{
-content:"";
-position:absolute;
-left:12px;
-right:12px;
-bottom:9px;
-height:2px;
-border-radius:999px;
-background:rgba(255,255,255,.36);
-}
-
-html.darkRoot .elevatorXWord,
-body.darkMode .elevatorXWord{
+html.darkRoot .splashBrand{
 color:#f8fafc;
-}
-
-html.darkRoot .elevatorXAccent,
-body.darkMode .elevatorXAccent{
-color:#5ac8fa;
-}
-
-
-html.darkRoot .brandLift{
-color:#f8fafc;
-}
-
-html.darkRoot .brandGo{
-color:#60c6ff;
 }
 
 @keyframes elevatorPulse{
@@ -362,9 +218,8 @@ letter-spacing:-.5px;
 display:flex;
 align-items:center;
 justify-content:center;
-gap:0;
+gap:12px;
 }
-
 
 .headerThemeBtn{
 width:40px;
@@ -1684,6 +1539,27 @@ color:#9b9b9f;
 line-height:1.65;
 }
 
+.profileSupportMail{
+margin:16px auto 0;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+min-height:44px;
+padding:0 16px;
+border-radius:999px;
+background:#0f172a;
+color:#fff !important;
+font-size:13px;
+font-weight:900;
+text-decoration:none;
+box-shadow:0 10px 24px rgba(15,23,42,.16);
+}
+
+.profileSupportMail:active{
+transform:scale(.98);
+}
+
 .toast{
 position:fixed;
 left:50%;
@@ -1899,6 +1775,12 @@ color:#d1d5db;
 body.darkMode .profileFooterSlogan,
 body.darkMode .profileFooterSmall{
 color:#7c8797;
+}
+
+body.darkMode .profileSupportMail{
+background:#1d4ed8;
+color:#fff !important;
+box-shadow:0 10px 24px rgba(29,78,216,.22);
 }
 
 body.darkMode .coverEdit{
@@ -2993,64 +2875,36 @@ display:none !important;
 left:50%;
 right:auto;
 transform:translateX(-50%);
-width:calc(100% - 36px);
-max-width:376px;
-height:82px;
-bottom:calc(14px + env(safe-area-inset-bottom));
-grid-template-columns:minmax(68px,1fr) minmax(84px,1fr) 94px minmax(68px,1fr);
-padding:0 16px 8px;
+width:calc(100% - 44px);
+max-width:350px;
+height:68px;
+bottom:calc(16px + env(safe-area-inset-bottom));
+grid-template-columns:1fr 1fr 70px 1fr;
+padding:0 10px;
 box-sizing:border-box;
-align-items:end;
-justify-items:center;
 }
 
 .tabItem{
 min-width:0;
 width:100%;
-height:100%;
-font-size:10.2px;
-font-weight:800;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:flex-end;
-padding-bottom:10px;
-}
-
-.tabText{
-display:block;
-white-space:nowrap;
-line-height:1.08;
-letter-spacing:-0.1px;
-}
-
-.tabItem[data-tab="bakim"]{
-transform:translateX(-2px);
-}
-
-.tabItem[data-tab="apartman"]{
-transform:translateX(-14px);
-}
-
-.tabItem[data-tab="profil"]{
-transform:translateX(6px);
+font-size:10.5px;
 }
 
 .tabIcon{
-width:23px;
-height:23px;
+width:22px;
+height:22px;
 margin-bottom:2px;
 }
 
 .tabGap{
-width:94px;
+width:70px;
 }
 
 .middleButton{
-width:58px;
-height:58px;
-top:-18px;
-font-size:36px;
+width:62px;
+height:62px;
+top:-22px;
+font-size:38px;
 }
 
 @media(max-width:430px){
@@ -3081,18 +2935,15 @@ min-height:54px;
 .maintMeta{font-size:10.6px;}
 .maintPill{font-size:9.6px;padding:4.5px 6.5px;}
 .tabbar{
-width:calc(100% - 34px);
-max-width:368px;
-height:80px;
-grid-template-columns:minmax(66px,1fr) minmax(82px,1fr) 90px minmax(66px,1fr);
-padding:0 14px 7px;
+width:calc(100% - 54px);
+max-width:340px;
+height:66px;
+grid-template-columns:1fr 1fr 66px 1fr;
+padding:0 8px;
 }
-.tabGap{width:90px;}
-.middleButton{width:56px;height:56px;top:-17px;font-size:34px;}
-.tabItem{font-size:9.9px;padding-bottom:9px;}
-.tabItem[data-tab="bakim"]{transform:translateX(-1px);}
-.tabItem[data-tab="apartman"]{transform:translateX(-12px);}
-.tabItem[data-tab="profil"]{transform:translateX(5px);}
+.tabGap{width:66px;}
+.middleButton{width:60px;height:60px;top:-21px;font-size:36px;}
+.tabItem{font-size:10px;}
 }
 
 body.darkMode .maintDone{
@@ -3121,10 +2972,12 @@ color:#ff7b72;
 
 <div id="splash">
 <div class="splashWrap">
-<div class="elevatorXLogo splashElevatorX">
-<span class="elevatorXWord">Elevator</span><span class="elevatorXAccent">X</span>
+<div class="elevatorBtn">
+<span class="callLight"></span>
+<span class="arrowUp">▲</span>
+<span class="arrowDown">▼</span>
 </div>
-<div class="splashSub">Asansör takip sistemi</div>
+<div class="splashBrand">ElevatorX</div>
 </div>
 </div>
 
@@ -3133,10 +2986,11 @@ color:#ff7b72;
 <div></div>
 
 <div class="headerBrand">
-<div class="elevatorXMark" aria-hidden="true">X</div>
-<div class="elevatorXLogo headerElevatorX">
-<span class="elevatorXWord">Elevator</span><span class="elevatorXAccent">X</span>
+<div class="miniElevatorLogo">
+<span class="miniUp">▲</span>
+<span class="miniDown">▼</span>
 </div>
+<span>ElevatorX</span>
 </div>
 
 <button
@@ -3297,6 +3151,12 @@ onchange="yedektenYukle(event)">
 
 </div>
 
+<div class="profileBox profileSupportBox">
+<h3>Destek</h3>
+<p>ElevatorX için destek ve geri bildirim hesabı.</p>
+<a class="profileSupportMail" href="mailto:supportelevatorx@gmail.com?subject=ElevatorX%20Destek">Destek Maili Gönder</a>
+</div>
+
 <div class="profileFooter">
 
 <img
@@ -3313,6 +3173,7 @@ Bakım, tahsilat ve servis takip sistemi
 
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
+Destek: supportelevatorx@gmail.com<br>
 Uğur AY • Teknik Servis<br>
 Kütahya / Tavşanlı
 </div>
@@ -3408,8 +3269,6 @@ let aktifEkran = "apartman";
 let oncekiEkran = "apartman";
 
 const APP_NAME = "ElevatorX";
-const APP_BRAND_SUB = "Asansör takip sistemi";
-const APP_LOGO = "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20128%20128%22%3E%0A%3Cdefs%3E%0A%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230f172a%22/%3E%0A%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23020617%22/%3E%0A%20%20%3C/linearGradient%3E%0A%20%20%3ClinearGradient%20id%3D%22xg%22%20x1%3D%220%22%20y1%3D%221%22%20x2%3D%221%22%20y2%3D%220%22%3E%0A%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23007aff%22/%3E%0A%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%235ac8fa%22/%3E%0A%20%20%3C/linearGradient%3E%0A%3C/defs%3E%0A%3Crect%20x%3D%2212%22%20y%3D%2212%22%20width%3D%22104%22%20height%3D%22104%22%20rx%3D%2230%22%20fill%3D%22url%28%23bg%29%22/%3E%0A%3Cpath%20d%3D%22M44%2034h40v10H44z%22%20fill%3D%22white%22%20opacity%3D%22.88%22/%3E%0A%3Cpath%20d%3D%22M48%2052h12v34H48zM68%2052h12v34H68z%22%20fill%3D%22white%22%20opacity%3D%22.72%22/%3E%0A%3Cpath%20d%3D%22M41%2092%2057%2068l8%2012%2010-16%2018%2028H79l-8-13-8%2013H50l8-12-7%2012z%22%20fill%3D%22url%28%23xg%29%22/%3E%0A%3Cpath%20d%3D%22M64%2027%2054%2039h20z%22%20fill%3D%22%235ac8fa%22/%3E%0A%3C/svg%3E";
 const APP_VERSION = "v1.0.0";
 
 function hideSplash(){
@@ -4501,7 +4360,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 .page{max-width:840px;margin:0 auto;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 18px 55px rgba(15,23,42,.10)}
 .topBand{height:10px;background:linear-gradient(90deg,#007aff,#60a5fa,#34c759)}
 .header{padding:28px 30px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #eef0f4}
-.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px;object-fit:contain}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
 .reportMeta{text-align:right;font-size:13px;color:#6b7280;line-height:1.7}.reportMeta b{color:#111827}
 .titleBox{padding:26px 30px 18px}.docTitle{font-size:30px;font-weight:900;letter-spacing:-.6px;margin:0}.docDesc{margin:8px 0 0;color:#6b7280;font-size:15px;line-height:1.45}
 .statusBox{margin:8px 30px 24px;border-radius:22px;padding:18px;display:flex;gap:14px;align-items:flex-start}.statusBlue{background:#eff6ff;border:1px solid #dbeafe}.statusGreen{background:#eaf8f0;border:1px solid #c9efd7}
@@ -4528,10 +4387,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 
 <div class="header">
 <div class="brand">
-<img src="${APP_LOGO}">
+<img src="https://i.imgur.com/jbOSWKN.png">
 <div>
 <div class="brandTitle">ElevatorX</div>
-<div class="brandSub">Asansör takip sistemi</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
 <div class="reportMeta">
@@ -4563,17 +4422,17 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 
 <div class="noteBox">
 <div class="noteTitle">Açıklama</div>
-<div class="noteText">Ödeme kaydı ElevatorX üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
+<div class="noteText">Ödeme kaydı ElevatorX servis takip sistemi üzerinden oluşturulmuştur. Bu makbuz bilgilendirme amacı taşır.</div>
 </div>
 
 <div class="signatureArea">
-<div class="signatureBox">ElevatorX<br>Ay Asansör Teknik Servis</div>
+<div class="signatureBox">ElevatorX<br>Teknik Servis</div>
 <div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
 </div>
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Ay Asansör • Teknik Servis • Kütahya / Tavşanlı</div>
+<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı<br>Destek: supportelevatorx@gmail.com</div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
@@ -4626,7 +4485,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 .page{max-width:840px;margin:0 auto;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 18px 55px rgba(15,23,42,.10)}
 .topBand{height:10px;background:linear-gradient(90deg,#007aff,#60a5fa,#34c759)}
 .header{padding:28px 30px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #eef0f4}
-.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px;object-fit:contain}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
 .reportMeta{text-align:right;font-size:13px;color:#6b7280;line-height:1.7}.reportMeta b{color:#111827}
 .titleBox{padding:26px 30px 18px}.docTitle{font-size:30px;font-weight:900;letter-spacing:-.6px;margin:0}.docDesc{margin:8px 0 0;color:#6b7280;font-size:15px;line-height:1.45}
 .statusBox{margin:8px 30px 24px;border-radius:22px;padding:18px;display:flex;gap:14px;align-items:flex-start}.statusBlue{background:#eff6ff;border:1px solid #dbeafe}.statusGreen{background:#eaf8f0;border:1px solid #c9efd7}
@@ -4653,10 +4512,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 
 <div class="header">
 <div class="brand">
-<img src="${APP_LOGO}">
+<img src="https://i.imgur.com/jbOSWKN.png">
 <div>
 <div class="brandTitle">ElevatorX</div>
-<div class="brandSub">Asansör takip sistemi</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
 <div class="reportMeta">
@@ -4674,7 +4533,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 <div class="statusIcon iconBlue">✓</div>
 <div>
 <div class="statusTitle titleBlue">${durum}</div>
-<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde ElevatorX üzerinden kayıt altına alınmıştır.</div>
+<div class="statusText">${a.ad || "-"} için bakım işlemi ${bakimTarihi} tarihinde ElevatorX tarafından kayıt altına alınmıştır.</div>
 </div>
 </div>
 
@@ -4700,13 +4559,13 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 </div>
 
 <div class="signatureArea">
-<div class="signatureBox">ElevatorX<br>Ay Asansör Teknik Servis</div>
+<div class="signatureBox">ElevatorX<br>Teknik Servis</div>
 <div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
 </div>
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Ay Asansör • Teknik Servis • Kütahya / Tavşanlı</div>
+<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı<br>Destek: supportelevatorx@gmail.com</div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
@@ -4776,7 +4635,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 .page{max-width:840px;margin:0 auto;background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 18px 55px rgba(15,23,42,.10)}
 .topBand{height:10px;background:linear-gradient(90deg,#007aff,#60a5fa,#34c759)}
 .header{padding:28px 30px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid #eef0f4}
-.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px;object-fit:contain}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
+.brand{display:flex;align-items:center;gap:14px}.brand img{width:52px;height:52px;border-radius:16px}.brandTitle{font-size:25px;font-weight:900;letter-spacing:-.4px}.brandSub{font-size:13px;color:#6b7280;font-weight:700;margin-top:2px}
 .reportMeta{text-align:right;font-size:13px;color:#6b7280;line-height:1.7}.reportMeta b{color:#111827}
 .titleBox{padding:26px 30px 18px}.docTitle{font-size:30px;font-weight:900;letter-spacing:-.6px;margin:0}.docDesc{margin:8px 0 0;color:#6b7280;font-size:15px;line-height:1.45}
 .statusBox{margin:8px 30px 24px;border-radius:22px;padding:18px;display:flex;gap:14px;align-items:flex-start}.statusBlue{background:#eff6ff;border:1px solid #dbeafe}.statusGreen{background:#eaf8f0;border:1px solid #c9efd7}
@@ -4803,10 +4662,10 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans
 
 <div class="header">
 <div class="brand">
-<img src="${APP_LOGO}">
+<img src="https://i.imgur.com/jbOSWKN.png">
 <div>
 <div class="brandTitle">ElevatorX</div>
-<div class="brandSub">Asansör takip sistemi</div>
+<div class="brandSub">Bakım, tahsilat ve servis takip sistemi</div>
 </div>
 </div>
 <div class="reportMeta">
@@ -4847,7 +4706,7 @@ ${geciken.length ? geciken.map(a=>`<div class="listItem">${a.ad || "-"} — ${a.
 
 
 <div class="footer">
-<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Ay Asansör • Teknik Servis • Kütahya / Tavşanlı</div>
+<div>© 2026 ElevatorX. Tüm hakları saklıdır.<br>Uğur AY • Teknik Servis • Kütahya / Tavşanlı<br>Destek: supportelevatorx@gmail.com</div>
 <div>Güvenli yükseliş, düzenli bakım.</div>
 </div>
 
