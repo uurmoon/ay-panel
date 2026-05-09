@@ -3245,6 +3245,152 @@ background:rgba(0,122,255,.09);
 color:#007aff;
 }
 
+
+/* History timeline + WhatsApp actions */
+.historyBox{
+margin-top:18px;
+background:rgba(255,255,255,.92);
+border:1px solid rgba(15,23,42,.06);
+border-radius:24px;
+padding:16px;
+box-shadow:0 10px 26px rgba(15,23,42,.055);
+text-align:left;
+}
+
+.historyHead{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+margin-bottom:12px;
+}
+
+.historyTitle{
+font-size:18px;
+font-weight:950;
+letter-spacing:-.25px;
+color:#0f172a;
+}
+
+.historyCount{
+font-size:12px;
+font-weight:900;
+color:#007aff;
+background:#eef6ff;
+border-radius:999px;
+padding:7px 10px;
+}
+
+.historyList{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.historyItem{
+display:grid;
+grid-template-columns:34px 1fr;
+gap:10px;
+align-items:flex-start;
+padding:10px;
+border-radius:18px;
+background:#f8fafc;
+border:1px solid rgba(15,23,42,.045);
+}
+
+.historyDot{
+width:34px;
+height:34px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:950;
+font-size:15px;
+background:#eaf8f0;
+color:#16a34a;
+}
+
+.historyDot.pay{
+background:#eef6ff;
+color:#007aff;
+}
+
+.historyDot.maint{
+background:#eaf8f0;
+color:#22a859;
+}
+
+.historyDot.info{
+background:#f5f7fb;
+color:#64748b;
+}
+
+.historyText{
+font-size:14px;
+font-weight:850;
+line-height:1.35;
+color:#111827;
+}
+
+.historyDate{
+margin-top:3px;
+font-size:12px;
+font-weight:800;
+color:#8a94a6;
+}
+
+.whatsGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin:12px 0 10px;
+}
+
+.whatsappBtn{
+background:#20c463!important;
+color:white!important;
+border:none!important;
+font-weight:950!important;
+box-shadow:0 12px 28px rgba(32,196,99,.22)!important;
+}
+
+.whatsappBtn.secondary{
+background:#128c7e!important;
+box-shadow:0 12px 28px rgba(18,140,126,.20)!important;
+}
+
+body.darkMode .historyBox,
+html.darkRoot .historyBox{
+background:rgba(15,23,42,.72);
+border-color:rgba(255,255,255,.08);
+}
+
+body.darkMode .historyTitle,
+html.darkRoot .historyTitle,
+body.darkMode .historyText,
+html.darkRoot .historyText{
+color:#f8fafc;
+}
+
+body.darkMode .historyItem,
+html.darkRoot .historyItem{
+background:#0f141d;
+border-color:rgba(255,255,255,.06);
+}
+
+body.darkMode .historyCount,
+html.darkRoot .historyCount{
+background:rgba(0,122,255,.16);
+color:#5ac8fa;
+}
+
+@media(max-width:430px){
+.whatsGrid{
+grid-template-columns:1fr;
+}
+}
+
 </style>
 </head>
 
@@ -3463,7 +3609,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.54<br>
+Sürüm v1.0.55<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -3558,7 +3704,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.54";
+const APP_VERSION = "v1.0.55";
 
 function hideSplash(){
 
@@ -4535,9 +4681,7 @@ return;
 
 data[i].bakimTarihi = bugun();
 
-data[i].kayitlar.push(
-"Bakım yapıldı (" + bugun() + ")"
-);
+islemKaydiEkle(i,"Bakım yapıldı");
 
 localVeriKaydet();
 
@@ -4570,6 +4714,193 @@ anaSayfa();
 
 }
 
+
+function htmlSafe(v){
+return String(v ?? "").replace(/[&<>"']/g,(c)=>{
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[c];
+});
+}
+
+function kayitMetni(kayit){
+if(!kayit){
+return "";
+}
+if(typeof kayit === "string"){
+return kayit.replace(/\s*\(.*?\)\s*$/,"").trim();
+}
+return String(kayit.metin || kayit.baslik || kayit.tip || "İşlem").trim();
+}
+
+function kayitTarihi(kayit){
+if(!kayit){
+return "";
+}
+if(typeof kayit === "string"){
+let eslesme = kayit.match(/\((.*?)\)/);
+return eslesme ? eslesme[1] : "";
+}
+return kayit.tarih || "";
+}
+
+function kayitTipi(kayit){
+let metin = kayitMetni(kayit).toLowerCase();
+if(metin.includes("ödeme")){
+return {cls:"pay",icon:"₺"};
+}
+if(metin.includes("bakım")){
+return {cls:"maint",icon:"✓"};
+}
+return {cls:"info",icon:"•"};
+}
+
+function islemKaydiEkle(i,metin){
+if(!data[i]){
+return;
+}
+if(!Array.isArray(data[i].kayitlar)){
+data[i].kayitlar = [];
+}
+data[i].kayitlar.push(metin + " (" + bugun() + ")");
+}
+
+function islemGecmisiHtml(a){
+let kayitlar = Array.isArray(a.kayitlar) ? a.kayitlar : [];
+
+if(!kayitlar.length){
+return `
+<div class="historyBox">
+  <div class="historyHead">
+    <div class="historyTitle">İşlem Geçmişi</div>
+    <div class="historyCount">0 kayıt</div>
+  </div>
+  <div class="historyItem">
+    <div class="historyDot info">•</div>
+    <div>
+      <div class="historyText">Henüz bakım veya ödeme kaydı yok.</div>
+      <div class="historyDate">İşlem yaptıkça burada zaman çizelgesi oluşur.</div>
+    </div>
+  </div>
+</div>
+`;
+}
+
+let satirlar = kayitlar
+.slice()
+.reverse()
+.map(k=>{
+let tip = kayitTipi(k);
+let metin = htmlSafe(kayitMetni(k));
+let tarih = htmlSafe(kayitTarihi(k) || "Tarih yok");
+
+return `
+<div class="historyItem">
+  <div class="historyDot ${tip.cls}">${tip.icon}</div>
+  <div>
+    <div class="historyText">${metin}</div>
+    <div class="historyDate">${tarih}</div>
+  </div>
+</div>
+`;
+})
+.join("");
+
+return `
+<div class="historyBox">
+  <div class="historyHead">
+    <div class="historyTitle">İşlem Geçmişi</div>
+    <div class="historyCount">${kayitlar.length} kayıt</div>
+  </div>
+  <div class="historyList">
+    ${satirlar}
+  </div>
+</div>
+`;
+}
+
+function whatsappTelefonFormatla(tel){
+let t = String(tel || "").replace(/[^\d+]/g,"");
+
+if(t.startsWith("+")){
+t = t.slice(1);
+}
+
+if(t.startsWith("00")){
+t = t.slice(2);
+}
+
+if(t.startsWith("0") && t.length === 11){
+t = "90" + t.slice(1);
+}else if(t.length === 10){
+t = "90" + t;
+}
+
+return t;
+}
+
+function whatsappMesajMetni(a,tip){
+let profil = profilBilgileri();
+let servisFirma = profil.firma || APP_NAME;
+let servisAd = profil.ad || "Teknik Servis";
+let servisTel = profil.telefon || "";
+
+let apartman = a.ad || "Apartman";
+let yonetici = a.yonetici || "";
+let bakimDurumu = a.bakimTarihi ? `${a.bakimTarihi} tarihinde tamamlanmıştır.` : "henüz tamamlanmamıştır.";
+let odemeDurumu = a.odemeTarihi ? `${a.odemeTarihi} tarihinde alınmıştır.` : "beklemededir.";
+
+if(tip === "odeme"){
+return `Merhaba${yonetici ? " " + yonetici : ""},
+
+${apartman} için ödeme bilgilendirmesi:
+
+Ödeme durumu: ${odemeDurumu}
+Tutar: ${a.ucret || 0} ₺
+
+${servisFirma}
+${servisAd}${servisTel ? "\nTel: " + servisTel : ""}`;
+}
+
+return `Merhaba${yonetici ? " " + yonetici : ""},
+
+${apartman} asansör bakım bilgilendirmesi:
+
+Bakım durumu: ${bakimDurumu}
+Planlanan bakım günü: ${kartTarih(a.bakimGunu)}
+Teknik not: ${a.not || "-"}
+
+${servisFirma}
+${servisAd}${servisTel ? "\nTel: " + servisTel : ""}`;
+}
+
+async function whatsappMesaj(i,tip){
+if(!data[i]){
+return;
+}
+
+let a = data[i];
+let mesaj = whatsappMesajMetni(a,tip);
+let tel = whatsappTelefonFormatla(a.tel);
+let url = tel
+? `https://wa.me/${tel}?text=${encodeURIComponent(mesaj)}`
+: `https://wa.me/?text=${encodeURIComponent(mesaj)}`;
+
+try{
+if(navigator.clipboard){
+await navigator.clipboard.writeText(mesaj);
+}
+}catch(err){}
+
+window.open(url,"_blank");
+
+toast(tel ? "WhatsApp mesajı hazırlandı" : "Telefon yok; mesaj metni hazırlandı");
+}
+
 function detayAc(i){
 
 haptic("light");
@@ -4583,6 +4914,9 @@ aktifEkran = "detay";
 aktifDetay = i;
 
 let a = data[i];
+if(!Array.isArray(a.kayitlar)){
+a.kayitlar = [];
+}
 let d = durumBilgisi(a);
 
 searchArea.style.display="none";
@@ -4659,6 +4993,8 @@ ${d.durum}
 ${a.not || "Teknik not yok"}
 </div>
 
+${islemGecmisiHtml(a)}
+
 <div class="detailGrid">
 
 <button class="green ${a.odemeTarihi ? "done" : ""}" onclick="odeme(${i})">
@@ -4677,6 +5013,16 @@ Düzenle
 Sil
 </button>
 
+</div>
+
+<div class="whatsGrid">
+<button class="whatsappBtn" onclick="whatsappMesaj(${i},'bakim')">
+Bakım Mesajı
+</button>
+
+<button class="whatsappBtn secondary" onclick="whatsappMesaj(${i},'odeme')">
+Ödeme Mesajı
+</button>
 </div>
 
 <button onclick="pdf(${i})">
@@ -4764,9 +5110,7 @@ return;
 
 data[i].odemeTarihi = bugun();
 
-data[i].kayitlar.push(
-"Ödeme alındı (" + bugun() + ")"
-);
+islemKaydiEkle(i,"Ödeme alındı");
 
 kaydet();
 
@@ -4792,9 +5136,7 @@ return;
 
 data[i].bakimTarihi = bugun();
 
-data[i].kayitlar.push(
-"Bakım yapıldı (" + bugun() + ")"
-);
+islemKaydiEkle(i,"Bakım yapıldı");
 
 kaydet();
 
