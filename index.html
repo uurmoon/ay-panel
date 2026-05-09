@@ -3230,6 +3230,21 @@ font-size:36px!important;
 }
 }
 
+
+/* Contact picker affordance */
+.metaPhone{
+cursor:pointer;
+position:relative;
+padding:4px 7px 4px 0;
+border-radius:12px;
+}
+.metaPhone:active{
+background:rgba(0,122,255,.09);
+}
+.metaPhone .miniMetaIcon{
+color:#007aff;
+}
+
 </style>
 </head>
 
@@ -3242,7 +3257,7 @@ font-size:36px!important;
     <p>Bu bilgiler sadece bu cihazda saklanır. Uygulama raporları ve profil ekranı bu bilgilere göre düzenlenir.</p>
     <input id="setupAd" placeholder="İsim Soyisim">
     <input id="setupFirma" placeholder="Firma">
-    <input id="setupTelefon" placeholder="Telefon">
+    <input id="setupTelefon" type="tel" inputmode="tel" autocomplete="tel" placeholder="Telefon" onclick="rehberdenTelefonSec(event,'setupTelefon','setupAd')">
     <textarea id="setupBio" placeholder="Kısa bilgi / hizmet alanı">Asansör bakım • montaj • servis</textarea>
     <button class="setupPrimary" onclick="ilkProfilKaydet()">Devam Et</button>
   </div>
@@ -3307,7 +3322,7 @@ onclick="temaDegistir()">
 
 <input id="ad" placeholder="Apartman adı">
 <input id="yonetici" placeholder="Yönetici">
-<input id="tel" placeholder="Telefon">
+<input id="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="Telefon" onclick="rehberdenTelefonSec(event,'tel','yonetici')">
 <input id="ucret" placeholder="Ücret">
 <input type="date" id="bakimGunu">
 <textarea id="not" placeholder="Teknik not..."></textarea>
@@ -3370,7 +3385,11 @@ value="">
 <input
 id="profilTelefon"
 class="profileJobInput"
-placeholder="Telefon">
+type="tel"
+inputmode="tel"
+autocomplete="tel"
+placeholder="Telefon"
+onclick="rehberdenTelefonSec(event,'profilTelefon','profilAd')">
 
 <textarea
 id="profilBio"
@@ -3444,7 +3463,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.53<br>
+Sürüm v1.0.54<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -3539,7 +3558,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.53";
+const APP_VERSION = "v1.0.54";
 
 function hideSplash(){
 
@@ -4002,6 +4021,132 @@ formBox.style.display="none";
 
 }
 
+
+let rehberUyariGosterildi = false;
+
+function rehberDestekleniyor(){
+return !!(navigator.contacts && window.ContactsManager);
+}
+
+function rehberTelefonTemizle(numara){
+return String(numara || "").replace(/[^\d+]/g,"").trim();
+}
+
+async function rehberdenKisiSec(){
+if(!rehberDestekleniyor()){
+if(!rehberUyariGosterildi){
+toast("Bu cihaz/tarayıcı rehber seçimini desteklemiyor. Telefonu elle yazabilirsin.");
+rehberUyariGosterildi = true;
+}
+return null;
+}
+
+try{
+let props = ["name","tel"];
+
+if(navigator.contacts.getProperties){
+let desteklenen = await navigator.contacts.getProperties();
+props = props.filter(p=>desteklenen.includes(p));
+}
+
+if(!props.includes("tel")){
+toast("Bu tarayıcı telefon bilgisini paylaşmaya izin vermiyor");
+return null;
+}
+
+let sonuc = await navigator.contacts.select(props,{multiple:false});
+
+if(!sonuc || !sonuc.length){
+return null;
+}
+
+let kisi = sonuc[0] || {};
+let ad = Array.isArray(kisi.name) ? (kisi.name[0] || "") : (kisi.name || "");
+let telNo = Array.isArray(kisi.tel) ? (kisi.tel[0] || "") : (kisi.tel || "");
+
+return {
+ad:String(ad || "").trim(),
+tel:String(telNo || "").trim()
+};
+
+}catch(err){
+if(err && err.name === "AbortError"){
+return null;
+}
+toast("Rehber açılamadı");
+return null;
+}
+}
+
+async function rehberdenTelefonSec(e,telId,adId){
+if(e){
+e.stopPropagation();
+}
+
+let telInput = document.getElementById(telId);
+
+if(telInput){
+telInput.focus();
+}
+
+let kisi = await rehberdenKisiSec();
+
+if(!kisi){
+return;
+}
+
+if(telInput && kisi.tel){
+telInput.value = kisi.tel;
+telInput.dispatchEvent(new Event("input",{bubbles:true}));
+}
+
+if(adId){
+let adInput = document.getElementById(adId);
+if(adInput && kisi.ad && !String(adInput.value || "").trim()){
+adInput.value = kisi.ad;
+adInput.dispatchEvent(new Event("input",{bubbles:true}));
+}
+}
+
+toast("Rehberden telefon eklendi");
+}
+
+async function apartmanRehberGuncelle(e,i){
+if(e){
+e.stopPropagation();
+}
+
+if(!data[i]){
+return;
+}
+
+let kisi = await rehberdenKisiSec();
+
+if(!kisi){
+return;
+}
+
+if(kisi.tel){
+data[i].tel = kisi.tel;
+}
+
+if(kisi.ad && !String(data[i].yonetici || "").trim()){
+data[i].yonetici = kisi.ad;
+}
+
+kaydet();
+
+if(aktifEkran === "detay"){
+detayAc(i);
+}else if(aktifEkran === "bakim"){
+bakimListesiAc();
+}else{
+goster();
+}
+
+toast("Telefon bilgisi güncellendi");
+}
+
 function kaydetApartman(){
 
 haptic("success");
@@ -4200,7 +4345,7 @@ h += `
 <div class="aptName">${a.ad || "-"}</div>
 <div class="aptMeta">
 <span class="metaLine"><span class="miniMetaIcon person"></span>${a.yonetici || "-"}</span>
-<span class="metaLine"><span class="miniMetaIcon phone"></span>${a.tel || "-"}</span>
+<span class="metaLine metaPhone" onclick="apartmanRehberGuncelle(event,${i})"><span class="miniMetaIcon phone"></span>${a.tel || "Rehberden seç"}</span>
 </div>
 </div>
 
