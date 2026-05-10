@@ -3659,7 +3659,30 @@ body.darkMode .legalHandle,html.darkRoot .legalHandle{background:#374151!importa
 
 </style>
 
-<!-- OneSignal Web Push - ElevatorX v76 -->
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  try {
+    await OneSignal.init({
+      appId: "c74b3f5c-2712-42ff-aa88-3e7543685428",
+      serviceWorkerPath: "ay-panel/OneSignalSDKWorker.js",
+      serviceWorkerParam: {
+        scope: "/ay-panel/"
+      },
+      autoResubscribe: true,
+      notifyButton: {
+        enable: false
+      }
+    });
+    window.elevatorXOneSignalReady = true;
+  } catch (err) {
+    console.warn("ElevatorX OneSignal init error:", err);
+  }
+});
+</script>
+
+
+<!-- OneSignal Web Push - ElevatorX v77 -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
 window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -3674,6 +3697,29 @@ OneSignalDeferred.push(async function(OneSignal) {
       autoResubscribe: true,
       notifyButton: {
         enable: false
+      },
+      promptOptions: {
+        slidedown: {
+          prompts: [
+            {
+              type: "push",
+              autoPrompt: true,
+              delay: {
+                pageViews: 1,
+                timeDelay: 10
+              },
+              text: {
+                actionMessage: "ElevatorX güncellemeleri ve duyuruları için bildirimleri açabilirsin.",
+                acceptButton: "Bildirim Aç",
+                cancelButton: "Daha Sonra"
+              }
+            }
+          ]
+        }
+      },
+      welcomeNotification: {
+        title: "ElevatorX bildirimleri aktif",
+        message: "Güncelleme ve önemli duyuruları buradan alacaksın."
       }
     });
     window.elevatorXOneSignalReady = true;
@@ -3898,7 +3944,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.76<br>
+Sürüm v1.0.77<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -4014,7 +4060,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.76";
+const APP_VERSION = "v1.0.77";
 const APP_LOGO = new URL("elevatorx-icon-v69.png?v=75", location.href).href;
 
 function hideSplash(){
