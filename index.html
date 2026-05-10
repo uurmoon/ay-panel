@@ -2,9 +2,38 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 
 <script>
+
+/* Disable iOS pinch and double-tap zoom v82 */
+(function(){
+let lastTouchEnd = 0;
+
+document.addEventListener("gesturestart", function(e){
+e.preventDefault();
+}, {passive:false});
+
+document.addEventListener("gesturechange", function(e){
+e.preventDefault();
+}, {passive:false});
+
+document.addEventListener("gestureend", function(e){
+e.preventDefault();
+}, {passive:false});
+
+document.addEventListener("touchend", function(e){
+let now = Date.now();
+
+if(now - lastTouchEnd <= 320){
+e.preventDefault();
+}
+
+lastTouchEnd = now;
+}, {passive:false});
+})();
+
+
 if(localStorage.getItem("tema")==="dark"){
 document.documentElement.classList.add("darkRoot");
 }
@@ -3901,6 +3930,34 @@ max-height:54px!important;
 }
 }
 
+
+/* Disable pinch/double-tap zoom v82 */
+html,
+body{
+touch-action:pan-y!important;
+-webkit-text-size-adjust:100%!important;
+text-size-adjust:100%!important;
+overscroll-behavior:none!important;
+}
+
+button,
+a,
+.tabItem,
+.middleButton{
+touch-action:manipulation!important;
+}
+
+input,
+textarea,
+select{
+font-size:16px!important;
+-webkit-text-size-adjust:100%!important;
+}
+
+*{
+-webkit-tap-highlight-color:transparent;
+}
+
 </style>
 
 <script>
@@ -4188,7 +4245,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.80<br>
+Sürüm v1.0.82<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -4317,7 +4374,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.80";
+const APP_VERSION = "v1.0.82";
 const APP_LOGO = new URL("elevatorx-icon-v69.png?v=75", location.href).href;
 
 function hideSplash(){
@@ -6339,7 +6396,8 @@ toast("Ay sonu raporu oluşturuldu");
 
 
 
-function yedekle(){
+
+async function yedekle(){
 
 haptic("medium");
 
@@ -6358,25 +6416,73 @@ kapakFoto:localStorage.getItem("coverPhoto") || ""
 tema:localStorage.getItem("tema") || "light"
 };
 
-let blob = new Blob(
-[JSON.stringify(yedek,null,2)],
-{type:"application/json"}
-);
-
-let link = document.createElement("a");
-
 let tarih =
 new Date()
 .toISOString()
 .split("T")[0];
 
-link.href = URL.createObjectURL(blob);
-link.download = "elevatorx-yedek-" + tarih + ".json";
+let dosyaAdi =
+"elevatorx-yedek-" + tarih + ".json";
+
+let json =
+JSON.stringify(yedek,null,2);
+
+let blob = new Blob(
+[json],
+{type:"application/json;charset=utf-8"}
+);
+
+try{
+
+let file =
+new File([blob], dosyaAdi, {type:"application/json"});
+
+if(
+navigator.share &&
+navigator.canShare &&
+navigator.canShare({files:[file]})
+){
+
+await navigator.share({
+files:[file],
+title:"ElevatorX Yedeği",
+text:"ElevatorX veri yedeği"
+});
+
+toast("Yedek paylaşım ekranı açıldı");
+return;
+
+}
+
+}catch(err){
+console.warn("ElevatorX yedek paylaşım ekranı açılamadı:",err);
+}
+
+let url =
+URL.createObjectURL(blob);
+
+let link =
+document.createElement("a");
+
+link.href = url;
+link.download = dosyaAdi;
+link.rel = "noopener";
+link.style.display = "none";
+
+document.body.appendChild(link);
 link.click();
+
+setTimeout(function(){
+try{
+URL.revokeObjectURL(url);
+link.remove();
+}catch(err){}
+},1200);
 
 toast("Yedek indirildi");
 
 }
+
 
 function yedektenYukle(event){
 
