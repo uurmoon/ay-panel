@@ -3657,6 +3657,157 @@ body.darkMode .legalContent,html.darkRoot .legalContent{background:#151b26!impor
 body.darkMode .legalClose,html.darkRoot .legalClose{background:#263241!important;color:#f8fafc!important}
 body.darkMode .legalHandle,html.darkRoot .legalHandle{background:#374151!important}
 
+
+/* Parts replacement history v78 */
+.partsHistoryCard{
+margin-top:16px;
+background:rgba(255,255,255,.78);
+border:1px solid rgba(229,231,235,.95);
+border-radius:22px;
+padding:14px;
+box-shadow:0 10px 28px rgba(15,23,42,.055);
+}
+
+.partsHistoryHead{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-bottom:10px;
+}
+
+.partsHistoryTitle{
+font-size:16px;
+font-weight:950;
+letter-spacing:-.2px;
+color:#111827;
+}
+
+.partsAddBtn{
+width:auto!important;
+margin:0!important;
+padding:9px 12px!important;
+border-radius:14px!important;
+font-size:12px!important;
+font-weight:950!important;
+background:#007aff!important;
+color:white!important;
+box-shadow:0 8px 18px rgba(0,122,255,.18)!important;
+}
+
+.partsEmpty{
+background:#f7f8fb;
+border:1px dashed #d9dee8;
+border-radius:16px;
+padding:13px;
+font-size:13px;
+font-weight:800;
+line-height:1.35;
+color:#7b8494;
+}
+
+.partsList{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.partsItem{
+display:grid;
+grid-template-columns:minmax(0,1fr) auto;
+gap:10px;
+align-items:center;
+background:#f8fafc;
+border:1px solid #edf0f5;
+border-radius:16px;
+padding:11px 12px;
+}
+
+.partsName{
+font-size:14px;
+font-weight:950;
+color:#111827;
+line-height:1.2;
+word-break:break-word;
+}
+
+.partsMeta{
+margin-top:3px;
+font-size:11.5px;
+font-weight:800;
+color:#7b8494;
+line-height:1.35;
+}
+
+.partsNote{
+margin-top:4px;
+font-size:12px;
+font-weight:750;
+color:#4b5563;
+line-height:1.35;
+}
+
+.partsDelete{
+width:34px!important;
+height:34px!important;
+padding:0!important;
+margin:0!important;
+border-radius:12px!important;
+font-size:14px!important;
+font-weight:950!important;
+background:#fff1f2!important;
+color:#ef4444!important;
+box-shadow:none!important;
+border:1px solid rgba(239,68,68,.14)!important;
+}
+
+.partsTotal{
+margin-top:10px;
+padding:10px 12px;
+border-radius:15px;
+background:#eef6ff;
+color:#0f5fb4;
+font-size:13px;
+font-weight:950;
+display:flex;
+justify-content:space-between;
+gap:12px;
+}
+
+body.darkMode .partsHistoryCard,
+html.darkRoot .partsHistoryCard{
+background:rgba(21,27,38,.86);
+border-color:rgba(55,65,81,.95);
+box-shadow:0 10px 28px rgba(0,0,0,.16);
+}
+
+body.darkMode .partsHistoryTitle,
+html.darkRoot .partsHistoryTitle,
+body.darkMode .partsName,
+html.darkRoot .partsName{
+color:#f8fafc;
+}
+
+body.darkMode .partsEmpty,
+html.darkRoot .partsEmpty,
+body.darkMode .partsItem,
+html.darkRoot .partsItem{
+background:#101827;
+border-color:#263241;
+color:#94a3b8;
+}
+
+body.darkMode .partsNote,
+html.darkRoot .partsNote{
+color:#cbd5e1;
+}
+
+body.darkMode .partsTotal,
+html.darkRoot .partsTotal{
+background:rgba(0,122,255,.14);
+color:#8fd3ff;
+}
+
 </style>
 
 <script>
@@ -3944,7 +4095,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.77<br>
+Sürüm v1.0.78<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -4060,7 +4211,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.77";
+const APP_VERSION = "v1.0.78";
 const APP_LOGO = new URL("elevatorx-icon-v69.png?v=75", location.href).href;
 
 function hideSplash(){
@@ -5073,6 +5224,145 @@ anaSayfa();
 
 }
 
+
+function ayHtml(v){
+return String(v ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+function parcaTutarFormat(v){
+let n = Number(v) || 0;
+return n ? n.toLocaleString("tr-TR") + " ₺" : "-";
+}
+
+function parcaGecmisiHtml(i){
+let a = data[i] || {};
+
+if(!Array.isArray(a.parcalar)){
+a.parcalar = [];
+}
+
+let parcalar = a.parcalar;
+let toplam = parcalar.reduce((t,p)=>t + (Number(p.tutar) || 0),0);
+
+let liste = "";
+
+if(!parcalar.length){
+liste = `
+<div class="partsEmpty">
+Henüz parça değişim kaydı yok. Değişen parçaları buradan ekleyebilirsin.
+</div>
+`;
+}else{
+liste = `<div class="partsList">` + parcalar.map((p,idx)=>{
+let ad = ayHtml(p.ad || "Parça");
+let tarih = ayHtml(p.tarih || "-");
+let adet = ayHtml(p.adet || "1");
+let tutar = parcaTutarFormat(p.tutar);
+let not = p.not ? `<div class="partsNote">${ayHtml(p.not)}</div>` : "";
+
+return `
+<div class="partsItem">
+<div>
+<div class="partsName">${ad}</div>
+<div class="partsMeta">${tarih} • Adet: ${adet} • Tutar: ${tutar}</div>
+${not}
+</div>
+<button class="partsDelete" onclick="parcaSil(${i},${idx})">×</button>
+</div>
+`;
+}).join("") + `</div>`;
+}
+
+let toplamHtml = parcalar.length
+? `<div class="partsTotal"><span>Toplam parça tutarı</span><strong>${parcaTutarFormat(toplam)}</strong></div>`
+: "";
+
+return `
+<div class="partsHistoryCard">
+<div class="partsHistoryHead">
+<div class="partsHistoryTitle">Parça Değişim Geçmişi</div>
+<button class="partsAddBtn" onclick="parcaEkle(${i})">+ Parça Ekle</button>
+</div>
+${liste}
+${toplamHtml}
+</div>
+`;
+}
+
+function parcaEkle(i){
+haptic("light");
+
+if(!data[i]){
+toast("Apartman bulunamadı");
+return;
+}
+
+if(!Array.isArray(data[i].parcalar)){
+data[i].parcalar = [];
+}
+
+let ad = prompt("Değişen parça adı", "");
+
+if(!ad || !ad.trim()){
+toast("Parça eklenmedi");
+return;
+}
+
+let tarih = prompt("Tarih", bugun()) || bugun();
+let adet = prompt("Adet", "1") || "1";
+let tutarRaw = prompt("Tutar ₺ (isteğe bağlı)", "0") || "0";
+let not = prompt("Not (isteğe bağlı)", "") || "";
+
+let tutar = Number(String(tutarRaw).replace(",", ".")) || 0;
+
+data[i].parcalar.unshift({
+ad:ad.trim(),
+tarih:tarih.trim(),
+adet:String(adet).trim() || "1",
+tutar:tutar,
+not:not.trim(),
+createdAt:new Date().toISOString()
+});
+
+if(!Array.isArray(data[i].kayitlar)){
+data[i].kayitlar = [];
+}
+
+data[i].kayitlar.push(
+"Parça değişti: " + ad.trim() + " (" + bugun() + ")"
+);
+
+kaydet();
+detayAc(i);
+toast("Parça geçmişine eklendi");
+}
+
+function parcaSil(i,idx){
+haptic("warning");
+
+if(!data[i] || !Array.isArray(data[i].parcalar)){
+return;
+}
+
+let onay = confirm("Bu parça kaydı silinsin mi?");
+
+if(!onay){
+toast("Silme iptal edildi");
+return;
+}
+
+data[i].parcalar.splice(idx,1);
+
+kaydet();
+detayAc(i);
+toast("Parça kaydı silindi");
+}
+
 function detayAc(i){
 
 haptic("light");
@@ -5161,6 +5451,8 @@ ${d.durum}
 <div class="detailNote">
 ${a.not || "Teknik not yok"}
 </div>
+
+${parcaGecmisiHtml(i)}
 
 <div class="detailGrid">
 
