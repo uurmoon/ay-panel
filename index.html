@@ -3658,6 +3658,31 @@ body.darkMode .legalClose,html.darkRoot .legalClose{background:#263241!important
 body.darkMode .legalHandle,html.darkRoot .legalHandle{background:#374151!important}
 
 </style>
+
+<!-- OneSignal Web Push - ElevatorX v76 -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  try {
+    await OneSignal.init({
+      appId: "c74b3f5c-2712-42ff-aa88-3e7543685428",
+      serviceWorkerPath: "ay-panel/OneSignalSDKWorker.js",
+      serviceWorkerParam: {
+        scope: "/ay-panel/"
+      },
+      autoResubscribe: true,
+      notifyButton: {
+        enable: false
+      }
+    });
+    window.elevatorXOneSignalReady = true;
+  } catch (err) {
+    console.warn("ElevatorX OneSignal init error:", err);
+  }
+});
+</script>
+
 </head>
 
 <body>
@@ -3873,7 +3898,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.75<br>
+Sürüm v1.0.76<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -3989,7 +4014,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.75";
+const APP_VERSION = "v1.0.76";
 const APP_LOGO = new URL("elevatorx-icon-v69.png?v=75", location.href).href;
 
 function hideSplash(){
