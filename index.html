@@ -4493,6 +4493,331 @@ background:#f8fafc!important;
 color:#111827!important;
 }
 
+
+/* Premium maintenance checklist v87 */
+.maintenanceChecklistCard{
+margin-top:16px;
+background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(255,255,255,.58));
+border:1px solid rgba(255,255,255,.72);
+border-radius:24px;
+padding:14px;
+box-shadow:0 18px 44px rgba(15,23,42,.075), inset 0 1px 0 rgba(255,255,255,.85);
+backdrop-filter:blur(22px) saturate(145%);
+-webkit-backdrop-filter:blur(22px) saturate(145%);
+position:relative;
+overflow:hidden;
+}
+
+.maintenanceChecklistCard::after{
+content:"";
+position:absolute;
+inset:0;
+border-radius:inherit;
+pointer-events:none;
+background:
+linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,255,255,0) 42%),
+radial-gradient(circle at 18% 0%,rgba(255,255,255,.58),rgba(255,255,255,0) 36%);
+opacity:.7;
+z-index:0;
+}
+
+.maintenanceChecklistCard > *{
+position:relative;
+z-index:1;
+}
+
+.maintenanceCheckHead{
+display:flex;
+align-items:flex-start;
+justify-content:space-between;
+gap:12px;
+margin-bottom:10px;
+}
+
+.maintenanceCheckTitle{
+font-size:16px;
+font-weight:950;
+letter-spacing:-.2px;
+color:#111827;
+}
+
+.maintenanceCheckSub{
+margin-top:2px;
+font-size:11.5px;
+font-weight:800;
+color:#8a94a6;
+}
+
+.maintenanceCheckList{
+display:flex;
+flex-wrap:wrap;
+gap:7px;
+}
+
+.maintenanceCheckPill{
+display:inline-flex;
+align-items:center;
+gap:6px;
+padding:7px 9px;
+border-radius:999px;
+background:rgba(16,185,129,.10);
+border:1px solid rgba(16,185,129,.16);
+color:#047857;
+font-size:11.5px;
+font-weight:900;
+line-height:1;
+}
+
+.maintenanceCheckPill::before{
+content:"✓";
+width:15px;
+height:15px;
+border-radius:50%;
+background:#10b981;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:10px;
+font-weight:950;
+}
+
+.maintenanceCheckNote{
+margin-top:10px;
+padding:10px 12px;
+border-radius:16px;
+background:rgba(248,250,252,.72);
+border:1px solid rgba(226,232,240,.78);
+font-size:12.5px;
+font-weight:780;
+line-height:1.45;
+color:#4b5563;
+}
+
+.checklistModal{
+position:fixed;
+inset:0;
+z-index:1000003;
+display:none;
+align-items:flex-end;
+background:rgba(15,23,42,.32);
+backdrop-filter:blur(14px);
+-webkit-backdrop-filter:blur(14px);
+}
+
+.checklistModal.show{
+display:flex;
+}
+
+.checklistSheet{
+width:100%;
+max-height:86vh;
+background:#f6f7fb;
+border-radius:32px 32px 0 0;
+padding:16px 18px calc(22px + env(safe-area-inset-bottom));
+box-shadow:0 -18px 55px rgba(15,23,42,.22);
+box-sizing:border-box;
+animation:checkSheetUp .24s cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes checkSheetUp{
+from{opacity:0;transform:translateY(70px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.checklistHandle{
+width:46px;
+height:5px;
+border-radius:999px;
+background:#d1d5db;
+margin:0 auto 14px;
+}
+
+.checklistHeader{
+display:flex;
+align-items:flex-start;
+justify-content:space-between;
+gap:14px;
+margin-bottom:12px;
+}
+
+.checklistHeader h3{
+margin:0;
+font-size:22px;
+font-weight:950;
+letter-spacing:-.5px;
+color:#111827;
+}
+
+.checklistHeader p{
+margin:4px 0 0;
+font-size:12.5px;
+font-weight:800;
+line-height:1.35;
+color:#7b8494;
+}
+
+.checklistClose{
+width:42px!important;
+height:42px!important;
+border-radius:50%!important;
+padding:0!important;
+margin:0!important;
+background:#e5e5ea!important;
+color:#111827!important;
+font-size:26px!important;
+font-weight:800!important;
+display:flex!important;
+align-items:center!important;
+justify-content:center!important;
+box-shadow:none!important;
+flex-shrink:0;
+}
+
+.checklistOptions{
+display:grid;
+grid-template-columns:1fr;
+gap:8px;
+max-height:45vh;
+overflow:auto;
+-webkit-overflow-scrolling:touch;
+padding:2px 0 8px;
+}
+
+.checkOption{
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px;
+border-radius:18px;
+background:white;
+border:1px solid #edf0f5;
+box-shadow:0 8px 22px rgba(15,23,42,.045);
+font-size:14px;
+font-weight:900;
+color:#111827;
+}
+
+.checkOption input{
+width:20px;
+height:20px;
+accent-color:#007aff;
+flex-shrink:0;
+}
+
+.checklistNoteInput{
+width:100%;
+min-height:72px;
+resize:none;
+border:1px solid #edf0f5;
+border-radius:18px;
+background:white;
+padding:12px 13px;
+font-size:16px;
+font-weight:800;
+color:#111827;
+box-shadow:0 8px 22px rgba(15,23,42,.045);
+outline:none;
+margin-top:10px;
+box-sizing:border-box;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+.checklistActions{
+display:grid;
+grid-template-columns:1fr 1.25fr;
+gap:10px;
+margin-top:12px;
+}
+
+.checklistSecondary,
+.checklistPrimary{
+margin:0!important;
+height:48px!important;
+border-radius:18px!important;
+font-size:14px!important;
+font-weight:950!important;
+}
+
+.checklistSecondary{
+background:#e5e5ea!important;
+color:#111827!important;
+box-shadow:none!important;
+}
+
+.checklistPrimary{
+background:#007aff!important;
+color:white!important;
+box-shadow:0 16px 34px rgba(0,122,255,.22), inset 0 1px 0 rgba(255,255,255,.35)!important;
+}
+
+body.darkMode .maintenanceChecklistCard,
+html.darkRoot .maintenanceChecklistCard{
+background:linear-gradient(145deg,rgba(30,41,59,.72),rgba(15,23,42,.58));
+border-color:rgba(148,163,184,.18);
+box-shadow:0 18px 44px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+body.darkMode .maintenanceChecklistCard::after,
+html.darkRoot .maintenanceChecklistCard::after{
+background:
+linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,0) 45%),
+radial-gradient(circle at 18% 0%,rgba(96,165,250,.12),rgba(96,165,250,0) 38%);
+opacity:1;
+}
+
+body.darkMode .maintenanceCheckTitle,
+html.darkRoot .maintenanceCheckTitle{
+color:#f8fafc;
+}
+
+body.darkMode .maintenanceCheckNote,
+html.darkRoot .maintenanceCheckNote{
+background:rgba(15,23,42,.56);
+border-color:rgba(148,163,184,.16);
+color:#cbd5e1;
+}
+
+body.darkMode .checklistModal,
+html.darkRoot .checklistModal{
+background:rgba(0,0,0,.46);
+}
+
+body.darkMode .checklistSheet,
+html.darkRoot .checklistSheet{
+background:#0b0f17;
+}
+
+body.darkMode .checklistHeader h3,
+html.darkRoot .checklistHeader h3,
+body.darkMode .checkOption,
+html.darkRoot .checkOption,
+body.darkMode .checklistNoteInput,
+html.darkRoot .checklistNoteInput{
+color:#f8fafc;
+}
+
+body.darkMode .checkOption,
+html.darkRoot .checkOption,
+body.darkMode .checklistNoteInput,
+html.darkRoot .checklistNoteInput{
+background:#151b26;
+border-color:#263241;
+}
+
+body.darkMode .checklistClose,
+html.darkRoot .checklistClose,
+body.darkMode .checklistSecondary,
+html.darkRoot .checklistSecondary{
+background:#263241!important;
+color:#f8fafc!important;
+}
+
+body.darkMode .checklistHandle,
+html.darkRoot .checklistHandle{
+background:#374151;
+}
+
 </style>
 
 <script>
@@ -4780,7 +5105,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.86<br>
+Sürüm v1.0.87<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -4850,6 +5175,26 @@ Destek: supportelevatorx@gmail.com
   </div>
 </div>
 
+
+<div id="checklistModal" class="checklistModal">
+  <div class="checklistSheet">
+    <div class="checklistHandle"></div>
+    <div class="checklistHeader">
+      <div>
+        <h3>Bakım Checklist</h3>
+        <p>Bakım yapıldı olarak kaydetmeden önce kontrol edilen maddeleri seç.</p>
+      </div>
+      <button type="button" class="checklistClose" onclick="bakimChecklistKapat()">×</button>
+    </div>
+    <div id="checklistOptions" class="checklistOptions"></div>
+    <textarea id="checklistNote" class="checklistNoteInput" placeholder="Bakım notu ekle (isteğe bağlı)"></textarea>
+    <div class="checklistActions">
+      <button type="button" class="checklistSecondary" onclick="bakimChecklistKapat()">Vazgeç</button>
+      <button type="button" class="checklistPrimary" onclick="bakimChecklistKaydet()">Bakımı Kaydet</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <div id="aiOverlay" class="aiOverlay" onclick="ayAsistanKapatDis(event)">
@@ -4909,7 +5254,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.86";
+const APP_VERSION = "v1.0.87";
 const APP_LOGO = new URL("elevatorx-icon-v69.png?v=75", location.href).href;
 
 function hideSplash(){
@@ -7383,6 +7728,158 @@ detayAc(i);
 toast("Geçmişe eklendi");
 }
 
+
+const BAKIM_CHECKLIST_ITEMS = [
+"Genel çalışma kontrolü",
+"Kapı kilidi ve kapı hareket kontrolü",
+"Kabin hareket ve seviye kontrolü",
+"Buton / gösterge kontrolü",
+"Güvenlik devresi kontrolü",
+"Makine dairesi / pano görsel kontrolü",
+"Temizlik ve yağlama kontrolü",
+"Teknik not / uyarı kontrolü"
+];
+
+let aktifBakimChecklistIndex = null;
+
+function sonBakimChecklist(a){
+if(!a || !Array.isArray(a.bakimChecklist) || !a.bakimChecklist.length){
+return null;
+}
+
+return a.bakimChecklist[a.bakimChecklist.length - 1];
+}
+
+function bakimChecklistHtml(i){
+let a = data[i];
+let son = sonBakimChecklist(a);
+
+if(!son || !Array.isArray(son.items) || !son.items.length){
+return "";
+}
+
+let items = son.items.map(function(item){
+return `<span class="maintenanceCheckPill">${ayHtml(item)}</span>`;
+}).join("");
+
+let note = son.note && String(son.note).trim()
+? `<div class="maintenanceCheckNote">${ayHtml(son.note)}</div>`
+: "";
+
+return `
+<div class="maintenanceChecklistCard">
+<div class="maintenanceCheckHead">
+<div>
+<div class="maintenanceCheckTitle">Bakım Checklist</div>
+<div class="maintenanceCheckSub">${ayHtml(son.tarih || "-")} • ${son.items.length} kontrol tamamlandı</div>
+</div>
+</div>
+<div class="maintenanceCheckList">
+${items}
+</div>
+${note}
+</div>
+`;
+}
+
+function bakimChecklistAc(i){
+aktifBakimChecklistIndex = i;
+
+let modal = document.getElementById("checklistModal");
+let options = document.getElementById("checklistOptions");
+let note = document.getElementById("checklistNote");
+
+if(!modal || !options){
+toast("Checklist ekranı açılamadı");
+return;
+}
+
+options.innerHTML = BAKIM_CHECKLIST_ITEMS.map(function(item,idx){
+return `
+<label class="checkOption">
+<input type="checkbox" value="${ayHtml(item)}" checked>
+<span>${ayHtml(item)}</span>
+</label>
+`;
+}).join("");
+
+if(note){
+note.value = "";
+}
+
+modal.classList.add("show");
+}
+
+function bakimChecklistKapat(){
+let modal = document.getElementById("checklistModal");
+
+if(modal){
+modal.classList.remove("show");
+}
+
+aktifBakimChecklistIndex = null;
+}
+
+function bakimChecklistKaydet(){
+let i = aktifBakimChecklistIndex;
+
+if(i === null || i === undefined || !data[i]){
+toast("Apartman bulunamadı");
+return;
+}
+
+let options = document.querySelectorAll("#checklistOptions input[type='checkbox']");
+let secilen = Array.from(options)
+.filter(function(input){return input.checked;})
+.map(function(input){return input.value;});
+
+if(!secilen.length){
+toast("En az bir kontrol seç");
+return;
+}
+
+let noteEl = document.getElementById("checklistNote");
+let not = noteEl ? noteEl.value.trim() : "";
+
+if(!Array.isArray(data[i].bakimChecklist)){
+data[i].bakimChecklist = [];
+}
+
+data[i].bakimChecklist.push({
+tarih:bugun(),
+items:secilen,
+note:not,
+createdAt:new Date().toISOString()
+});
+
+bakimChecklistKapat();
+bakimKaydiTamamla(i);
+}
+
+function bakimKaydiTamamla(i){
+haptic("success");
+
+data[i].bakimTarihi = bugun();
+
+if(!Array.isArray(data[i].kayitlar)){
+data[i].kayitlar = [];
+}
+
+data[i].kayitlar.push(
+"Bakım yapıldı (" + bugun() + ")"
+);
+
+kaydet();
+
+toast("Bakım checklist kaydedildi");
+
+pdf(i);
+
+if(aktifDetay !== null && data[aktifDetay]){
+detayAc(aktifDetay);
+}
+}
+
 function detayAc(i){
 
 haptic("light");
@@ -7476,6 +7973,8 @@ ${d.durum}
 <div class="detailNote">
 ${a.not || "Teknik not yok"}
 </div>
+
+${bakimChecklistHtml(i)}
 
 ${asansorGecmisiHtml(i)}
 
@@ -7616,21 +8115,7 @@ pdf(i);
 return;
 }
 
-data[i].bakimTarihi = bugun();
-
-data[i].kayitlar.push(
-"Bakım yapıldı (" + bugun() + ")"
-);
-
-kaydet();
-
-toast("Bakım kaydedildi");
-
-pdf(i);
-
-if(aktifDetay !== null && data[aktifDetay]){
-detayAc(aktifDetay);
-}
+bakimChecklistAc(i);
 
 }
 
@@ -7886,6 +8371,24 @@ let pdfLogo = pdfMarka.logo;
 let pdfSorumlu = pdfMarka.ad;
 let pdfTel = pdfMarka.telefon;
 
+let sonChecklist = sonBakimChecklist(a);
+let bakimChecklistPdfHtml =
+sonChecklist && Array.isArray(sonChecklist.items) && sonChecklist.items.length
+? sonChecklist.items.map(function(item){
+return `<div class="checkItem"><span class="checkDot">✓</span>${ayHtml(item)}</div>`;
+}).join("")
+: `
+<div class="checkItem"><span class="checkDot">✓</span>Genel çalışma kontrolü</div>
+<div class="checkItem"><span class="checkDot">✓</span>Kapı ve güvenlik kontrolü</div>
+<div class="checkItem"><span class="checkDot">✓</span>Kabin hareket kontrolü</div>
+<div class="checkItem"><span class="checkDot">✓</span>Teknik not kontrolü</div>
+`;
+
+let bakimChecklistPdfNot =
+sonChecklist && sonChecklist.note && String(sonChecklist.note).trim()
+? `<div class="noteBox"><div class="noteTitle">Bakım Checklist Notu</div><div class="noteText">${ayHtml(sonChecklist.note)}</div></div>`
+: "";
+
 let w = window.open("");
 
 if(!w){
@@ -8020,11 +8523,10 @@ html,body{background:#fff!important;margin:0!important;padding:0!important;zoom:
 </div>
 
 <div class="checkList">
-<div class="checkItem"><span class="checkDot">✓</span>Genel çalışma kontrolü</div>
-<div class="checkItem"><span class="checkDot">✓</span>Kapı ve güvenlik kontrolü</div>
-<div class="checkItem"><span class="checkDot">✓</span>Kabin hareket kontrolü</div>
-<div class="checkItem"><span class="checkDot">✓</span>Teknik not kontrolü</div>
+${bakimChecklistPdfHtml}
 </div>
+
+${bakimChecklistPdfNot}
 
 <div class="noteBox">
 <div class="noteTitle">Teknik Not</div>
