@@ -5081,6 +5081,33 @@ body.darkMode .tabbar .middleButton{border-color:rgba(17,23,34,.95)!important}
 .tabbar .middleButton{width:62px!important;height:62px!important;font-size:37px!important}
 }
 
+
+
+/* Paket v94 — Alt bar apartman sekmesi hizalama düzeltmesi */
+.tabbar .tabItem[data-tab="apartman"]{
+transform:translateX(-10px)!important;
+}
+
+.tabbar .tabItem[data-tab="apartman"] .tabIcon,
+.tabbar .tabItem[data-tab="apartman"] .tabText{
+transform:translateX(-2px)!important;
+}
+
+@media(max-width:430px){
+.tabbar .tabItem[data-tab="apartman"]{
+transform:translateX(-12px)!important;
+}
+.tabbar .tabItem[data-tab="apartman"] .tabIcon,
+.tabbar .tabItem[data-tab="apartman"] .tabText{
+transform:translateX(-2px)!important;
+}
+}
+
+body.darkMode .tabbar .tabItem[data-tab="apartman"] .tabIcon,
+body.darkMode .tabbar .tabItem[data-tab="apartman"] .tabText{
+transform:translateX(-2px)!important;
+}
+
 </style>
 
 <script>
@@ -5517,7 +5544,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.93";
+const APP_VERSION = "v1.0.94";
 const APP_LOGO = new URL("elevatorx-icon-v69.png?v=75", location.href).href;
 
 function hideSplash(){
