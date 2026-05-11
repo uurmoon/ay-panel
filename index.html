@@ -4426,6 +4426,73 @@ background:#f8fafc!important;
 color:#111827!important;
 }
 
+
+/* Apartment code + elevator registry card v86 */
+.aptCode{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+margin-top:6px;
+padding:5px 8px;
+border-radius:999px;
+background:rgba(17,24,39,.065);
+border:1px solid rgba(17,24,39,.08);
+color:#475569;
+font-size:10.5px;
+font-weight:950;
+letter-spacing:.08em;
+text-transform:uppercase;
+line-height:1;
+}
+
+.sicilInfoCard{
+background:linear-gradient(145deg,rgba(17,24,39,.92),rgba(30,41,59,.86))!important;
+border-color:rgba(255,255,255,.18)!important;
+color:white!important;
+}
+
+.sicilInfoCard .infoLabel,
+.sicilInfoCard .infoValue{
+color:white!important;
+}
+
+.sicilInfoCard .infoLabel{
+opacity:.68;
+}
+
+.sicilPdfBtn{
+background:#111827!important;
+color:white!important;
+font-weight:950!important;
+box-shadow:0 16px 34px rgba(15,23,42,.18), inset 0 1px 0 rgba(255,255,255,.20)!important;
+}
+
+body.darkMode .aptCode,
+html.darkRoot .aptCode{
+background:rgba(255,255,255,.08);
+border-color:rgba(255,255,255,.10);
+color:#cbd5e1;
+}
+
+body.darkMode .sicilInfoCard,
+html.darkRoot .sicilInfoCard{
+background:linear-gradient(145deg,rgba(248,250,252,.92),rgba(226,232,240,.82))!important;
+color:#111827!important;
+}
+
+body.darkMode .sicilInfoCard .infoLabel,
+body.darkMode .sicilInfoCard .infoValue,
+html.darkRoot .sicilInfoCard .infoLabel,
+html.darkRoot .sicilInfoCard .infoValue{
+color:#111827!important;
+}
+
+body.darkMode .sicilPdfBtn,
+html.darkRoot .sicilPdfBtn{
+background:#f8fafc!important;
+color:#111827!important;
+}
+
 </style>
 
 <script>
@@ -4713,7 +4780,7 @@ onchange="yedektenYukle(event)">
 <div class="profileFooterSmall">
 © 2026 ElevatorX. Tüm hakları saklıdır.<br>
 Asansör takip sistemi<br>
-Sürüm v1.0.85<br>
+Sürüm v1.0.86<br>
 Destek: supportelevatorx@gmail.com
 </div>
 
@@ -4842,7 +4909,7 @@ const AUTO_YEDEK_HISTORY_KEY = "ayAutoBackupHistory";
 const AUTO_YEDEK_LIMIT = 8;
 
 const APP_NAME = "ElevatorX";
-const APP_VERSION = "v1.0.85";
+const APP_VERSION = "v1.0.86";
 const APP_LOGO = new URL("elevatorx-icon-v69.png?v=75", location.href).href;
 
 function hideSplash(){
@@ -5022,6 +5089,58 @@ if(parca.length === 3){
 return `${parca[2]}.${parca[1]}.${parca[0].slice(2)}`;
 }
 return tarih;
+}
+
+
+function kodParcasi(v){
+let s =
+String(v || "ASN")
+.toLocaleUpperCase("tr-TR")
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g,"")
+.replace(/[^A-Z0-9]/g,"");
+
+return (s.slice(0,3) || "ASN");
+}
+
+function apartmanKodu(i){
+let a = data[i];
+
+if(!a){
+return "EX-ASN-000";
+}
+
+if(!a.sicilKod){
+a.sicilKod =
+"EX-" +
+kodParcasi(a.ad) +
+"-" +
+String(i + 1).padStart(3,"0");
+
+localVeriKaydet();
+}
+
+return a.sicilKod;
+}
+
+function parcaToplamTutar(a){
+if(!a || !Array.isArray(a.parcalar)){
+return 0;
+}
+
+return a.parcalar.reduce(function(t,p){
+return t + (Number(p.tutar) || 0);
+},0);
+}
+
+function sonParcaBilgisi(a){
+if(!a || !Array.isArray(a.parcalar) || !a.parcalar.length){
+return "-";
+}
+
+let p = a.parcalar[0];
+
+return (p.ad || "Parça") + (p.tarih ? " • " + p.tarih : "");
 }
 
 function toplamTahsilat(){
@@ -5628,6 +5747,7 @@ h += `
 
 <div>
 <div class="aptName">${a.ad || "-"}</div>
+<div class="aptCode">${apartmanKodu(i)}</div>
 <div class="aptMeta">
 <span class="metaLine"><span class="miniMetaIcon person"></span>${a.yonetici || "-"}</span>
 <span class="metaLine metaPhone" onclick="apartmanRehberGuncelle(event,${i})"><span class="miniMetaIcon phone"></span>${a.tel || "Rehberden seç"}</span>
@@ -5926,6 +6046,509 @@ ${liste}
 ${toplamHtml}
 </div>
 `;
+}
+
+
+
+function sicilKartiPdf(i){
+
+haptic("medium");
+
+let a = data[i];
+
+if(!a){
+toast("Apartman bulunamadı");
+return;
+}
+
+let pdfMarka = pdfFirmaBilgi();
+let pdfFirma = pdfMarka.firma;
+let pdfLogo = pdfMarka.logo;
+let pdfSorumlu = pdfMarka.ad;
+let pdfTel = pdfMarka.telefon;
+
+let kod = apartmanKodu(i);
+let parcaSayisi = Array.isArray(a.parcalar) ? a.parcalar.length : 0;
+let parcaToplam = parcaToplamTutar(a);
+let sonIslem = Array.isArray(a.kayitlar) && a.kayitlar.length ? a.kayitlar[a.kayitlar.length - 1] : "-";
+let raporNo =
+"SCL-" +
+new Date().getFullYear() +
+"-" +
+String(i + 1).padStart(4,"0");
+
+let sonParcalar = "";
+
+if(parcaSayisi){
+sonParcalar =
+a.parcalar.slice(0,6).map(function(p,idx){
+return `
+<tr>
+<td>${idx + 1}</td>
+<td>${ayHtml(p.ad || "Parça")}</td>
+<td>${ayHtml(p.tarih || "-")}</td>
+<td>${ayHtml(p.adet || "1")}</td>
+<td>${parcaTutarFormat(p.tutar)}</td>
+</tr>
+`;
+}).join("");
+}else{
+sonParcalar = `
+<tr>
+<td colspan="5" class="emptyCell">Kayıtlı parça değişimi yok</td>
+</tr>
+`;
+}
+
+let w = window.open("");
+
+if(!w){
+toast("PDF penceresi açılamadı. Safari açılır pencere iznini kontrol et.");
+return;
+}
+
+w.document.write(`
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asansör Sicil Kartı - ElevatorX</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+background:#eef1f6;
+color:#111827;
+padding:24px;
+}
+.page{
+max-width:840px;
+margin:0 auto;
+background:white;
+border-radius:28px;
+overflow:hidden;
+box-shadow:0 18px 55px rgba(15,23,42,.10);
+}
+.topBand{
+height:10px;
+background:linear-gradient(90deg,#111827,#007aff,#34c759);
+}
+.header{
+padding:26px 30px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:18px;
+border-bottom:1px solid #eef0f4;
+}
+.brand{
+display:flex;
+align-items:center;
+gap:14px;
+min-width:0;
+}
+.brand img{
+width:52px;
+height:52px;
+border-radius:16px;
+object-fit:cover;
+background:#f8fafc;
+}
+.brandTitle{
+font-size:24px;
+font-weight:950;
+letter-spacing:-.4px;
+line-height:1.15;
+word-break:break-word;
+}
+.brandSub{
+font-size:13px;
+color:#6b7280;
+font-weight:750;
+margin-top:2px;
+}
+.reportMeta{
+text-align:right;
+font-size:13px;
+color:#6b7280;
+line-height:1.7;
+white-space:nowrap;
+}
+.reportMeta b{color:#111827}
+.identityHero{
+margin:24px 30px 16px;
+background:linear-gradient(145deg,#111827,#1f2937);
+border-radius:26px;
+padding:22px;
+color:white;
+position:relative;
+overflow:hidden;
+}
+.identityHero::after{
+content:"";
+position:absolute;
+right:-60px;
+top:-60px;
+width:180px;
+height:180px;
+border-radius:50%;
+background:rgba(0,122,255,.26);
+filter:blur(2px);
+}
+.kicker{
+font-size:12px;
+font-weight:950;
+letter-spacing:.18em;
+text-transform:uppercase;
+opacity:.65;
+margin-bottom:8px;
+}
+.docTitle{
+font-size:32px;
+font-weight:950;
+letter-spacing:-.7px;
+margin:0;
+position:relative;
+z-index:1;
+}
+.identityCode{
+margin-top:12px;
+display:inline-flex;
+align-items:center;
+padding:9px 13px;
+border-radius:999px;
+background:rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.20);
+font-size:15px;
+font-weight:950;
+letter-spacing:.08em;
+position:relative;
+z-index:1;
+}
+.desc{
+margin:12px 0 0;
+font-size:14px;
+line-height:1.45;
+color:rgba(255,255,255,.78);
+max-width:560px;
+position:relative;
+z-index:1;
+}
+.infoGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+padding:0 30px 16px;
+}
+.infoCard{
+background:#f8fafc;
+border:1px solid #edf0f5;
+border-radius:18px;
+padding:14px;
+min-height:76px;
+}
+.label{
+font-size:11px;
+font-weight:950;
+letter-spacing:.34px;
+text-transform:uppercase;
+color:#8a94a6;
+margin-bottom:6px;
+}
+.value{
+font-size:15px;
+font-weight:850;
+color:#111827;
+line-height:1.25;
+word-break:break-word;
+}
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+padding:0 30px 16px;
+}
+.stat{
+border-radius:18px;
+padding:14px;
+background:linear-gradient(135deg,#eff6ff,#f8fbff);
+border:1px solid #dbeafe;
+}
+.stat.green{
+background:linear-gradient(135deg,#effaf3,#f8fffb);
+border-color:#d6f4df;
+}
+.stat.orange{
+background:linear-gradient(135deg,#fff7ed,#fffaf5);
+border-color:#fed7aa;
+}
+.statLabel{
+font-size:10px;
+font-weight:950;
+letter-spacing:.25px;
+text-transform:uppercase;
+color:#7b8494;
+margin-bottom:4px;
+}
+.statValue{
+font-size:17px;
+font-weight:950;
+color:#0f5fb4;
+line-height:1.15;
+}
+.stat.green .statValue{color:#168a3a}
+.stat.orange .statValue{color:#c2410c}
+.section{
+margin:0 30px 16px;
+border:1px solid #edf0f5;
+border-radius:20px;
+overflow:hidden;
+background:white;
+}
+.sectionTitle{
+padding:13px 16px;
+background:#f8fafc;
+border-bottom:1px solid #edf0f5;
+font-size:14px;
+font-weight:950;
+color:#111827;
+}
+table{
+width:100%;
+border-collapse:collapse;
+}
+th{
+font-size:10px;
+font-weight:950;
+letter-spacing:.3px;
+text-transform:uppercase;
+color:#8a94a6;
+text-align:left;
+background:#fff;
+padding:10px;
+border-bottom:1px solid #edf0f5;
+}
+td{
+font-size:12.5px;
+font-weight:800;
+color:#4b5563;
+padding:10px;
+border-bottom:1px solid #f1f4f8;
+vertical-align:top;
+}
+tr:last-child td{
+border-bottom:0;
+}
+.emptyCell{
+text-align:center;
+color:#9ca3af;
+padding:18px;
+}
+.noteBox{
+margin:0 30px 18px;
+background:#f8fafc;
+border:1px solid #edf0f5;
+border-radius:20px;
+padding:16px;
+}
+.noteTitle{
+font-size:14px;
+font-weight:950;
+color:#111827;
+margin-bottom:6px;
+}
+.noteText{
+font-size:13px;
+color:#4b5563;
+line-height:1.55;
+white-space:pre-wrap;
+}
+.signatureArea{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:22px;
+padding:0 30px 24px;
+}
+.signatureBox{
+height:68px;
+border-top:1.5px solid #d1d5db;
+padding-top:8px;
+font-size:12px;
+font-weight:800;
+color:#6b7280;
+text-align:center;
+}
+.footer{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:16px;
+border-top:1px solid #eef0f4;
+padding:14px 30px;
+font-size:11px;
+line-height:1.45;
+color:#9ca3af;
+}
+.printBtn,
+.backBtn{
+position:fixed;
+z-index:20;
+border:0;
+font-weight:900;
+border-radius:16px;
+box-shadow:0 10px 28px rgba(15,23,42,.16);
+}
+.backBtn{
+top:14px;
+left:14px;
+background:#111827;
+color:white;
+padding:11px 14px;
+}
+.printBtn{
+right:18px;
+bottom:18px;
+background:#007aff;
+color:white;
+padding:14px 18px;
+font-size:14px;
+}
+
+@media print{
+@page{size:A4;margin:8mm}
+body{
+background:white!important;
+padding:0!important;
+-webkit-print-color-adjust:exact;
+print-color-adjust:exact;
+}
+.page{
+box-shadow:none!important;
+border-radius:0!important;
+max-width:none!important;
+}
+.printBtn,.backBtn{display:none!important}
+.header{padding:14px 20px 10px!important}
+.brand img{width:40px!important;height:40px!important}
+.brandTitle{font-size:18px!important}
+.brandSub,.reportMeta{font-size:9px!important}
+.identityHero{margin:12px 20px 9px!important;padding:14px!important;border-radius:18px!important}
+.kicker{font-size:8px!important;margin-bottom:4px!important}
+.docTitle{font-size:21px!important}
+.identityCode{font-size:10px!important;padding:6px 9px!important;margin-top:7px!important}
+.desc{font-size:9px!important;margin-top:6px!important}
+.infoGrid{padding:0 20px 8px!important;gap:6px!important}
+.infoCard{padding:8px!important;border-radius:11px!important;min-height:50px!important}
+.label{font-size:7.5px!important;margin-bottom:3px!important}
+.value{font-size:10px!important}
+.stats{padding:0 20px 8px!important;gap:6px!important}
+.stat{padding:8px!important;border-radius:11px!important}
+.statLabel{font-size:7px!important}
+.statValue{font-size:11.5px!important}
+.section{margin:0 20px 8px!important;border-radius:12px!important}
+.sectionTitle{padding:8px 10px!important;font-size:10px!important}
+th{font-size:7px!important;padding:6px!important}
+td{font-size:8.5px!important;padding:6px!important}
+.noteBox{margin:0 20px 8px!important;padding:8px!important;border-radius:12px!important}
+.noteTitle{font-size:10px!important}
+.noteText{font-size:8.5px!important;line-height:1.35!important}
+.signatureArea{padding:0 20px 9px!important;gap:14px!important}
+.signatureBox{height:42px!important;font-size:8px!important;padding-top:5px!important}
+.footer{padding:7px 20px!important;font-size:7.5px!important;line-height:1.18!important}
+}
+</style>
+
+</head>
+<body>
+
+<button class="backBtn" onclick="if(window.history.length>1){window.history.back()}else{window.close()}">← Geri</button>
+
+<div class="page">
+<div class="topBand"></div>
+
+<div class="header">
+<div class="brand">
+<img src="${pdfLogo}">
+<div>
+<div class="brandTitle">${pdfFirma}</div>
+<div class="brandSub">ElevatorX • Asansör sicil kartı</div>
+</div>
+</div>
+<div class="reportMeta">
+<b>Sicil No:</b> ${raporNo}<br>
+<b>Tarih:</b> ${bugun()}
+</div>
+</div>
+
+<div class="identityHero">
+<div class="kicker">Dijital Asansör Kimliği</div>
+<h1 class="docTitle">Asansör Sicil Kartı</h1>
+<div class="identityCode">${kod}</div>
+<p class="desc">Bu kart, ilgili asansörün temel bakım, ödeme ve parça geçmişi özetini tek sayfalık dijital sicil olarak sunar.</p>
+</div>
+
+<div class="infoGrid">
+<div class="infoCard"><div class="label">Apartman</div><div class="value">${ayHtml(a.ad || "-")}</div></div>
+<div class="infoCard"><div class="label">Yönetici</div><div class="value">${ayHtml(a.yonetici || "-")}</div></div>
+<div class="infoCard"><div class="label">Telefon</div><div class="value">${ayHtml(a.tel || "-")}</div></div>
+<div class="infoCard"><div class="label">Bakım Günü</div><div class="value">${ayHtml(a.bakimGunu || "-")}</div></div>
+<div class="infoCard"><div class="label">Son Bakım</div><div class="value">${ayHtml(a.bakimTarihi || "-")}</div></div>
+<div class="infoCard"><div class="label">Ödeme Durumu</div><div class="value">${a.odemeTarihi ? "Ödeme Alındı" : "Ödeme Bekliyor"}</div></div>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="statLabel">Kod</div><div class="statValue">${kod}</div></div>
+<div class="stat green"><div class="statLabel">Parça Kaydı</div><div class="statValue">${parcaSayisi}</div></div>
+<div class="stat orange"><div class="statLabel">Parça Tutarı</div><div class="statValue">${parcaTutarFormat(parcaToplam)}</div></div>
+<div class="stat"><div class="statLabel">Bakım Ücreti</div><div class="statValue">${ayHtml(a.ucret || 0)} ₺</div></div>
+</div>
+
+<div class="section">
+<div class="sectionTitle">Son Parça Kayıtları</div>
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>Parça</th>
+<th>Tarih</th>
+<th>Adet</th>
+<th>Tutar</th>
+</tr>
+</thead>
+<tbody>
+${sonParcalar}
+</tbody>
+</table>
+</div>
+
+<div class="noteBox">
+<div class="noteTitle">Son İşlem / Teknik Not</div>
+<div class="noteText">${ayHtml(sonIslem)}${a.not ? "\\n\\n" + ayHtml(a.not) : ""}</div>
+</div>
+
+<div class="signatureArea">
+<div class="signatureBox">${ayHtml(pdfFirma)}<br>${ayHtml(pdfSorumlu)}</div>
+<div class="signatureBox">Müşteri / Yönetici<br>İmza</div>
+</div>
+
+<div class="footer">
+<div>© 2026 ${APP_NAME}. Tüm hakları saklıdır.<br>Sürüm ${APP_VERSION} • Destek: supportelevatorx@gmail.com</div>
+<div>Asansör sicil kartı</div>
+</div>
+
+</div>
+
+<button class="printBtn" onclick="window.print()">PDF / Yazdır</button>
+
+</body>
+</html>
+
+`);
+
 }
 
 
@@ -6811,6 +7434,11 @@ ${d.durum}
 
 <div class="detailInfoGrid">
 
+<div class="infoCard sicilInfoCard">
+<span class="infoLabel">Apartman Kodu</span>
+<span class="infoValue">${apartmanKodu(i)}</span>
+</div>
+
 <div class="infoCard">
 <span class="infoLabel">Yönetici</span>
 <span class="infoValue">${a.yonetici || "-"}</span>
@@ -6872,6 +7500,10 @@ Sil
 </button>
 
 </div>
+
+<button class="sicilPdfBtn" onclick="sicilKartiPdf(${i})">
+Asansör Sicil Kartı
+</button>
 
 <button onclick="pdf(${i})">
 PDF Oluştur
